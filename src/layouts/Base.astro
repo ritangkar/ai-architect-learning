@@ -1,0 +1,83 @@
+---
+import '../styles/global.css';
+import { url } from '../lib/url';
+import { getContent } from '../lib/content/site';
+interface Props { title: string; description?: string; narrow?: boolean; current?: string; noindex?: boolean }
+const { title, description = 'Architect Lab: a local-first learning portal for enterprise AI solution architects.', narrow = false, current = '' } = Astro.props;
+const c = getContent();
+const nav = [
+  ['Dashboard', '', ''], ['Pathway', 'pathway/', 'pathway'], ['Curriculum', 'curriculum/', 'curriculum'], ['Cases', 'cases/', 'cases'], ['Review', 'review/', 'review'], ['Map', 'map/', 'map'], ['Progress', 'progress/', 'progress'],
+] as const;
+const more = [['Map', 'map/'], ['Progress', 'progress/'], ['Search', 'search/'], ['Patterns', 'patterns/'], ['Competencies', 'competencies/'], ['Exercises', 'exercises/'], ['Sources', 'sources/'], ['Freshness', 'freshness/'], ['Settings', 'settings/'], ['About and method', 'about/']] as const;
+const barItems = [['Home', '', ''], ['Pathway', 'pathway/', 'pathway'], ['Learn', 'curriculum/', 'curriculum'], ['Cases', 'cases/', 'cases'], ['Review', 'review/', 'review']] as const;
+const pageTitle = title === c.site.siteName ? title : `${title} | ${c.site.siteName}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href={url('icons/icon.svg')} type="image/svg+xml" />
+    <script is:inline>
+      try {
+        var t = localStorage.getItem('al.theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        var d = localStorage.getItem('al.density'); if (d === 'compact') document.documentElement.setAttribute('data-density', 'compact');
+        if (localStorage.getItem('al.motion') === 'off') document.documentElement.setAttribute('data-motion', 'off');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="site-header">
+      <div class="inner">
+        <a class="brand" href={url()}>{c.site.siteName}</a>
+        <nav class="nav-main" aria-label="Primary">
+          {nav.map(([label, path, key]) => <a href={url(path)} aria-current={current === key ? 'page' : undefined}>{label}</a>)}
+        </nav>
+        <nav class="nav-util" aria-label="Utility">
+          <a href={url('search/')} aria-current={current === 'search' ? 'page' : undefined}>Search</a>
+          <a href={url('settings/')} aria-current={current === 'settings' ? 'page' : undefined}>Settings</a>
+        </nav>
+      </div>
+    </header>
+    <div id="storage-banner-host"></div>
+    <main id="main" class={narrow ? 'narrow' : ''} data-pagefind-body>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>Your progress is stored only in this browser on this device. Back it up from <a href={url('settings/')}>Settings</a>. · <a href={url('about/')}>Method and provenance</a> · <a href={url('sources/')}>Sources</a> · <a href={url('freshness/')}>Freshness</a></p>
+    </footer>
+    <nav class="bottom-bar" aria-label="Mobile primary">
+      {barItems.map(([label, path, key]) => <a href={url(path)} aria-current={current === key ? 'page' : undefined}>{label}</a>)}
+      <button type="button" id="more-btn" aria-expanded="false" aria-controls="more-sheet">More</button>
+    </nav>
+    <div class="more-sheet" id="more-sheet" hidden>
+      {more.map(([label, path]) => <a href={url(path)}>{label}</a>)}
+    </div>
+    <div class="toast-host" id="toast-host" aria-live="polite"></div>
+    <script>
+      const btn = document.getElementById('more-btn') as HTMLButtonElement | null;
+      const sheet = document.getElementById('more-sheet') as HTMLElement | null;
+      btn?.addEventListener('click', () => {
+        const open = sheet!.hidden;
+        sheet!.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sheet && !sheet.hidden) { sheet.hidden = true; btn?.setAttribute('aria-expanded', 'false'); btn?.focus(); }
+        const t = e.target as HTMLElement;
+        if (e.key === '/' && !e.ctrlKey && !e.metaKey && !['INPUT', 'TEXTAREA', 'SELECT'].includes(t.tagName) && !t.isContentEditable) {
+          e.preventDefault();
+          location.href = (document.querySelector('.nav-util a[href$="search/"]') as HTMLAnchorElement).href;
+        }
+      });
+    </script>
+    <script>
+      import { mountGlobalBanner } from '../lib/app/banner';
+      mountGlobalBanner();
+    </script>
+  </body>
+</html>
