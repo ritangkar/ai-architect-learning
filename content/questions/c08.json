@@ -1,0 +1,272 @@
+[
+ {
+  "id": "Q-C08-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.5.5"
+  ],
+  "competencies": [
+   "C08",
+   "C06"
+  ],
+  "difficulty": 2,
+  "stem": "What is the purpose of a human-in-the-loop approval step in an agent workflow?",
+  "options": [
+   {
+    "id": "a",
+    "text": "To slow the system down"
+   },
+   {
+    "id": "b",
+    "text": "To place a human decision before high-impact or irreversible actions where model errors would be costly"
+   },
+   {
+    "id": "c",
+    "text": "To train the model"
+   },
+   {
+    "id": "d",
+    "text": "To reduce token usage"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Approval gates match autonomy to risk: low-impact actions can be automated while high-impact ones need accountable human judgement.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C08-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.5.7"
+  ],
+  "competencies": [
+   "C08",
+   "C11"
+  ],
+  "difficulty": 3,
+  "stem": "For audit, which record is most useful for an agent decision?",
+  "options": [
+   {
+    "id": "a",
+    "text": "The final answer only"
+   },
+   {
+    "id": "b",
+    "text": "The inputs, retrieved sources, tool calls and results, model and prompt versions, and the final output with timestamps and user identity"
+   },
+   {
+    "id": "c",
+    "text": "Only the number of tokens used"
+   },
+   {
+    "id": "d",
+    "text": "Only the model name"
+   }
+  ],
+  "correct": "b",
+  "explanation": "To explain a decision later you need the evidence and versions behind it, not just the outcome.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C08-M3",
+  "type": "mcq",
+  "topics": [
+   "T3.2.1"
+  ],
+  "competencies": [
+   "C08",
+   "C15"
+  ],
+  "difficulty": 3,
+  "stem": "Which statement about regulation of AI systems is the most appropriate for an architect to work from?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Regulation never affects architecture"
+   },
+   {
+    "id": "b",
+    "text": "Obligations depend on the use case and risk class and jurisdiction, so requirements must be confirmed per project with current official sources and legal advice"
+   },
+   {
+    "id": "c",
+    "text": "One global law covers all AI uses identically"
+   },
+   {
+    "id": "d",
+    "text": "Regulation applies only to model providers"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Obligations vary by role (provider or deployer), risk category and jurisdiction, and regulations evolve. Educational material is not legal advice.",
+  "sourceCaseId": null,
+  "status": "draft",
+  "to_verify": true
+ },
+ {
+  "id": "Q-C08-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.5.5",
+   "T1.5.7"
+  ],
+  "competencies": [
+   "C08",
+   "C11"
+  ],
+  "difficulty": 4,
+  "stem": "A loan-pre-screening assistant drafts recommendations for officers. Management wants to remove officer review \"to save time\" after a good pilot.",
+  "constraints": [
+   "Decisions affect customers materially",
+   "Pilot covered limited customer segments",
+   "Complaints must be explainable"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Keep officer review for decisions that materially affect customers, automate only categories with proven, monitored performance and a reversal path, and keep records that explain each decision.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Remove review entirely since pilot results were good.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Keep review forever with no plan to revisit.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Replace review with a disclaimer to customers.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Pilot coverage limits what can be concluded about wider populations.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Good average accuracy makes oversight unnecessary.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Autonomy should be extended per category as evidence accumulates.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "A disclaimer is equivalent to human oversight.",
+    "valid": false
+   }
+  ],
+  "explanation": "Oversight should be proportionate and evidence-based. Extending autonomy gradually, with monitoring, reversal and explainability, balances value and risk.",
+  "model_answer": "Define decision categories and impact, keep review for high-impact ones, set monitoring and thresholds for automation, ensure explainability and reversal, and revisit as evidence grows.",
+  "rubric": [
+   {
+    "criterion": "Proportionate oversight by impact",
+    "points": 2
+   },
+   {
+    "criterion": "Evidence-based extension of autonomy",
+    "points": 2
+   },
+   {
+    "criterion": "Explainability or records",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C08-S2",
+  "type": "scenario",
+  "topics": [
+   "T2.2.3",
+   "T1.5.5"
+  ],
+  "competencies": [
+   "C08",
+   "C13"
+  ],
+  "difficulty": 4,
+  "stem": "A company will let business users build their own agents with a low-code studio. Security worries about unmanaged agents calling sensitive APIs, duplicate agents and unclear ownership.",
+  "constraints": [
+   "Hundreds of potential citizen builders",
+   "Agents can call business APIs",
+   "Need an inventory and owners"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Define a governance model: an agent registry with owners, tiered approval by risk and data access, shared reviewed tools, monitoring and a retirement process.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Ban business-user agents completely.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Allow everything and review quarterly.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Let each department write its own rules.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Governance should scale by risk tier rather than blocking all builders.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Quarterly review is enough for agents with API access.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "A registry with owners enables inventory and accountability.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Independent departmental rules give consistent control.",
+    "valid": false
+   }
+  ],
+  "explanation": "Governing citizen-built agents needs inventory, ownership, risk-tiered approval and shared controlled tools. Bans push work to shadow IT; no governance leaves exposure unmanaged.",
+  "model_answer": "Create a registry and ownership model, risk-tier agents by data and action scope, require approval and review for higher tiers, provide vetted tools, and monitor and retire agents.",
+  "rubric": [
+   {
+    "criterion": "Registry and ownership",
+    "points": 2
+   },
+   {
+    "criterion": "Risk-tiered approval",
+    "points": 2
+   },
+   {
+    "criterion": "Monitoring or lifecycle",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

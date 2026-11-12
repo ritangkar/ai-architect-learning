@@ -1,0 +1,275 @@
+[
+ {
+  "id": "Q-C05-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.3.5"
+  ],
+  "competencies": [
+   "C05",
+   "C07"
+  ],
+  "difficulty": 2,
+  "stem": "What problem does the Model Context Protocol (MCP) mainly address?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Training larger models"
+   },
+   {
+    "id": "b",
+    "text": "A standard way for AI applications to discover and call external tools and data sources"
+   },
+   {
+    "id": "c",
+    "text": "Compressing prompts"
+   },
+   {
+    "id": "d",
+    "text": "Replacing REST APIs entirely"
+   }
+  ],
+  "correct": "b",
+  "explanation": "MCP standardises how AI hosts connect to tools and data (servers expose tools, resources and prompts). It complements existing APIs; servers typically wrap them.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C05-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.3.6"
+  ],
+  "competencies": [
+   "C05",
+   "C12"
+  ],
+  "difficulty": 3,
+  "stem": "How does agent-to-agent (A2A) interoperability differ in emphasis from tool access via MCP?",
+  "options": [
+   {
+    "id": "a",
+    "text": "A2A is about one agent delegating a task to another autonomous agent, while MCP is about an agent calling tools and data sources"
+   },
+   {
+    "id": "b",
+    "text": "They are identical protocols"
+   },
+   {
+    "id": "c",
+    "text": "A2A replaces the need for authentication"
+   },
+   {
+    "id": "d",
+    "text": "MCP is only for image models"
+   }
+  ],
+  "correct": "a",
+  "explanation": "MCP connects a model-based application to tools and context. A2A-style protocols describe how independent agents discover each other and exchange tasks. They are complementary; details of each specification should be checked at the time of use.",
+  "sourceCaseId": null,
+  "status": "draft",
+  "to_verify": true
+ },
+ {
+  "id": "Q-C05-M3",
+  "type": "mcq",
+  "topics": [
+   "T2.4.1"
+  ],
+  "competencies": [
+   "C05",
+   "C13"
+  ],
+  "difficulty": 3,
+  "stem": "An integration layer exposes enterprise APIs to several AI agents. Which design best limits blast radius when an agent misbehaves?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Give every agent the same broad service account"
+   },
+   {
+    "id": "b",
+    "text": "Expose narrowly scoped operations through a gateway with per-agent credentials, rate limits and audit logs"
+   },
+   {
+    "id": "c",
+    "text": "Let agents call databases directly"
+   },
+   {
+    "id": "d",
+    "text": "Share one API key in the prompt"
+   }
+  ],
+  "correct": "b",
+  "explanation": "A gateway pattern with least-privilege scopes, per-caller identity, limits and logging contains failures and makes behaviour attributable.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C05-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.3.5",
+   "T1.3.1"
+  ],
+  "competencies": [
+   "C05"
+  ],
+  "difficulty": 4,
+  "stem": "Three internal teams each wrote their own function-calling wrappers around the same order and inventory APIs for different assistants. The wrappers disagree on error handling and authentication, and a change in one API broke two assistants.",
+  "constraints": [
+   "Five more assistants are planned",
+   "APIs are owned by a separate platform team",
+   "Security wants a single audit point"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Wrap the APIs once as a shared tool layer (for example MCP servers or an equivalent internal facade) with consistent schemas, errors and authentication, versioned by the platform team and reused by all assistants.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Let each team keep its wrapper and document the differences.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Merge all assistants into one monolithic assistant.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Switch the APIs to GraphQL without changing the wrappers.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "One shared, versioned facade removes duplicated effort and a class of breakage.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Documentation alone keeps divergent wrappers consistent.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "A single layer gives security one place to enforce policy and audit.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Changing API style fixes duplicated wrappers.",
+    "valid": false
+   }
+  ],
+  "explanation": "The repeating problem is duplicated, divergent integration glue. A shared tool facade owned by the API team gives consistency, versioning and a single enforcement and audit point. Merging assistants does not address ownership or reuse.",
+  "model_answer": "Create one tool layer over the APIs with stable schemas and error contracts, centralised authentication and logging, versioning and deprecation rules, and migrate assistants to it.",
+  "rubric": [
+   {
+    "criterion": "Proposes a shared, owned integration layer",
+    "points": 2
+   },
+   {
+    "criterion": "Mentions consistent schemas or errors",
+    "points": 1
+   },
+   {
+    "criterion": "Mentions security or audit benefit",
+    "points": 1
+   },
+   {
+    "criterion": "Mentions versioning or ownership",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C05-S2",
+  "type": "scenario",
+  "topics": [
+   "T2.4.1",
+   "T1.3.5"
+  ],
+  "competencies": [
+   "C05",
+   "C13"
+  ],
+  "difficulty": 4,
+  "stem": "A retailer wants an AI agent that can check order status, create a return and notify the customer. Order data is in a core ERP, returns in a separate service, notifications in a messaging platform. Each system has its own authentication.",
+  "constraints": [
+   "Customer data is personal data",
+   "Agent actions must be traceable to a customer session",
+   "Systems are owned by different teams"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Expose each capability as a narrow, authenticated operation behind an integration layer, propagate the customer session identity, use idempotency for the return, and log every call with the session and agent identity.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Give the agent one administrator credential for all three systems for simplicity.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Let the model construct SQL for each system.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Copy all data into a vector store and let the agent answer from it.",
+    "credit": 0.5
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Narrow operations limit what a misbehaving agent can do.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "A single administrator credential is acceptable if the agent is internal.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Idempotency protects against duplicate returns when calls are retried.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Copying data into a vector store gives consistent real-time order status and write ability.",
+    "valid": false
+   }
+  ],
+  "explanation": "Capabilities should be narrow, authenticated and attributable. Writes need idempotency and identity propagation. A copied vector store is stale and cannot perform actions.",
+  "model_answer": "Define three scoped operations, authenticate each with least privilege, pass and log the customer session identity, make the return idempotent, and monitor failures and retries.",
+  "rubric": [
+   {
+    "criterion": "Scoped operations through an integration layer",
+    "points": 2
+   },
+   {
+    "criterion": "Identity propagation and audit logging",
+    "points": 2
+   },
+   {
+    "criterion": "Idempotency or retry safety",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

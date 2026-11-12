@@ -1,0 +1,273 @@
+[
+ {
+  "id": "Q-C03-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.1.4",
+   "T1.2.1"
+  ],
+  "competencies": [
+   "C03"
+  ],
+  "difficulty": 2,
+  "stem": "In a retrieval-augmented generation (RAG) system, what is the role of embeddings?",
+  "options": [
+   {
+    "id": "a",
+    "text": "They compress the final answer to save tokens"
+   },
+   {
+    "id": "b",
+    "text": "They map text to vectors so that semantically similar passages can be found by similarity search"
+   },
+   {
+    "id": "c",
+    "text": "They encrypt documents at rest"
+   },
+   {
+    "id": "d",
+    "text": "They decide which user may see a document"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Embeddings place text in a vector space where distance reflects semantic similarity, enabling retrieval of passages relevant to a query even without shared keywords.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C03-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.2.2"
+  ],
+  "competencies": [
+   "C03"
+  ],
+  "difficulty": 3,
+  "stem": "A search over product codes and part numbers misses exact matches when using only vector similarity. What is the standard remedy?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Use a larger embedding model only"
+   },
+   {
+    "id": "b",
+    "text": "Combine keyword (lexical) search with vector search and rerank the merged results"
+   },
+   {
+    "id": "c",
+    "text": "Lower the number of documents indexed"
+   },
+   {
+    "id": "d",
+    "text": "Remove numbers from the documents"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Dense vectors capture meaning but are weak on exact identifiers. Hybrid retrieval adds lexical matching, and a reranker orders the combined candidates by relevance.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C03-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.2.4"
+  ],
+  "competencies": [
+   "C03",
+   "C12"
+  ],
+  "difficulty": 3,
+  "stem": "A client wants a model to answer from internal documents that change daily and must be traceable to source. Which approach fits best?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Fine-tune the model weekly on the documents"
+   },
+   {
+    "id": "b",
+    "text": "Retrieval-augmented generation over an indexed, regularly refreshed document store with citations"
+   },
+   {
+    "id": "c",
+    "text": "Paste every document into each prompt"
+   },
+   {
+    "id": "d",
+    "text": "Train a model from scratch"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Fine-tuning bakes knowledge into weights, is slow to refresh and poor at attribution. Retrieval keeps knowledge external, updatable and citable.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C03-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.2.1",
+   "T1.2.3"
+  ],
+  "competencies": [
+   "C03"
+  ],
+  "difficulty": 4,
+  "stem": "A RAG assistant answers well on short FAQs but poorly on long technical manuals. Retrieved chunks often start mid-sentence and answers miss definitions given earlier in the same section.",
+  "constraints": [
+   "Documents are structured with headings",
+   "Answers must cite sections",
+   "Re-indexing is possible"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Chunk along document structure (headings and sections), keep a small overlap, attach section titles as metadata to each chunk and test retrieval on a set of real questions.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Increase the chunk size to the maximum the embedding model allows.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Switch to a bigger generation model.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Reduce the number of retrieved chunks to one.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Structure-aware chunks keep related definitions and context together.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Generation model size fixes retrieval problems.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Metadata such as section titles helps both retrieval and citation.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Retrieving a single chunk always gives the most precise context.",
+    "valid": false
+   }
+  ],
+  "explanation": "Poor chunk boundaries separate context from the text that needs it. Structure-aware chunking with metadata improves retrieval, and evaluating on real questions confirms it. Bigger chunks dilute relevance; a bigger generator cannot use text that was never retrieved.",
+  "model_answer": "Re-chunk by headings, add overlap and section metadata, consider retrieving parent sections, build a retrieval test set from real questions and compare recall before and after.",
+  "rubric": [
+   {
+    "criterion": "Uses structure-aware chunking",
+    "points": 2
+   },
+   {
+    "criterion": "Adds metadata for context and citation",
+    "points": 1
+   },
+   {
+    "criterion": "Proposes measuring retrieval quality",
+    "points": 2
+   },
+   {
+    "criterion": "Does not blame the generator",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C03-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.2.2",
+   "T1.2.5"
+  ],
+  "competencies": [
+   "C03",
+   "C09"
+  ],
+  "difficulty": 4,
+  "stem": "A support assistant retrieves ten passages per query. Users report relevant answers exist in the knowledge base but the assistant often answers from tangential passages.",
+  "constraints": [
+   "Latency budget allows one extra processing step",
+   "A labelled set of 200 question and answer-passage pairs exists",
+   "Knowledge base has overlapping articles"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Retrieve more candidates, add a reranker to order them for the query, and measure recall at k and ranking quality on the labelled set before and after.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Increase k to twenty and pass everything to the model.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Remove overlapping articles at random to reduce noise.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Ask users to rephrase their questions more precisely.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "A reranker can promote the truly relevant candidates from a wider pool.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Passing more passages always improves answers.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "A labelled set allows objective comparison of retrieval changes.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Users are responsible for query quality.",
+    "valid": false
+   }
+  ],
+  "explanation": "The relevant passage is being retrieved but not prioritised. Reranking addresses ordering; retrieval metrics on a labelled set show whether it helped. More context can distract the generator.",
+  "model_answer": "Widen the candidate pool, add a cross-encoder or similar reranker, evaluate recall@k and ranking metrics on the labelled set, and check latency stays within budget; handle duplicates deliberately rather than randomly.",
+  "rubric": [
+   {
+    "criterion": "Adds reranking or equivalent ordering step",
+    "points": 2
+   },
+   {
+    "criterion": "Measures with labelled data",
+    "points": 2
+   },
+   {
+    "criterion": "Notes latency or cost trade-off",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

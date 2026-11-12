@@ -1,0 +1,271 @@
+[
+ {
+  "id": "Q-C12-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.6.3"
+  ],
+  "competencies": [
+   "C12",
+   "C16"
+  ],
+  "difficulty": 2,
+  "stem": "What should an architecture decision record (ADR) capture?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Only the final decision"
+   },
+   {
+    "id": "b",
+    "text": "The context, the options considered, the decision, the reasons and the consequences or trade-offs"
+   },
+   {
+    "id": "c",
+    "text": "Only the cost"
+   },
+   {
+    "id": "d",
+    "text": "The meeting attendees"
+   }
+  ],
+  "correct": "b",
+  "explanation": "An ADR preserves why a decision was made, including rejected alternatives, so later teams can revisit it when assumptions change.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C12-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.2.4"
+  ],
+  "competencies": [
+   "C12",
+   "C03"
+  ],
+  "difficulty": 3,
+  "stem": "Which situation most favours fine-tuning over retrieval?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Facts change daily and must be cited"
+   },
+   {
+    "id": "b",
+    "text": "You need a consistent style, format or narrow behaviour that prompting cannot reliably achieve, and the knowledge is stable"
+   },
+   {
+    "id": "c",
+    "text": "You need to reference specific documents"
+   },
+   {
+    "id": "d",
+    "text": "You have no training data at all"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Fine-tuning shapes behaviour and style; retrieval supplies changing facts. Combining them is common.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C12-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.4.4"
+  ],
+  "competencies": [
+   "C12",
+   "C17"
+  ],
+  "difficulty": 3,
+  "stem": "Which action reduces vendor lock-in for model access?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Hard-code one provider's SDK across the codebase"
+   },
+   {
+    "id": "b",
+    "text": "Route model calls through an internal abstraction or gateway with tested prompts per model and an exit plan"
+   },
+   {
+    "id": "c",
+    "text": "Store prompts only in the vendor console"
+   },
+   {
+    "id": "d",
+    "text": "Never evaluate alternatives"
+   }
+  ],
+  "correct": "b",
+  "explanation": "An abstraction layer, portable prompts and tested alternatives lower switching cost. Some lock-in is acceptable if chosen deliberately.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C12-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.6.3",
+   "T1.4.2"
+  ],
+  "competencies": [
+   "C12",
+   "C16"
+  ],
+  "difficulty": 4,
+  "stem": "A client must choose between a hosted frontier model API, a managed cloud model service in their existing cloud, and a self-hosted open-weight model. Requirements: moderate data sensitivity, small platform team, variable load.",
+  "constraints": [
+   "Platform team of three",
+   "Data is sensitive but not regulated-restricted",
+   "Load varies strongly by season"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Run a weighted options analysis against agreed criteria (quality on their tasks, data handling, operations burden, cost at expected volume, exit cost), test candidates on their own evaluation set, and record the decision as an ADR.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Pick the model with the best public benchmark scores.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Self-host to maximise control.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Choose whatever the vendor sales team recommends.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Criteria and weights should reflect this client's constraints.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Public benchmarks reliably predict performance on the client's tasks.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "A small platform team makes operations burden a real cost of self-hosting.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Control is always worth more than operational simplicity.",
+    "valid": false
+   }
+  ],
+  "explanation": "Choose with explicit criteria and evidence from the client's own tasks. Self-hosting buys control at an operations cost a small team may not afford. Record reasons to allow later revisiting.",
+  "model_answer": "Define criteria and weights, test candidates on a client evaluation set, estimate total cost including operations and exit, and document the decision with trade-offs.",
+  "rubric": [
+   {
+    "criterion": "Explicit weighted criteria",
+    "points": 2
+   },
+   {
+    "criterion": "Tests on client tasks",
+    "points": 2
+   },
+   {
+    "criterion": "Records decision (ADR)",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C12-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.3.3",
+   "T1.3.2"
+  ],
+  "competencies": [
+   "C12",
+   "C04"
+  ],
+  "difficulty": 4,
+  "stem": "A team debates adopting an agent framework versus writing their own orchestration code for a three-step workflow with two tools.",
+  "constraints": [
+   "Small team",
+   "Workflow unlikely to grow much",
+   "Maintainability matters"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Start with straightforward application code for the three steps, adopt a framework only when requirements such as branching, state persistence or human approval justify its learning and dependency cost, and record the reasoning.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Adopt the most popular framework regardless of need.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Build a general-purpose orchestration framework in-house.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Delay the project until a standard emerges.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Simple needs rarely justify heavy dependencies.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Popularity is a sufficient reason to adopt a framework.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Clear triggers keep the option open without over-building.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "A bespoke general framework is cheaper than plain code for three steps.",
+    "valid": false
+   }
+  ],
+  "explanation": "Choose the simplest approach that meets present requirements and define triggers for revisiting. Frameworks pay off when they remove real complexity.",
+  "model_answer": "Use plain code now, list the conditions that would justify a framework, and capture the decision and trade-offs.",
+  "rubric": [
+   {
+    "criterion": "Chooses simplicity for present needs",
+    "points": 2
+   },
+   {
+    "criterion": "Defines triggers to revisit",
+    "points": 2
+   },
+   {
+    "criterion": "Notes dependency cost",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

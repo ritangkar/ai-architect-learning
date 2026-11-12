@@ -1,0 +1,270 @@
+[
+ {
+  "id": "Q-C04-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.3.1"
+  ],
+  "competencies": [
+   "C04",
+   "C05"
+  ],
+  "difficulty": 2,
+  "stem": "In tool (function) calling, who executes the tool?",
+  "options": [
+   {
+    "id": "a",
+    "text": "The model executes it inside its weights"
+   },
+   {
+    "id": "b",
+    "text": "The application code, after the model returns a structured request naming the tool and its arguments"
+   },
+   {
+    "id": "c",
+    "text": "The embedding service"
+   },
+   {
+    "id": "d",
+    "text": "The end user"
+   }
+  ],
+  "correct": "b",
+  "explanation": "The model only proposes a call as structured output. The surrounding application validates the request, runs the tool, and returns the result to the model. That boundary is where authorisation and validation belong.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C04-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.3.2"
+  ],
+  "competencies": [
+   "C04",
+   "C12"
+  ],
+  "difficulty": 3,
+  "stem": "When is a fixed workflow (prompt chain or router) usually preferable to an autonomous agent loop?",
+  "options": [
+   {
+    "id": "a",
+    "text": "When the steps are known in advance and predictability, cost and testability matter"
+   },
+   {
+    "id": "b",
+    "text": "When nothing about the task is known"
+   },
+   {
+    "id": "c",
+    "text": "When you want the model to choose its own tools indefinitely"
+   },
+   {
+    "id": "d",
+    "text": "When latency does not matter at all"
+   }
+  ],
+  "correct": "a",
+  "explanation": "Known, stable steps are cheaper, faster, easier to test and easier to audit as a workflow. Agents earn their cost when the path cannot be specified in advance.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C04-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.3.4"
+  ],
+  "competencies": [
+   "C04",
+   "C17"
+  ],
+  "difficulty": 4,
+  "stem": "Which is a genuine drawback of splitting a task across many cooperating agents?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Multi-agent systems cannot use tools"
+   },
+   {
+    "id": "b",
+    "text": "Coordination overhead, compounding errors between agents, higher cost and harder debugging"
+   },
+   {
+    "id": "c",
+    "text": "They always run slower than one agent in every case"
+   },
+   {
+    "id": "d",
+    "text": "They cannot be evaluated"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Every handoff adds tokens, latency and a new place to lose or distort information. Multi-agent designs are justified by clear specialisation or parallelism, not by default.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C04-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.3.2",
+   "T1.3.1"
+  ],
+  "competencies": [
+   "C04",
+   "C12"
+  ],
+  "difficulty": 3,
+  "stem": "A bank wants an assistant for card-dispute intake. The process has six fixed steps with mandatory checks. A prototype using a free-roaming agent skips steps about one time in twenty.",
+  "constraints": [
+   "Regulated process with mandatory steps",
+   "Every case must be auditable",
+   "Some free-text understanding is needed to read customer descriptions"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Implement the six steps as an explicit workflow with deterministic ordering, using the model for language understanding inside individual steps and logging each step.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Keep the free-roaming agent and add a stronger instruction to never skip steps.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Add more agents that supervise the first agent.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Abandon the model and use only a web form.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Mandatory ordering is better enforced by code than by a prompt instruction.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Instructions to a model are a guarantee of behaviour.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Models still add value in understanding free text within a step.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "More supervising agents remove the need for deterministic control.",
+    "valid": false
+   }
+  ],
+  "explanation": "When the path is known and compliance requires it, encode it in the control flow and use the model for sub-tasks. Prompt instructions reduce but do not eliminate deviation.",
+  "model_answer": "Make the sequence deterministic, keep model calls scoped and schema-validated, log each step for audit, and test the workflow with adversarial and ambiguous inputs.",
+  "rubric": [
+   {
+    "criterion": "Encodes mandatory order in code",
+    "points": 2
+   },
+   {
+    "criterion": "Uses the model within steps",
+    "points": 1
+   },
+   {
+    "criterion": "Adds step-level logging for audit",
+    "points": 2
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C04-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.3.4",
+   "T1.3.3"
+  ],
+  "competencies": [
+   "C04"
+  ],
+  "difficulty": 4,
+  "stem": "An analytics assistant must answer questions needing SQL generation, document reading and chart drafting. A single agent with fifteen tools often picks the wrong tool and loses track in long sessions.",
+  "constraints": [
+   "Latency target under 15 seconds for common questions",
+   "Tools have clearly different inputs",
+   "Evaluation set exists"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Introduce a supervisor that routes to a few specialised sub-agents or sub-flows with narrow tool sets, keep shared state explicit, and compare against the single-agent baseline on the evaluation set including latency.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Add five more tools to the single agent for coverage.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Run every sub-agent for every question in parallel and merge answers.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Lower the temperature to zero and accept the errors.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Narrower tool sets reduce selection errors.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "More tools always improves coverage without cost.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "A baseline comparison shows whether the added complexity pays for itself.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Temperature zero removes tool-selection errors.",
+    "valid": false
+   }
+  ],
+  "explanation": "Specialisation with routing can reduce tool confusion, but the extra coordination must justify itself against a baseline. Running everything in parallel wastes cost and may reduce quality.",
+  "model_answer": "Route to specialised components with small tool sets, define the shared state and handoff format, measure accuracy and latency versus the single-agent baseline, and keep the simplest design that meets targets.",
+  "rubric": [
+   {
+    "criterion": "Proposes routing and narrow tool sets",
+    "points": 2
+   },
+   {
+    "criterion": "Defines state or handoff",
+    "points": 1
+   },
+   {
+    "criterion": "Compares with a baseline",
+    "points": 2
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

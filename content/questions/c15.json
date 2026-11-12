@@ -1,0 +1,272 @@
+[
+ {
+  "id": "Q-C15-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.4.5",
+   "T3.1.3"
+  ],
+  "competencies": [
+   "C12",
+   "C15"
+  ],
+  "difficulty": 3,
+  "stem": "A manufacturer wants to predict bearing failures from vibration sensor streams. Which approach is the most appropriate first choice?",
+  "options": [
+   {
+    "id": "a",
+    "text": "A general-purpose chat LLM reading raw sensor values"
+   },
+   {
+    "id": "b",
+    "text": "A predictive time-series or anomaly-detection model trained on labelled sensor history, with an LLM at most for explaining alerts"
+   },
+   {
+    "id": "c",
+    "text": "A rules spreadsheet with no data"
+   },
+   {
+    "id": "d",
+    "text": "An image generator"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Sensor streams are numeric time series; purpose-built predictive models are the standard tool. LLMs may help summarise findings but are not the predictor.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C15-M2",
+  "type": "mcq",
+  "topics": [
+   "T3.1.6"
+  ],
+  "competencies": [
+   "C15",
+   "C12"
+  ],
+  "difficulty": 4,
+  "stem": "Which design principle is most important when adding an AI assistant to a clinical documentation workflow?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Maximise autonomy"
+   },
+   {
+    "id": "b",
+    "text": "Keep a qualified clinician accountable for content, protect patient data under applicable rules, and make provenance and edits auditable"
+   },
+   {
+    "id": "c",
+    "text": "Hide AI involvement from clinicians"
+   },
+   {
+    "id": "d",
+    "text": "Store transcripts in public storage"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Healthcare settings add patient-safety and privacy duties: human accountability, data protection and audit. Specific obligations depend on jurisdiction and need legal confirmation.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C15-M3",
+  "type": "mcq",
+  "topics": [
+   "T3.1.5"
+  ],
+  "competencies": [
+   "C15",
+   "C12"
+  ],
+  "difficulty": 4,
+  "stem": "In financial services, which requirement most strongly shapes using ML for credit-related decisions?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Colour contrast"
+   },
+   {
+    "id": "b",
+    "text": "Explainability, fairness testing, model risk management and an accountable human process around the model"
+   },
+   {
+    "id": "c",
+    "text": "Faster page load"
+   },
+   {
+    "id": "d",
+    "text": "Number of microservices"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Credit decisions are regulated and affect individuals; model governance, explainability and bias testing are central. Exact rules depend on jurisdiction.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C15-S1",
+  "type": "scenario",
+  "topics": [
+   "T3.1.2",
+   "T1.4.5"
+  ],
+  "competencies": [
+   "C15",
+   "C12"
+  ],
+  "difficulty": 4,
+  "stem": "A retailer asks for \"AI for demand planning\" and proposes a chat assistant over sales spreadsheets. Their problem is stock-outs and overstock across 5,000 products.",
+  "constraints": [
+   "Weekly planning cycle",
+   "Historical sales and promotions data exists",
+   "Planners want to understand the forecast"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Use a forecasting model on the historical and promotional data for the numbers, and optionally add an LLM interface that explains forecasts and drivers to planners without producing the numbers itself.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Have the LLM estimate demand from pasted spreadsheets.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Buy more stock to avoid stock-outs.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Build a forecasting model for the numbers but give planners no way to see what drives each forecast.",
+    "credit": 0.5
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Quantitative forecasting is a predictive-ML task with measurable error.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "An LLM reading spreadsheets gives a validated forecast.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "A conversational layer can improve explanation and adoption.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Planning needs no historical data.",
+    "valid": false
+   }
+  ],
+  "explanation": "Match technique to problem: numeric forecasting needs a validated predictive model; an LLM can help with explanation and interaction on top. Forecast error should be measured.",
+  "model_answer": "Build and validate a forecasting model on historical and promotional data, measure error, and optionally add a conversational explanation layer.",
+  "rubric": [
+   {
+    "criterion": "Chooses predictive model for the numbers",
+    "points": 3
+   },
+   {
+    "criterion": "Uses LLM only for explanation",
+    "points": 1
+   },
+   {
+    "criterion": "Mentions measuring error",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C15-S2",
+  "type": "scenario",
+  "topics": [
+   "T3.1.4",
+   "T1.3.2"
+  ],
+  "competencies": [
+   "C15",
+   "C12"
+  ],
+  "difficulty": 4,
+  "stem": "A logistics firm wants an agent that re-plans deliveries when disruptions occur. Re-planning affects contracts and driver schedules.",
+  "constraints": [
+   "Real-time decisions",
+   "Optimisation solvers already exist",
+   "High cost of wrong re-plans"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Use the existing optimisation solver for route decisions, let the agent gather context and propose options, require dispatcher approval for contract-affecting changes, and log decisions.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Let the LLM compute routes itself.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Remove human involvement to react faster.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Ban AI from logistics.",
+    "credit": 0.5
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Solvers are purpose-built for optimisation; models should not replace them.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "LLMs compute optimal routes reliably.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Approval gates limit the cost of wrong changes.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Removing humans improves safety.",
+    "valid": false
+   }
+  ],
+  "explanation": "Combine deterministic optimisation with an agent for context and options, keeping humans in the loop for consequential changes.",
+  "model_answer": "Call the solver for routes, use the agent to collect disruption data and explain options, require approval for contractual impacts, and audit.",
+  "rubric": [
+   {
+    "criterion": "Uses the solver for optimisation",
+    "points": 2
+   },
+   {
+    "criterion": "Approval for consequential changes",
+    "points": 2
+   },
+   {
+    "criterion": "Audit",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

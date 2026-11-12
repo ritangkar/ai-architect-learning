@@ -1,0 +1,271 @@
+[
+ {
+  "id": "Q-C16-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.4.1"
+  ],
+  "competencies": [
+   "C12",
+   "C16"
+  ],
+  "difficulty": 2,
+  "stem": "In the C4 model, which diagram shows the system as a box within its users and the other systems it interacts with?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Code diagram"
+   },
+   {
+    "id": "b",
+    "text": "System context diagram"
+   },
+   {
+    "id": "c",
+    "text": "Component diagram"
+   },
+   {
+    "id": "d",
+    "text": "Container diagram"
+   }
+  ],
+  "correct": "b",
+  "explanation": "C4 has four levels: context, containers, components and code. The context diagram shows scope and external actors and systems.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C16-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.6.5"
+  ],
+  "competencies": [
+   "C16"
+  ],
+  "difficulty": 3,
+  "stem": "When presenting an architecture recommendation to executives, what should come first?",
+  "options": [
+   {
+    "id": "a",
+    "text": "A detailed component list"
+   },
+   {
+    "id": "b",
+    "text": "The decision required, the options considered, the recommendation, and the cost, risk and benefit in business terms"
+   },
+   {
+    "id": "c",
+    "text": "The technology history"
+   },
+   {
+    "id": "d",
+    "text": "The deployment scripts"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Executives need the decision, the trade-offs and the business impact. Detail can follow for those who want it.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C16-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.6.2"
+  ],
+  "competencies": [
+   "C01",
+   "C16"
+  ],
+  "difficulty": 3,
+  "stem": "Which is the best way to hand a design from architecture to the delivery team?",
+  "options": [
+   {
+    "id": "a",
+    "text": "A single verbal briefing"
+   },
+   {
+    "id": "b",
+    "text": "A written handoff with scope, key decisions and their reasons, interfaces, non-functional requirements, risks and open questions"
+   },
+   {
+    "id": "c",
+    "text": "Only the slide deck used for sales"
+   },
+   {
+    "id": "d",
+    "text": "A list of vendor names"
+   }
+  ],
+  "correct": "b",
+  "explanation": "A written handoff makes the decisions and constraints explicit and carries the reasons so the team can handle unexpected cases.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C16-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.6.3",
+   "T1.6.5"
+  ],
+  "competencies": [
+   "C12",
+   "C16"
+  ],
+  "difficulty": 4,
+  "stem": "A client's CTO receives an 80-page architecture document and says nobody will read it, yet the steering committee must approve funding next week.",
+  "constraints": [
+   "One-hour committee meeting",
+   "Mixed technical and business audience",
+   "Key decisions are still open"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Prepare a short decision pack: one-page context and reference architecture, the two or three key decisions with options and a recommendation, risks and costs, with the long document as an appendix.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Send the 80 pages again with a cover note.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Present only high-level slides without options or risks.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Ask the committee to read the document in the meeting.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "The audience needs decisions and trade-offs, not every detail.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Completeness of documentation is what committees want.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Keeping the long document as an appendix preserves traceability.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Omitting risks makes approval easier and is acceptable.",
+    "valid": false
+   }
+  ],
+  "explanation": "Tailor communication to the decision: concise decisions and trade-offs up front, detail available on request. Omitting options and risks undermines trust.",
+  "model_answer": "Create a short pack with context, key decisions, options, recommendation, risks and costs; link or append the full document.",
+  "rubric": [
+   {
+    "criterion": "Short decision-oriented pack",
+    "points": 2
+   },
+   {
+    "criterion": "Includes options and risks",
+    "points": 2
+   },
+   {
+    "criterion": "Keeps detail available",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C16-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.4.1",
+   "T1.6.2"
+  ],
+  "competencies": [
+   "C12",
+   "C16",
+   "C01"
+  ],
+  "difficulty": 4,
+  "stem": "Two teams disagree on whether a new AI service should directly access a customer database. Each draws a different diagram and meetings go in circles.",
+  "constraints": [
+   "Teams use different notation",
+   "Boundaries of the system are unclear",
+   "Decision needed this week"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Agree a context diagram first (users, the AI service and external systems), then a container diagram showing data stores and interfaces, and use them to decide the access boundary explicitly.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Let each team present its own diagram again.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Vote on the diagram style.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Delay until a tool is purchased.",
+    "credit": 0.5
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "A shared, structured notation exposes the disagreement about boundaries.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Repeating separate diagrams will converge the views.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Layered diagrams separate scope questions from internal design.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Tooling choice is the root cause of the disagreement.",
+    "valid": false
+   }
+  ],
+  "explanation": "A shared notation at the right level makes assumptions visible and lets the group decide boundaries explicitly.",
+  "model_answer": "Draw context then container diagrams jointly, mark the contested interface, and record the decision with reasons.",
+  "rubric": [
+   {
+    "criterion": "Uses shared structured diagrams",
+    "points": 2
+   },
+   {
+    "criterion": "Makes the boundary decision explicit",
+    "points": 2
+   },
+   {
+    "criterion": "Records decision",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

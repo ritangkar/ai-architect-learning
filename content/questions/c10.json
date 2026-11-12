@@ -1,0 +1,271 @@
+[
+ {
+  "id": "Q-C10-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.5.9"
+  ],
+  "competencies": [
+   "C10"
+  ],
+  "difficulty": 2,
+  "stem": "Which technique reduces cost and latency when many requests share a long, identical prompt prefix?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Prompt or prefix caching offered by the platform, where available"
+   },
+   {
+    "id": "b",
+    "text": "Increasing temperature"
+   },
+   {
+    "id": "c",
+    "text": "Removing the system prompt"
+   },
+   {
+    "id": "d",
+    "text": "Using a smaller font"
+   }
+  ],
+  "correct": "a",
+  "explanation": "Caching a stable prefix avoids reprocessing the same tokens. Availability and pricing differ by provider, so check current documentation.",
+  "sourceCaseId": null,
+  "status": "draft",
+  "to_verify": true
+ },
+ {
+  "id": "Q-C10-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.5.8"
+  ],
+  "competencies": [
+   "C10",
+   "C17"
+  ],
+  "difficulty": 3,
+  "stem": "The model provider has an outage. Which design choice most improves resilience?",
+  "options": [
+   {
+    "id": "a",
+    "text": "A single provider with no fallback"
+   },
+   {
+    "id": "b",
+    "text": "Timeouts, retries with backoff, a fallback model or provider (or a degraded non-AI path), and clear user messaging"
+   },
+   {
+    "id": "c",
+    "text": "Longer prompts"
+   },
+   {
+    "id": "d",
+    "text": "Caching nothing"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Plan for dependency failure: bound waiting, retry sensibly, provide a fallback, and degrade gracefully instead of failing silently.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C10-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.4.2",
+   "T1.5.9"
+  ],
+  "competencies": [
+   "C10",
+   "C12"
+  ],
+  "difficulty": 3,
+  "stem": "Routing simple requests to a small model and hard ones to a larger model is mainly a trade-off between:",
+  "options": [
+   {
+    "id": "a",
+    "text": "Colour and layout"
+   },
+   {
+    "id": "b",
+    "text": "Cost and latency versus quality, guided by task difficulty and evaluation"
+   },
+   {
+    "id": "c",
+    "text": "Encryption strength"
+   },
+   {
+    "id": "d",
+    "text": "Database size"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Routing exploits the fact that many requests do not need the most capable model. It must be validated by evaluation so quality is not silently lost.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C10-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.5.9",
+   "T1.1.2"
+  ],
+  "competencies": [
+   "C10"
+  ],
+  "difficulty": 4,
+  "stem": "An internal assistant costs far more than forecast. Logs show long conversations resend the entire history every turn, and most questions are simple lookups.",
+  "constraints": [
+   "Budget cap per month",
+   "Quality must not drop for hard questions",
+   "Evaluation set exists"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Trim or summarise history, cache stable prefixes where supported, route simple lookups to a cheaper model, and verify on the evaluation set that quality holds.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Reduce the output length limit to the minimum.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Switch all traffic to the cheapest model.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Ask users to ask fewer questions.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Token volume and model choice are the main cost drivers and can be tuned separately.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Cutting outputs alone addresses input token cost.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Evaluation protects quality while optimising cost.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Cheapest model for everything is safe if the bill drops.",
+    "valid": false
+   }
+  ],
+  "explanation": "Cost control means reducing tokens, reusing work and matching model to task, validated against quality. Blanket cuts risk quality.",
+  "model_answer": "Manage context growth, cache stable prefixes, route by difficulty, measure cost per task and quality on the evaluation set, and set budgets and alerts.",
+  "rubric": [
+   {
+    "criterion": "Reduces repeated or unnecessary tokens",
+    "points": 2
+   },
+   {
+    "criterion": "Routes by difficulty",
+    "points": 1
+   },
+   {
+    "criterion": "Validates with evaluation",
+    "points": 2
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C10-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.5.8",
+   "T1.3.7"
+  ],
+  "competencies": [
+   "C10",
+   "C17"
+  ],
+  "difficulty": 4,
+  "stem": "A long-running agent processes batches overnight. Occasionally a tool times out and the whole run restarts from scratch, repeating side effects such as emails already sent.",
+  "constraints": [
+   "Runs take hours",
+   "Some steps are not safe to repeat",
+   "Failures are intermittent"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Persist state after each step, make side-effecting steps idempotent or record completion, retry with backoff, and resume from the last checkpoint instead of restarting.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Add a longer timeout and hope failures stop.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Run twice and keep whichever finishes.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Remove the email step.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Checkpointing allows resume without redoing completed work.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Longer timeouts remove the need for state.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Idempotency or completion records prevent duplicate side effects.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Running twice is a safe resilience strategy for side effects.",
+    "valid": false
+   }
+  ],
+  "explanation": "Durable execution needs persisted state and safe retries. Idempotency and checkpointing prevent duplicated side effects after partial failure.",
+  "model_answer": "Store step state, mark completed side effects, use idempotency keys, retry with backoff, and resume from checkpoint; alert when retries are exhausted.",
+  "rubric": [
+   {
+    "criterion": "Checkpoint or persisted state",
+    "points": 2
+   },
+   {
+    "criterion": "Idempotency for side effects",
+    "points": 2
+   },
+   {
+    "criterion": "Retry with backoff",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

@@ -1,0 +1,269 @@
+[
+ {
+  "id": "Q-C11-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.5.7"
+  ],
+  "competencies": [
+   "C11",
+   "C08"
+  ],
+  "difficulty": 2,
+  "stem": "What does tracing add to an LLM application beyond ordinary logs?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Nothing"
+   },
+   {
+    "id": "b",
+    "text": "A linked view of each request across retrieval, prompts, model calls and tools with timings and token counts"
+   },
+   {
+    "id": "c",
+    "text": "Automatic fixes"
+   },
+   {
+    "id": "d",
+    "text": "Cheaper models"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Traces connect the steps of one request so you can see where latency, cost or errors arise and reproduce problems.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C11-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.5.10"
+  ],
+  "competencies": [
+   "C11",
+   "C16"
+  ],
+  "difficulty": 3,
+  "stem": "Why should prompts and model versions be version-controlled and deployed through a controlled pipeline?",
+  "options": [
+   {
+    "id": "a",
+    "text": "It is fashionable"
+   },
+   {
+    "id": "b",
+    "text": "Behaviour changes with them, so changes must be reviewable, testable against evaluations and reversible"
+   },
+   {
+    "id": "c",
+    "text": "It reduces token cost directly"
+   },
+   {
+    "id": "d",
+    "text": "Models require it by law"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Prompts and model choices are part of the system behaviour. Treat them like code: review, test, version and roll back.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C11-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.5.7"
+  ],
+  "competencies": [
+   "C11"
+  ],
+  "difficulty": 3,
+  "stem": "Which signals are most useful to monitor in production for a RAG assistant?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Only server CPU"
+   },
+   {
+    "id": "b",
+    "text": "Latency, cost, error and refusal rates, retrieval hit quality indicators, user feedback and sampled quality reviews"
+   },
+   {
+    "id": "c",
+    "text": "Only the number of logins"
+   },
+   {
+    "id": "d",
+    "text": "Only the model's name"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Quality, cost and reliability must all be observed, ideally with sampled human review, since automatic metrics miss some failures.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C11-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.5.10",
+   "T1.5.7"
+  ],
+  "competencies": [
+   "C11"
+  ],
+  "difficulty": 4,
+  "stem": "Prompt changes are edited directly in production by two engineers. Last week an edit silently increased refusals; nobody knows which change caused it.",
+  "constraints": [
+   "Several people change prompts",
+   "Evaluation set exists",
+   "Need quick rollback"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Store prompts in version control, require review and an automated evaluation run before release, deploy through a pipeline with versioned releases and a quick rollback, and monitor refusal rate after release.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Ask engineers to message each other before editing.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Freeze prompts permanently.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Log the final prompt text only.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Versioning and review provide traceability for behaviour changes.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Informal communication gives reliable traceability.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Automated evaluation catches regressions before users do.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Freezing removes the need to improve the assistant.",
+    "valid": false
+   }
+  ],
+  "explanation": "Without version control, evaluation gating and rollback, behaviour changes cannot be attributed or undone. Treat prompts as release artefacts.",
+  "model_answer": "Put prompts in version control, add review and automated evaluation gates, release with versions, enable rollback, and monitor key metrics after release.",
+  "rubric": [
+   {
+    "criterion": "Version control and review",
+    "points": 2
+   },
+   {
+    "criterion": "Automated evaluation gate",
+    "points": 2
+   },
+   {
+    "criterion": "Rollback and monitoring",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C11-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.5.7",
+   "T1.5.10"
+  ],
+  "competencies": [
+   "C11",
+   "C08"
+  ],
+  "difficulty": 4,
+  "stem": "Leadership asks how the team knows the assistant is still giving good answers six months after launch, when documents and user questions have changed.",
+  "constraints": [
+   "Content changes monthly",
+   "Limited reviewer time",
+   "Cost of full review is high"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Set up ongoing monitoring: sampled, rubric-based human review of production conversations, automated checks, drift indicators on questions and retrieval results, and periodic refresh of the evaluation set.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Rely on the launch-day test results.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Review every conversation manually.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Wait for complaints.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Sampling makes continuing review affordable.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Launch tests remain valid regardless of content change.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Evaluation sets need refreshing as usage drifts.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Complaints alone give early warning for silent quality loss.",
+    "valid": false
+   }
+  ],
+  "explanation": "Quality drifts as content and questions change. Continuous sampled review, automated checks and a refreshed evaluation set provide affordable assurance.",
+  "model_answer": "Define quality rubrics, sample production traffic for review, track drift signals, refresh evaluation data, and review trends regularly.",
+  "rubric": [
+   {
+    "criterion": "Ongoing sampled review",
+    "points": 2
+   },
+   {
+    "criterion": "Drift or refresh of evaluation data",
+    "points": 2
+   },
+   {
+    "criterion": "Affordable approach",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

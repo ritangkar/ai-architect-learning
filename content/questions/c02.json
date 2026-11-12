@@ -1,0 +1,276 @@
+[
+ {
+  "id": "Q-C02-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.1.1"
+  ],
+  "competencies": [
+   "C02"
+  ],
+  "difficulty": 2,
+  "stem": "For which problem is a large language model the weakest default choice?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Drafting a first response to a free-text customer complaint"
+   },
+   {
+    "id": "b",
+    "text": "Summarising a long contract into plain language"
+   },
+   {
+    "id": "c",
+    "text": "Calculating invoice totals from line items with exact tax rules"
+   },
+   {
+    "id": "d",
+    "text": "Extracting entities from unstructured emails"
+   }
+  ],
+  "correct": "c",
+  "explanation": "Exact arithmetic with fixed rules is a job for deterministic code. LLMs can approximate arithmetic but give no guarantee, and the rules are fully specified, so a rules engine is cheaper, faster and auditable.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C02-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.1.2"
+  ],
+  "competencies": [
+   "C02",
+   "C10"
+  ],
+  "difficulty": 3,
+  "stem": "What does the context window of a language model limit?",
+  "options": [
+   {
+    "id": "a",
+    "text": "The number of users that can call the model at once"
+   },
+   {
+    "id": "b",
+    "text": "The total amount of text (tokens) the model can take into account in one request, including the prompt and, usually, the output"
+   },
+   {
+    "id": "c",
+    "text": "How long the model remembers a user between sessions"
+   },
+   {
+    "id": "d",
+    "text": "The number of tools an agent may register"
+   }
+  ],
+  "correct": "b",
+  "explanation": "The context window bounds the tokens processed per request. It is not a memory across sessions and not a concurrency limit. Anything beyond it must be summarised, retrieved or left out.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C02-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.1.3"
+  ],
+  "competencies": [
+   "C02",
+   "C17"
+  ],
+  "difficulty": 3,
+  "stem": "A model confidently cites a regulation clause that does not exist. Which term and mitigation fit best?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Latency spike; add a larger GPU"
+   },
+   {
+    "id": "b",
+    "text": "Hallucination; ground answers in retrieved, citable sources and verify citations"
+   },
+   {
+    "id": "c",
+    "text": "Overfitting; retrain the model nightly"
+   },
+   {
+    "id": "d",
+    "text": "Tokenisation error; switch tokenizer"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Fabricated but plausible content is a hallucination. Grounding in retrieved documents, requiring citations and checking them against the source reduces and detects it. It does not remove the risk entirely.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C02-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.1.1",
+   "T1.1.3"
+  ],
+  "competencies": [
+   "C02"
+  ],
+  "difficulty": 3,
+  "stem": "A finance team wants an LLM to approve or reject expense claims against a 40-page policy. Each decision must be reproducible and explainable to auditors.",
+  "constraints": [
+   "Auditable decisions",
+   "Policy changes quarterly",
+   "Claims include receipts as images"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Use deterministic rules for the clear policy checks, use a model only for extraction from receipts and for flagging ambiguous cases to a human, and log the evidence for each decision.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Let the LLM decide every claim with the policy in the prompt and low temperature for consistency.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Fine-tune a model on past decisions so it learns the policy.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Avoid AI entirely because decisions are regulated.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Low temperature makes outputs repeatable enough for audit purposes.",
+    "valid": false
+   },
+   {
+    "id": "r2",
+    "text": "Reproducibility and explanation requirements favour deterministic logic for the decision itself.",
+    "valid": true
+   },
+   {
+    "id": "r3",
+    "text": "Models add value on unstructured inputs such as receipt images and ambiguous wording.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Fine-tuning guarantees compliance with the policy text.",
+    "valid": false
+   }
+  ],
+  "explanation": "Match the technique to the sub-problem. Rule evaluation is deterministic and auditable; perception and language understanding are where models help. Low temperature reduces variance but does not make a model an auditable rules engine.",
+  "model_answer": "Split the workflow: extract fields from receipts with a model (validated), apply explicit policy rules in code, route ambiguous or low-confidence cases to a human, store inputs, rule outcomes and model outputs for audit, and re-test when the policy changes.",
+  "rubric": [
+   {
+    "criterion": "Separates deterministic rules from model tasks",
+    "points": 2
+   },
+   {
+    "criterion": "Keeps a human path for ambiguity",
+    "points": 1
+   },
+   {
+    "criterion": "Addresses auditability and logging",
+    "points": 2
+   },
+   {
+    "criterion": "Notes policy changes need re-testing",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C02-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.1.5",
+   "T1.1.2"
+  ],
+  "competencies": [
+   "C02"
+  ],
+  "difficulty": 3,
+  "stem": "An assistant must answer questions using a customer's 300-page product manual. The first prototype pastes the whole manual into every prompt. Cost and latency are high and answers sometimes ignore details in the middle of the manual.",
+  "constraints": [
+   "Manual updates monthly",
+   "Cost per query matters",
+   "Answers must reference the right section"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Stop sending the whole manual; select only the relevant sections per question and put them in the prompt with clear instructions to answer from them.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Switch to the model with the largest advertised context window and keep pasting the manual.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Increase the temperature so the model explores more of the manual.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Shorten the question so more of the manual fits.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Sending only relevant material reduces tokens, latency and distraction.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "A bigger window removes the effect of irrelevant text on answer quality.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Selected passages make it easier to cite the section used.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Temperature controls how much of the context is read.",
+    "valid": false
+   }
+  ],
+  "explanation": "Long contexts cost money and time, and relevant details can be under-used when surrounded by irrelevant text. Context engineering means choosing what goes into the window. A larger window helps capacity but not selection.",
+  "model_answer": "Provide only the relevant passages per query (for example via retrieval), keep instructions explicit about answering from them, include section identifiers for citation, and refresh the source when the manual changes.",
+  "rubric": [
+   {
+    "criterion": "Reduces context to what is relevant",
+    "points": 2
+   },
+   {
+    "criterion": "Links selection to cost and latency",
+    "points": 1
+   },
+   {
+    "criterion": "Mentions citation or section reference",
+    "points": 1
+   },
+   {
+    "criterion": "Rejects window size or temperature as the fix",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

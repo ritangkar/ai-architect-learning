@@ -1,0 +1,271 @@
+[
+ {
+  "id": "Q-C07-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.5.3"
+  ],
+  "competencies": [
+   "C07",
+   "C06"
+  ],
+  "difficulty": 3,
+  "stem": "An assistant retrieves documents on behalf of a user. What is the correct way to prevent it exposing documents that user is not entitled to see?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Filter the retrieved results at query time using the end user's permissions (or the user's identity propagated to the data source)"
+   },
+   {
+    "id": "b",
+    "text": "Tell the model not to reveal restricted documents"
+   },
+   {
+    "id": "c",
+    "text": "Index only documents everyone may see and ignore the rest"
+   },
+   {
+    "id": "d",
+    "text": "Rely on the user to ask only for permitted content"
+   }
+  ],
+  "correct": "a",
+  "explanation": "Authorisation must be enforced by the system on the retrieval path, using the real user's identity. A prompt instruction is not an access control. Indexing only public content is safe but may not meet the use case.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C07-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.5.4"
+  ],
+  "competencies": [
+   "C07",
+   "C08"
+  ],
+  "difficulty": 3,
+  "stem": "Which practice best supports data minimisation when sending text to a hosted model?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Send complete customer records so the model has full context"
+   },
+   {
+    "id": "b",
+    "text": "Send only the fields needed for the task, redact or tokenise identifiers where possible, and log what was sent"
+   },
+   {
+    "id": "c",
+    "text": "Disable all logging"
+   },
+   {
+    "id": "d",
+    "text": "Send data in uppercase"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Minimise what leaves your boundary, mask what the task does not need, and keep an audit trail of what was shared.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C07-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.5.3"
+  ],
+  "competencies": [
+   "C07",
+   "C06"
+  ],
+  "difficulty": 4,
+  "stem": "\"On-behalf-of\" identity propagation for an agent means:",
+  "options": [
+   {
+    "id": "a",
+    "text": "The agent uses its own all-powerful service account for every action"
+   },
+   {
+    "id": "b",
+    "text": "The agent calls downstream systems with a token that represents the end user (and the agent), so the downstream system applies the user's permissions"
+   },
+   {
+    "id": "c",
+    "text": "The user shares their password with the agent"
+   },
+   {
+    "id": "d",
+    "text": "The agent never calls downstream systems"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Propagating the user context lets downstream systems enforce existing authorisation and produce attributable audit trails. Shared passwords and super-user accounts break both.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C07-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.5.3",
+   "T1.3.5"
+  ],
+  "competencies": [
+   "C07",
+   "C06"
+  ],
+  "difficulty": 4,
+  "stem": "An HR assistant answers questions from policy documents and from employee records. In testing, a junior employee obtained another employee's salary band by asking cleverly.",
+  "constraints": [
+   "Records system already enforces role-based access",
+   "Assistant uses one service account to read records",
+   "Audit requires knowing who saw what"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Replace the service account with propagated user identity so the records system enforces the user's permissions, filter retrieval by entitlements, and log the user identity with each access.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Add a prompt rule not to reveal salaries to junior staff.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Keep the service account but only allow questions from managers.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Hide the records tool and answer only from policies.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Existing access control in the records system should decide, using the real user identity.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "A prompt rule is a sufficient access control.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Per-user audit logs need the user identity at the point of access.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "A shared service account preserves per-user audit.",
+    "valid": false
+   }
+  ],
+  "explanation": "The flaw is architectural: a privileged service account lets the model act with more authority than the user has. Propagating identity makes the authoritative system decide and keeps audit meaningful.",
+  "model_answer": "Use on-behalf-of tokens or equivalent, rely on the records system's access rules, filter retrieval by entitlement, and keep per-user logs; avoid giving the model privileged standing access.",
+  "rubric": [
+   {
+    "criterion": "Identifies privileged service account as root cause",
+    "points": 2
+   },
+   {
+    "criterion": "Propagates user identity",
+    "points": 2
+   },
+   {
+    "criterion": "Mentions audit attribution",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C07-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.5.4",
+   "T3.2.2"
+  ],
+  "competencies": [
+   "C07",
+   "C08"
+  ],
+  "difficulty": 4,
+  "stem": "A European client wants to use a hosted model API for summarising support tickets that contain names, email addresses and sometimes health details.",
+  "constraints": [
+   "Data protection law applies",
+   "Some tickets may contain special-category data",
+   "Provider region options vary"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Assess lawful basis and a data-processing agreement, minimise and redact before sending, choose a region and retention settings that meet policy, exclude special-category tickets unless explicitly covered, and record the decision.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Send everything and rely on the provider's general privacy page.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Refuse all hosted models permanently.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Remove only email addresses and send the rest.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Legal basis, contract and data location are architectural inputs, not afterthoughts.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Provider marketing statements replace a contract.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Redaction and exclusion reduce what is exposed.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Removing one identifier type is enough for health data.",
+    "valid": false
+   }
+  ],
+  "explanation": "Personal and special-category data call for explicit legal and technical controls: contract, minimisation, location and retention. Blanket refusal is safe but ignores options such as redaction and private deployment. This is educational, not legal advice.",
+  "model_answer": "Confirm lawful basis and a processing agreement, minimise and redact, pick region and retention, exclude or separately handle special-category content, and document the decision for review with legal counsel.",
+  "rubric": [
+   {
+    "criterion": "Addresses legal basis and contract",
+    "points": 2
+   },
+   {
+    "criterion": "Minimises or redacts data",
+    "points": 2
+   },
+   {
+    "criterion": "Considers region or retention",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

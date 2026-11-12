@@ -1,0 +1,273 @@
+[
+ {
+  "id": "Q-C13-M1",
+  "type": "mcq",
+  "topics": [
+   "T2.1.2"
+  ],
+  "competencies": [
+   "C13",
+   "C07"
+  ],
+  "difficulty": 3,
+  "stem": "On SAP Business Technology Platform (BTP), what is the main purpose of the Cloud Connector?",
+  "options": [
+   {
+    "id": "a",
+    "text": "To train models"
+   },
+   {
+    "id": "b",
+    "text": "To provide a secure outbound-initiated connection from BTP to systems in a customer's on-premise network without opening inbound firewall ports"
+   },
+   {
+    "id": "c",
+    "text": "To store vector embeddings"
+   },
+   {
+    "id": "d",
+    "text": "To replace the identity provider"
+   }
+  ],
+  "correct": "b",
+  "explanation": "The Cloud Connector runs in the customer network and opens an outbound tunnel to BTP so cloud applications can reach selected on-premise systems under controlled exposure. Destinations in the subaccount reference it.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C13-M2",
+  "type": "mcq",
+  "topics": [
+   "T2.4.4"
+  ],
+  "competencies": [
+   "C13",
+   "C12"
+  ],
+  "difficulty": 3,
+  "stem": "What does the \"clean core\" principle recommend for an ERP such as SAP S/4HANA when adding AI functions?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Modify standard code freely to embed AI logic"
+   },
+   {
+    "id": "b",
+    "text": "Keep the core standard and upgrade-safe by extending through released extension points and side-by-side applications on a platform"
+   },
+   {
+    "id": "c",
+    "text": "Avoid APIs"
+   },
+   {
+    "id": "d",
+    "text": "Move all data to a spreadsheet"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Clean core keeps customisation out of the ERP core so upgrades stay simple; AI logic usually lives in side-by-side extensions calling released APIs and events.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C13-M3",
+  "type": "mcq",
+  "topics": [
+   "T2.2.5"
+  ],
+  "competencies": [
+   "C12",
+   "C13"
+  ],
+  "difficulty": 4,
+  "stem": "When is a pro-code approach to building an agent usually justified over a low-code studio?",
+  "options": [
+   {
+    "id": "a",
+    "text": "When the agent is a simple, single-step automation for one business user"
+   },
+   {
+    "id": "b",
+    "text": "When you need complex orchestration, custom evaluation and testing, fine control over performance or integration patterns, and team-owned lifecycle management"
+   },
+   {
+    "id": "c",
+    "text": "When no developers are available"
+   },
+   {
+    "id": "d",
+    "text": "When you want no versioning"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Low-code suits fast, bounded automations; pro-code is better when control, testability and complex logic are required. Many estates use both under shared governance.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C13-S1",
+  "type": "scenario",
+  "topics": [
+   "T2.1.2",
+   "T2.4.2"
+  ],
+  "competencies": [
+   "C13",
+   "C07"
+  ],
+  "difficulty": 4,
+  "stem": "An AI agent running on BTP must read purchase orders from an on-premise ERP and must only return orders the signed-in buyer may see. The ERP is not reachable from the internet.",
+  "constraints": [
+   "No inbound firewall exceptions allowed",
+   "Authorisation must reflect the signed-in user",
+   "Audit must show which user triggered each call"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Connect through the Cloud Connector with a destination in the subaccount, use principal propagation so the ERP evaluates the user's own authorisations, and log the user identity with each call.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Expose the ERP APIs publicly with an API key stored in the agent prompt.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Use one technical user with broad read access and filter results in the prompt.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Copy all purchase orders into a vector store and answer from it.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Principal propagation lets the ERP apply the real user's permissions.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Filtering results inside the prompt is a robust access control.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "An outbound-initiated tunnel satisfies the no-inbound-exceptions rule.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Putting credentials in a prompt is acceptable if the agent is internal.",
+    "valid": false
+   }
+  ],
+  "explanation": "Reach on-premise systems via the connector pattern and keep authorisation with the system of record by propagating the user. A broad technical user plus prompt filtering moves the control into the model, which is not trustworthy.",
+  "model_answer": "Use Cloud Connector and a destination for connectivity, propagate the user identity (principal propagation) so the ERP enforces entitlements, and write audit logs with user and agent identity.",
+  "rubric": [
+   {
+    "criterion": "Uses Cloud Connector or equivalent outbound tunnel",
+    "points": 2
+   },
+   {
+    "criterion": "Propagates user identity",
+    "points": 2
+   },
+   {
+    "criterion": "Rejects prompt-based filtering and embedded credentials",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft",
+  "to_verify": true
+ },
+ {
+  "id": "Q-C13-S2",
+  "type": "scenario",
+  "topics": [
+   "T2.1.3",
+   "T1.4.2"
+  ],
+  "competencies": [
+   "C13",
+   "C12"
+  ],
+  "difficulty": 4,
+  "stem": "Several SAP-centred teams each embed their own model-provider API key in their applications. Finance cannot see spend, security cannot rotate keys centrally, and models differ across teams.",
+  "constraints": [
+   "Goal: central visibility and governance",
+   "Teams need model choice",
+   "Some data is sensitive"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Introduce a central model-access layer (for example a platform gateway or SAP's generative AI services where available to the client) with managed credentials, usage metering, approved models and policy controls, and migrate teams to it.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Document a policy asking teams to rotate keys quarterly.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Pick one model for the whole company and forbid others.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Let each team keep its keys and share spend by email.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "A central layer gives one place for credentials, metering and policy.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "A policy document enforces key hygiene without tooling.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Approved-model lists can still allow choice within governance.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Decentralised keys give central visibility.",
+    "valid": false
+   }
+  ],
+  "explanation": "Centralising model access gives visibility, credential control and policy enforcement while allowing governed choice. The product options available to a given client should be checked at the time of design.",
+  "model_answer": "Create a model gateway or platform service, move credentials into managed secrets, meter by team, define approved models and data rules, and migrate.",
+  "rubric": [
+   {
+    "criterion": "Proposes a central access layer",
+    "points": 2
+   },
+   {
+    "criterion": "Covers credentials and metering",
+    "points": 2
+   },
+   {
+    "criterion": "Allows governed model choice",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft",
+  "to_verify": true
+ }
+]

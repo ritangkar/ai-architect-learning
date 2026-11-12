@@ -1,0 +1,270 @@
+[
+ {
+  "id": "Q-C14-M1",
+  "type": "mcq",
+  "topics": [
+   "T2.3.2"
+  ],
+  "competencies": [
+   "C14",
+   "C05"
+  ],
+  "difficulty": 3,
+  "stem": "In a composable commerce storefront, where should a call to a language model for product-description personalisation normally be made?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Directly from the browser with the provider key in the page"
+   },
+   {
+    "id": "b",
+    "text": "From a server-side service (backend-for-frontend or integration layer) that holds credentials, enforces policy and caches results"
+   },
+   {
+    "id": "c",
+    "text": "From the database"
+   },
+   {
+    "id": "d",
+    "text": "Nowhere, personalisation is impossible"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Keys and policy belong server-side. A service layer also lets you cache, rate-limit, log and swap models without changing the storefront.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C14-M2",
+  "type": "mcq",
+  "topics": [
+   "T2.3.6"
+  ],
+  "competencies": [
+   "C14",
+   "C07"
+  ],
+  "difficulty": 3,
+  "stem": "Before using a customer's profile data to personalise AI-generated content, which check is essential?",
+  "options": [
+   {
+    "id": "a",
+    "text": "That the customer has a premium plan"
+   },
+   {
+    "id": "b",
+    "text": "That consent and purpose limitations recorded for that customer allow the use, and that only needed attributes are used"
+   },
+   {
+    "id": "c",
+    "text": "That the page loads quickly"
+   },
+   {
+    "id": "d",
+    "text": "That the model is the largest available"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Personalisation with personal data depends on consent state and purpose. Use the minimum data needed and respect consent changes.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C14-M3",
+  "type": "mcq",
+  "topics": [
+   "T2.3.3"
+  ],
+  "competencies": [
+   "C14"
+  ],
+  "difficulty": 3,
+  "stem": "An agent-assist feature suggests replies to service agents. Which design keeps accountability clear?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Send AI replies to customers automatically for all case types"
+   },
+   {
+    "id": "b",
+    "text": "Show grounded suggestions with sources to the agent, who edits and sends, with escalation for contract and complaint cases"
+   },
+   {
+    "id": "c",
+    "text": "Hide the sources"
+   },
+   {
+    "id": "d",
+    "text": "Disable feedback"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Suggestions with citations and a human sender keep accountability and allow quality feedback. Higher-risk categories should stay human-led.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C14-S1",
+  "type": "scenario",
+  "topics": [
+   "T2.3.5",
+   "T2.4.1"
+  ],
+  "competencies": [
+   "C14",
+   "C15"
+  ],
+  "difficulty": 4,
+  "stem": "A B2B manufacturer wants customers to ask an assistant for order status and to request quote changes. Orders live in an ERP; the storefront and quotes live in a commerce platform. Price changes need sales approval.",
+  "constraints": [
+   "Order data authoritative in the ERP",
+   "Quote changes carry commercial risk",
+   "Customers are authenticated company users"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Read order status through scoped ERP APIs with the customer's identity, let the assistant draft quote-change requests that enter the existing approval workflow, and never let it change prices directly.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Let the assistant edit quotes directly for speed.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Copy ERP data into the assistant's own database and answer from the copy.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Disable authentication to simplify use.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "The ERP remains the system of record for status; reading via APIs avoids stale copies.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Direct price edits by the assistant are acceptable if audited afterwards.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Drafting into an existing approval workflow keeps commercial control.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "A copied database stays accurate without extra work.",
+    "valid": false
+   }
+  ],
+  "explanation": "Keep the system of record authoritative, use identity-aware APIs for reads, and route consequential changes through existing approval workflows.",
+  "model_answer": "Use APIs with propagated identity for status; generate draft requests that enter the approval process; restrict write capability; log actions.",
+  "rubric": [
+   {
+    "criterion": "System of record accessed via API",
+    "points": 2
+   },
+   {
+    "criterion": "Human or workflow approval for price changes",
+    "points": 2
+   },
+   {
+    "criterion": "Identity-aware access",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C14-S2",
+  "type": "scenario",
+  "topics": [
+   "T2.3.4",
+   "T2.3.6"
+  ],
+  "competencies": [
+   "C14",
+   "C05"
+  ],
+  "difficulty": 4,
+  "stem": "Marketing wants an AI feature that writes personalised email campaigns from customer profiles. Profile data comes from several systems; some customers have withdrawn consent for marketing.",
+  "constraints": [
+   "Consent changes daily",
+   "Campaigns are sent in bulk",
+   "Brand and legal review required for templates"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Generate content only for the audience filtered by current consent at send time, constrain generation to approved templates and brand rules, review samples before release, and log inputs and outputs.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Generate for everyone and let the email platform suppress withdrawn customers later.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Send AI-generated emails without review to move faster.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Stop using profiles entirely.",
+    "credit": 0.5
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Consent must be evaluated on current data when content is produced and sent.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Suppression after generation is equivalent to not using the data.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Approved templates and samples contain brand and legal risk.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Removing personalisation is the only compliant option.",
+    "valid": false
+   }
+  ],
+  "explanation": "Consent state is dynamic, so enforcement must happen with current data and before using personal attributes. Constrained generation and review manage brand risk.",
+  "model_answer": "Filter audiences by live consent, restrict generation to approved structures, sample and approve before sending, log generation inputs and outputs.",
+  "rubric": [
+   {
+    "criterion": "Consent enforced with current data before use",
+    "points": 2
+   },
+   {
+    "criterion": "Constrains generation and reviews samples",
+    "points": 2
+   },
+   {
+    "criterion": "Logging",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

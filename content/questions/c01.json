@@ -1,0 +1,240 @@
+[
+ {
+  "id": "Q-C01-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.6.1"
+  ],
+  "competencies": [
+   "C01"
+  ],
+  "difficulty": 2,
+  "stem": "At the start of an AI engagement a client says, \"We want a chatbot.\" Which discovery question is the most useful first step?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Which large language model would you like us to use?"
+   },
+   {
+    "id": "b",
+    "text": "Which task or decision is slow, costly or error-prone today, who does it, and how would we know it had improved?"
+   },
+   {
+    "id": "c",
+    "text": "How many users will have the chatbot on their phone?"
+   },
+   {
+    "id": "d",
+    "text": "Do you already have an API key for a model provider?"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Discovery starts from the business problem and a measurable outcome. Model choice, channel and credentials are solution details that depend on the answer. Without a baseline you cannot tell whether an AI solution helped.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C01-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.6.2"
+  ],
+  "competencies": [
+   "C01"
+  ],
+  "difficulty": 3,
+  "stem": "Which of these is a testable non-functional requirement for an internal policy-answering assistant?",
+  "options": [
+   {
+    "id": "a",
+    "text": "The assistant should feel fast and trustworthy."
+   },
+   {
+    "id": "b",
+    "text": "For at least 95% of questions the first answer token appears within 3 seconds and every answer cites at least one source document."
+   },
+   {
+    "id": "c",
+    "text": "The assistant will use the best available model."
+   },
+   {
+    "id": "d",
+    "text": "The assistant must be user friendly."
+   }
+  ],
+  "correct": "b",
+  "explanation": "A testable requirement has a measurable threshold and a way to check it. \"Fast\", \"best\" and \"user friendly\" cannot be verified, so they cannot be accepted or rejected.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C01-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.6.1"
+  ],
+  "competencies": [
+   "C01"
+  ],
+  "difficulty": 3,
+  "stem": "A head of HR asks for \"an AI chatbot for HR\". You have two weeks for discovery. HR data includes health and pay information, and the employee base spans several countries.",
+  "constraints": [
+   "Two weeks of discovery",
+   "Sensitive personal data",
+   "Several jurisdictions",
+   "Stakeholders include HR, Legal and IT security"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Run workshops to rank the top HR task types by volume and pain, map the data sources and owners for each, and record data-protection and approval constraints before any tool or model is chosen.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Build a prototype over all HR documents to find out what is possible.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Select a vendor so that procurement can start in parallel.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Send a questionnaire asking employees what they want from a chatbot and design from the answers.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Scope, data sensitivity and success measures decide the architecture, so they must be known first.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "A prototype is cheap, so doing it first removes the need for discovery.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Different task types (policy lookup, personal records, case handling) have very different risk profiles and need different designs.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Vendor selection is the main architectural decision.",
+    "valid": false
+   }
+  ],
+  "explanation": "Discovery should convert a vague wish into prioritised use cases with owners, data sources, risks and success measures. A prototype over unscoped sensitive data is itself a risk, and picking a vendor first inverts the decision order.",
+  "model_answer": "Rank use cases by volume, pain and risk; separate public policy lookup from personal-data tasks; identify data owners and legal constraints per jurisdiction; agree measurable success criteria; then choose approach and tooling. A bounded prototype on non-sensitive policy documents may follow to test feasibility.",
+  "rubric": [
+   {
+    "criterion": "Starts from use cases and outcomes, not tools",
+    "points": 2
+   },
+   {
+    "criterion": "Identifies data sensitivity and jurisdictions",
+    "points": 2
+   },
+   {
+    "criterion": "Names stakeholders or owners",
+    "points": 1
+   },
+   {
+    "criterion": "Defers vendor and model selection",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C01-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.6.1",
+   "T1.6.2"
+  ],
+  "competencies": [
+   "C01"
+  ],
+  "difficulty": 4,
+  "stem": "Sales wants an assistant to send customer email replies automatically. Legal wants a human to review every reply. Both are senior stakeholders and each says the other is blocking value.",
+  "constraints": [
+   "Replies range from order status to complaints and contract queries",
+   "Brand and regulatory exposure for some categories",
+   "Support volume is high"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Turn the conflict into an explicit decision: classify reply categories by risk, propose auto-send only for low-risk templated categories and approval for the rest, record the rule as a requirement with acceptance criteria, and ask both stakeholders to sign it.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Side with Sales because volume is the problem and add review later if complaints appear.",
+    "credit": 0
+   },
+   {
+    "id": "c",
+    "text": "Require review of every reply because Legal carries the risk.",
+    "credit": 0.5
+   },
+   {
+    "id": "d",
+    "text": "Escalate to the sponsor and wait for a ruling before doing any design work.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Risk differs by message type, so a single rule for all replies is unlikely to be right.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "The loudest stakeholder should win to keep the project moving.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Making the policy an explicit, signed requirement stops it being reopened implicitly later.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "The conflict is a political matter that architecture cannot help with.",
+    "valid": false
+   }
+  ],
+  "explanation": "Conflicting requirements are resolved by making the trade-off explicit and tying it to risk tiers. Both extremes either ignore real exposure or discard the value case.",
+  "model_answer": "Categorise replies by risk and reversibility, define the automation boundary per category, add human-in-the-loop for higher-risk ones, write the rule with measurable acceptance criteria (for example the share of auto-sent replies that required correction), and record the decision and sign-off.",
+  "rubric": [
+   {
+    "criterion": "Recognises the conflict as a trade-off to design for",
+    "points": 2
+   },
+   {
+    "criterion": "Uses risk tiers or categories",
+    "points": 2
+   },
+   {
+    "criterion": "Records the decision and gets agreement",
+    "points": 1
+   },
+   {
+    "criterion": "Keeps value from automation where risk is low",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]

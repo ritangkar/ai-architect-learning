@@ -1,0 +1,267 @@
+[
+ {
+  "id": "Q-C09-M1",
+  "type": "mcq",
+  "topics": [
+   "T1.5.6"
+  ],
+  "competencies": [
+   "C09"
+  ],
+  "difficulty": 2,
+  "stem": "What is a \"golden set\" in LLM application testing?",
+  "options": [
+   {
+    "id": "a",
+    "text": "A set of the most expensive prompts"
+   },
+   {
+    "id": "b",
+    "text": "A curated set of inputs with expected outputs or acceptance criteria used to detect regressions when prompts, models or data change"
+   },
+   {
+    "id": "c",
+    "text": "The first thousand users"
+   },
+   {
+    "id": "d",
+    "text": "A vendor benchmark"
+   }
+  ],
+  "correct": "b",
+  "explanation": "A golden set is a stable, representative regression suite. Run it before changing a prompt, model, retrieval setup or data.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C09-M2",
+  "type": "mcq",
+  "topics": [
+   "T1.2.5"
+  ],
+  "competencies": [
+   "C09",
+   "C03"
+  ],
+  "difficulty": 3,
+  "stem": "Which metric tells you whether the relevant passage appears among the top k retrieved results?",
+  "options": [
+   {
+    "id": "a",
+    "text": "Perplexity"
+   },
+   {
+    "id": "b",
+    "text": "Recall at k"
+   },
+   {
+    "id": "c",
+    "text": "Latency"
+   },
+   {
+    "id": "d",
+    "text": "Token count"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Recall@k measures whether relevant items are retrieved within the top k. It evaluates retrieval separately from generation.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C09-M3",
+  "type": "mcq",
+  "topics": [
+   "T1.5.6"
+  ],
+  "competencies": [
+   "C09"
+  ],
+  "difficulty": 4,
+  "stem": "Using a language model to judge another model's outputs (\"LLM-as-judge\") is best treated as:",
+  "options": [
+   {
+    "id": "a",
+    "text": "A ground truth that needs no checking"
+   },
+   {
+    "id": "b",
+    "text": "A scalable but biased signal that should be calibrated against human labels and combined with deterministic checks"
+   },
+   {
+    "id": "c",
+    "text": "Illegal"
+   },
+   {
+    "id": "d",
+    "text": "Only useful for translation"
+   }
+  ],
+  "correct": "b",
+  "explanation": "Judge models are useful at scale but can be biased (for example towards length or their own style). Calibrate them against human judgement and complement with objective checks.",
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C09-S1",
+  "type": "scenario",
+  "topics": [
+   "T1.5.6"
+  ],
+  "competencies": [
+   "C09"
+  ],
+  "difficulty": 4,
+  "stem": "A team swaps its model for a cheaper one and tests by trying ten prompts by hand. Two weeks later users report worse answers on refund questions.",
+  "constraints": [
+   "Real traffic exists",
+   "Refund questions are high-impact",
+   "No automated tests"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Build a representative evaluation set from real, anonymised questions (including refund cases), define pass criteria, and run it automatically before any model or prompt change, with a rollout that can be reverted.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Keep manual spot-checks but try twenty prompts instead of ten.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Ask users to report problems and fix them as they arise.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Revert to the expensive model permanently.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Representative data and criteria make quality changes measurable.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "Spot checks give statistically reliable coverage of rare high-impact cases.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Automation lets every change be tested cheaply and repeatedly.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "User reports are an adequate test strategy for high-impact domains.",
+    "valid": false
+   }
+  ],
+  "explanation": "Without a representative evaluation set, regressions in important categories go unnoticed. Automate the evaluation and tie changes to it.",
+  "model_answer": "Sample and anonymise real queries, label or define criteria per category, automate the run in CI, gate changes on thresholds, and monitor after release with rollback available.",
+  "rubric": [
+   {
+    "criterion": "Representative evaluation set including high-impact cases",
+    "points": 2
+   },
+   {
+    "criterion": "Automated, repeatable gate",
+    "points": 2
+   },
+   {
+    "criterion": "Rollback or monitoring",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ },
+ {
+  "id": "Q-C09-S2",
+  "type": "scenario",
+  "topics": [
+   "T1.2.5",
+   "T1.5.6"
+  ],
+  "competencies": [
+   "C09",
+   "C03"
+  ],
+  "difficulty": 4,
+  "stem": "A RAG assistant gives wrong answers. Product owners blame the model; engineers suspect retrieval. You can log retrieved passages and generated answers.",
+  "constraints": [
+   "Need to find the failing component quickly",
+   "Labelled question and passage pairs exist for 150 queries",
+   "Generation and retrieval are separate components"
+  ],
+  "options": [
+   {
+    "id": "a",
+    "text": "Evaluate retrieval and generation separately: measure recall at k on the labelled pairs, then judge answers given the correct passages, to localise whether retrieval or generation fails.",
+    "credit": 1
+   },
+   {
+    "id": "b",
+    "text": "Swap the model and see if answers improve.",
+    "credit": 0.5
+   },
+   {
+    "id": "c",
+    "text": "Rewrite the prompt several times.",
+    "credit": 0
+   },
+   {
+    "id": "d",
+    "text": "Collect more user feedback before doing anything.",
+    "credit": 0
+   }
+  ],
+  "correct": "a",
+  "rationales": [
+   {
+    "id": "r1",
+    "text": "Component-level evaluation localises faults.",
+    "valid": true
+   },
+   {
+    "id": "r2",
+    "text": "End-to-end accuracy alone shows where the fault is.",
+    "valid": false
+   },
+   {
+    "id": "r3",
+    "text": "Providing the gold passage to the generator isolates generation quality.",
+    "valid": true
+   },
+   {
+    "id": "r4",
+    "text": "Prompt rewriting is the quickest way to find a retrieval fault.",
+    "valid": false
+   }
+  ],
+  "explanation": "Separating retrieval metrics from generation quality identifies the failing stage, avoiding costly guesswork.",
+  "model_answer": "Compute recall and ranking metrics on labelled pairs, run the generator with gold passages to test its faithfulness, compare results, then fix the weaker component.",
+  "rubric": [
+   {
+    "criterion": "Separates retrieval and generation evaluation",
+    "points": 3
+   },
+   {
+    "criterion": "Uses labelled data",
+    "points": 1
+   },
+   {
+    "criterion": "Avoids guess-and-swap",
+    "points": 1
+   }
+  ],
+  "sourceCaseId": null,
+  "status": "draft"
+ }
+]
