@@ -11,6 +11,7 @@ Everything below is run by CI (`.github/workflows/ci.yml` and `deploy.yml`). The
 | `npm run build` | Validate, build graph summary, Astro build, Pagefind index, internal link check under the base path. |
 | `npm run test:e2e` | Playwright against `dist/` served by `scripts/serve-dist.mjs` under the real base path. |
 | `npm run lhci` | Lighthouse CI budgets on sampled routes (mobile emulation). |
+| `npm run audit` | `npm audit --omit=dev --audit-level=high` on shipped dependencies (blocking in CI). The full audit also runs, informationally: at the time of writing its only finding was `basic-ftp` in the Lighthouse CI tooling chain, which is never shipped. |
 | `npm run check:links` | External link probe, writes `reports/link-report.json`. Warnings only. |
 | `npm run scan:secrets` / `scan:history` | Pattern scan of the working tree or the full git history. Also runs as a pre-commit hook. |
 

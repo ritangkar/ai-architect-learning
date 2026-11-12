@@ -39,7 +39,8 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
   const order = useMemo(() => seededShuffle((q.options ?? []).map((o) => o.id), `${seed}|${q.id}`), [q.id, seed]);
   const options = order.map((id) => q.options!.find((o) => o.id === id)!).filter(Boolean);
   const multi = q.type === 'mcq' && Array.isArray(q.correct);
-  const toggle = (arr: string[], set: (a: string[]) => void, id: string) => set(arr.includes(id) ? arr.filter((x) => x !== id) : [...arr, id]);
+  // functional updates: rapid successive input must never lose a click
+  const toggle = (set: (f: (a: string[]) => string[]) => void, id: string) => set((arr) => (arr.includes(id) ? arr.filter((x) => x !== id) : [...arr, id]));
   const response = (): any => {
     switch (q.type) {
       case 'mcq': return { picked };
@@ -86,7 +87,7 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
               const good = q.type === 'scenario' ? o.id === q.correct : correctSet.has(o.id);
               return (
                 <label key={o.id} class={choiceClass(o.id, good, isPicked)}>
-                  <input type={multi ? 'checkbox' : 'radio'} name={`opt-${q.id}`} checked={isPicked} onChange={() => (multi ? toggle(picked, setPicked, o.id) : setPicked([o.id]))} />
+                  <input type={multi ? 'checkbox' : 'radio'} name={`opt-${q.id}`} checked={isPicked} onChange={() => (multi ? toggle(setPicked, o.id) : setPicked([o.id]))} />
                   <span>{o.text}{done && good ? <strong> (best answer)</strong> : null}{done && isPicked && !good ? <strong> (not the best answer)</strong> : null}</span>
                 </label>
               );
@@ -103,7 +104,7 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
               const isPicked = rats.includes(r.id);
               return (
                 <label key={r.id} class={`choice ${isPicked ? 'picked' : ''} ${done && r.valid ? 'correct' : ''} ${done && isPicked && !r.valid ? 'wrong' : ''}`}>
-                  <input type="checkbox" checked={isPicked} onChange={() => toggle(rats, setRats, r.id)} />
+                  <input type="checkbox" checked={isPicked} onChange={() => toggle(setRats, r.id)} />
                   <span>{r.text}{done ? (r.valid ? <strong> (sound reason)</strong> : <strong> (weak or wrong reason)</strong>) : null}</span>
                 </label>
               );
@@ -132,7 +133,7 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
                   {q.criteria!.map((c) => (
                     <td key={c.id}>
                       <label class="visually-hidden" for={`m-${q.id}-${o.id}-${c.id}`}>{o.text} on {c.name}</label>
-                      <select id={`m-${q.id}-${o.id}-${c.id}`} disabled={done} value={matrix[o.id]?.[c.id] ?? ''} onChange={(e) => setMatrix({ ...matrix, [o.id]: { ...(matrix[o.id] ?? {}), [c.id]: Number((e.target as HTMLSelectElement).value) } })}>
+                      <select id={`m-${q.id}-${o.id}-${c.id}`} disabled={done} value={matrix[o.id]?.[c.id] ?? ''} onChange={(e) => { const v = Number((e.target as HTMLSelectElement).value); setMatrix((m) => ({ ...m, [o.id]: { ...(m[o.id] ?? {}), [c.id]: v } })); }}>
                         <option value="">–</option>{[1, 2, 3, 4, 5].map((n) => <option value={n} key={n}>{n}</option>)}
                       </select>
                       {done ? <span class="small muted"> model: {q.model_scores?.[o.id]?.[c.id]}</span> : null}
@@ -155,7 +156,7 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
                 const isPicked = marked.includes(c.id);
                 return (
                   <label key={c.id} class={`choice ${isPicked ? 'picked' : ''} ${done && c.flaw ? 'correct' : ''} ${done && isPicked && !c.flaw ? 'wrong' : ''}`}>
-                    <input type="checkbox" checked={isPicked} onChange={() => toggle(marked, setMarked, c.id)} />
+                    <input type="checkbox" checked={isPicked} onChange={() => toggle(setMarked, c.id)} />
                     <span>{c.text}{done ? <strong>{c.flaw ? ' (real flaw)' : ' (not a flaw)'}</strong> : null}{done && c.explanation ? <span class="muted small"> {c.explanation}</span> : null}</span>
                   </label>
                 );
@@ -192,7 +193,7 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
           {q.model_answer && q.type !== 'card' ? <details open class="acc"><summary>Model answer</summary><div style="color:var(--text)"><p>{q.model_answer}</p></div></details> : null}
           {q.type === 'scenario' && q.rubric?.length && free.trim() ? (
             <fieldset style="border:0;padding:0;margin:8px 0 0"><legend style="color:var(--text)"><strong>Self-score your justification</strong> against the rubric (not machine-graded; not counted in mastery):</legend>
-              {q.rubric.map((r) => <label class="choice" key={r.criterion} style="color:var(--text)"><input type="checkbox" checked={rubricChecked.includes(r.criterion)} onChange={() => toggle(rubricChecked, setRubricChecked, r.criterion)} />{r.criterion} ({r.points} pt)</label>)}
+              {q.rubric.map((r) => <label class="choice" key={r.criterion} style="color:var(--text)"><input type="checkbox" checked={rubricChecked.includes(r.criterion)} onChange={() => toggle(setRubricChecked, r.criterion)} />{r.criterion} ({r.points} pt)</label>)}
               <p style="color:var(--text)" class="small">Self-score: {rubricChecked.reduce((s, c) => s + (q.rubric!.find((r) => r.criterion === c)?.points ?? 0), 0)} of {q.rubric.reduce((s, r) => s + r.points, 0)} points.</p>
             </fieldset>
           ) : null}

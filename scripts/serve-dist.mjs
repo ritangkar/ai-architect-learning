@@ -2,6 +2,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { resolveSite } from './site-config.mjs';
 
 const { base } = resolveSite();
@@ -14,8 +15,12 @@ const server = http.createServer((req, res) => {
   const u = new URL(req.url ?? '/', 'http://x');
   let p = decodeURIComponent(u.pathname);
   const send = (file, status = 200) => {
-    res.writeHead(status, { 'content-type': types[path.extname(file)] ?? 'application/octet-stream', 'cache-control': 'no-cache' });
-    fs.createReadStream(file).pipe(res);
+    const type = types[path.extname(file)] ?? 'application/octet-stream';
+    // GitHub Pages compresses text assets; do the same so local measurements (Lighthouse) are realistic.
+    const gz = /gzip/.test(String(req.headers['accept-encoding'] ?? '')) && /^(text\/|application\/json|image\/svg|text\/javascript)/.test(type);
+    res.writeHead(status, { 'content-type': type, 'cache-control': 'no-cache', ...(gz ? { 'content-encoding': 'gzip', vary: 'accept-encoding' } : {}) });
+    const rs = fs.createReadStream(file);
+    gz ? rs.pipe(zlib.createGzip({ level: 6 })).pipe(res) : rs.pipe(res);
   };
   const notFound = () => send(path.join(root, '404.html'), 404);
   if (prefix && !p.startsWith(prefix + '/') && p !== prefix) return notFound();

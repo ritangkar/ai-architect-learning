@@ -25,6 +25,9 @@ const patterns = (t.pat ?? []);
 const ver = c.sapVerification[id];
 const verifySrc = [...new Set([...(lesson?.frontmatter.sources ?? []), ...cases.flatMap((k) => k.sources)])].filter((s) => c.sources.find((x) => x.id === s)?.verify);
 const cards = c.cards.filter((k) => k.topicId === id);
+const nRel = t.pre.length + c.topics.filter((x) => x.pre.includes(id)).length;
+const topMobile = 900 + 55 * nRel;
+const topDesktop = 500 + 30 * nRel;
 const slots = t.res.map(([key, focus]) => ({ key, focus, src: c.resourceSources[key] ?? null }));
 const cleanDomain = (h: string) => (/^[a-z0-9.-]+\.[a-z]{2,}(\/[\w./-]*)?$/i.test(h) ? 'https://' + h : null);
 ---
@@ -46,7 +49,7 @@ const cleanDomain = (h: string) => (/^[a-z0-9.-]+\.[a-z]{2,}(\/[\w./-]*)?$/i.tes
 
   <section aria-labelledby="obj"><h2 id="obj">Objectives</h2><ul>{t.obj.map((o) => <li>{o}</li>)}</ul></section>
 
-  <TopicStudy client:only="preact" topicId={id} part="top" />
+  <div class="slot" style={`--m:${topMobile}px;--d:${topDesktop}px`}><TopicStudy client:only="preact" topicId={id} part="top" /></div>
 
   <section id="lesson-root" data-depth="standard" aria-labelledby="lesson-h">
     <h2 id="lesson-h">Lesson</h2>
@@ -90,7 +93,7 @@ const cleanDomain = (h: string) => (/^[a-z0-9.-]+\.[a-z]{2,}(\/[\w./-]*)?$/i.tes
     )}
   </section>
 
-  <TopicStudy client:only="preact" topicId={id} part="bottom" />
+  <div class="slot" style="--m:500px;--d:370px"><TopicStudy client:only="preact" topicId={id} part="bottom" /></div>
 
   <section aria-labelledby="rel-h">
     <h2 id="rel-h">Related cases and patterns</h2>

@@ -7,7 +7,7 @@ import { resolveSite } from './site-config.mjs';
 const { base } = resolveSite();
 const port = 4399;
 const root = `http://localhost:${port}${base === '/' ? '' : base}/`;
-const routes = ['', 'curriculum/', 'topic/T1.2.1/', 'case/CS-001/', 'cases/', 'sources/', 'pathway/', 'settings/'];
+const routes = (process.env.LH_ROUTES ?? ',curriculum/,topic/T1.2.1/,case/CS-001/,cases/,sources/,pathway/,settings/').split(',');
 const config = {
   ci: {
     collect: { url: routes.map((r) => root + r), numberOfRuns: 1, settings: { preset: 'desktop', chromeFlags: '--no-sandbox --headless=new', formFactor: 'mobile', screenEmulation: { mobile: true, width: 360, height: 740, deviceScaleFactor: 2, disabled: false }, throttlingMethod: 'simulate', throttling: { rttMs: 150, throughputKbps: 1638, cpuSlowdownMultiplier: 4 } } },

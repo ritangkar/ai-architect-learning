@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { url } from '../lib/url';
+import { url, dataUrl } from '../lib/url';
 import { getContent } from '../lib/content/site';
 interface Props { title: string; description?: string; narrow?: boolean; current?: string; noindex?: boolean }
 const { title, description = 'Architect Lab: a local-first learning portal for enterprise AI solution architects.', narrow = false, current = '' } = Astro.props;
@@ -20,6 +20,7 @@ const pageTitle = title === c.site.siteName ? title : `${title} | ${c.site.siteN
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="referrer" content="no-referrer" />
+    <link rel="preload" href={dataUrl('core')} as="fetch" crossorigin="anonymous" />
     <link rel="icon" href={url('icons/icon.svg')} type="image/svg+xml" />
     <script is:inline>
       try {

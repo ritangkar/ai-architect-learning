@@ -64,7 +64,7 @@ pre code { background: none; padding: 0; }
 .nav-main a:hover, .nav-util a:hover { background: var(--surface-2); color: var(--text); }
 .nav-main a[aria-current='page'], .nav-util a[aria-current='page'], .bottom-bar a[aria-current='page'] { color: var(--accent); background: var(--accent-soft); }
 .nav-util { display: flex; margin-left: auto; gap: var(--s1); }
-main { flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: var(--s4) var(--s4) calc(var(--s8) + var(--s6)); }
+main { flex: 1; min-height: 100vh; width: 100%; max-width: 1200px; margin: 0 auto; padding: var(--s4) var(--s4) calc(var(--s8) + var(--s6)); }
 main.narrow { max-width: 860px; }
 .site-footer { border-top: 1px solid var(--border); padding: var(--s4); color: var(--text-muted); font-size: .85rem; text-align: center; margin-bottom: 72px; }
 .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; background: var(--surface); border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(6, 1fr); }
@@ -141,3 +141,7 @@ details.acc { border: 1px solid var(--border); border-radius: var(--radius); bac
 .field select, .field input[type='text'], .field input[type='search'], .field input[type='number'] { width: 100%; max-width: 100%; min-width: 0; }
 .filters .field { flex: 1 1 180px; max-width: 100%; }
 select { text-overflow: ellipsis; }
+
+/* Space reserved for client-rendered islands so late hydration does not shift the static content (CLS). Heights are calibrated to the rendered islands. */
+.slot { min-height: var(--m, 0); }
+@media (min-width: 900px) { .slot { min-height: var(--d, var(--m, 0)); } }

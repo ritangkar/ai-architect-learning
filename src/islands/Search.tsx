@@ -6,22 +6,30 @@ export default function Search() {
   const [q, setQ] = useState('');
   const [type, setType] = useState('');
   const [pillar, setPillar] = useState('');
+  const [industry, setIndustry] = useState('');
+  const [industries, setIndustries] = useState<string[]>([]);
   const [hits, setHits] = useState<Hit[] | null>(null);
   const [err, setErr] = useState('');
   const pf = useRef<any>(null);
   const input = useRef<HTMLInputElement>(null);
+  const load = async () => {
+    if (!pf.current) {
+      pf.current = await import(/* @vite-ignore */ `${BASE}pagefind/pagefind.js`);
+      await pf.current.options({ basePath: `${BASE}pagefind/` });
+    }
+    return pf.current;
+  };
+  useEffect(() => { load().then(async (p) => setIndustries(Object.keys((await p.filters()).industry ?? {}).sort())).catch(() => {}); }, []);
   useEffect(() => { input.current?.focus(); const p = new URLSearchParams(location.search).get('q'); if (p) setQ(p); }, []);
   useEffect(() => {
     let alive = true;
     (async () => {
       if (!q.trim()) { setHits(null); return; }
       try {
-        if (!pf.current) {
-          pf.current = await import(/* @vite-ignore */ `${BASE}pagefind/pagefind.js`);
-          await pf.current.options({ basePath: `${BASE}pagefind/` });
-        }
+        await load();
         const filters: Record<string, string> = {};
         if (pillar) filters.pillar = pillar;
+        if (industry) filters.industry = industry;
         const res = await pf.current.search(q, { filters });
         const data: Hit[] = await Promise.all(res.results.slice(0, 20).map(async (r: any) => { const d = await r.data(); return { url: d.url, title: d.meta?.title ?? d.url, excerpt: d.excerpt, type: d.meta?.type }; }));
         if (alive) { setHits(type ? data.filter((h) => (h.type ?? '').toLowerCase() === type) : data); setErr(''); }
@@ -30,7 +38,7 @@ export default function Search() {
       }
     })();
     return () => { alive = false; };
-  }, [q, type, pillar]);
+  }, [q, type, pillar, industry]);
   return (
     <div class="stack">
       <h1>Search</h1>
@@ -38,6 +46,7 @@ export default function Search() {
       <form role="search" class="filters" onSubmit={(e) => e.preventDefault()}>
         <div class="field"><label for="sq">Search</label><input id="sq" ref={input} type="search" value={q} onInput={(e) => setQ((e.target as HTMLInputElement).value)} style="min-width:min(100%,320px)" /></div>
         <div class="field"><label for="st">Type</label><select id="st" value={type} onChange={(e) => setType((e.target as HTMLSelectElement).value)}><option value="">All</option><option value="topic">Topic</option><option value="case">Case</option><option value="pattern">Pattern</option></select></div>
+        <div class="field"><label for="si">Industry (cases)</label><select id="si" value={industry} onChange={(e) => setIndustry((e.target as HTMLSelectElement).value)}><option value="">All</option>{industries.map((i) => <option key={i}>{i}</option>)}</select></div>
         <div class="field"><label for="sp">Pillar</label><select id="sp" value={pillar} onChange={(e) => setPillar((e.target as HTMLSelectElement).value)}><option value="">All</option><option value="P1">P1</option><option value="P2">P2</option><option value="P3">P3</option></select></div>
       </form>
       {err ? <p class="callout warn" role="status">{err}</p> : null}

@@ -41,7 +41,6 @@ export default function CaseLibrary() {
   };
   return (
     <div class="stack">
-      <h1>Case library</h1>
       <div class="card">
         <p><strong>{core.counts.cases} cases catalogued.</strong> By tier: {tiers.map(([t, n]) => `Tier ${t}: ${n}`).join(' · ')}.</p>
         {core.catalogNote ? <p class="callout warn" role="note"><span class="prov U">note</span> {core.catalogNote}</p> : null}

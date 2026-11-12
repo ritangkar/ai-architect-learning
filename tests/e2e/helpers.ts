@@ -66,7 +66,7 @@ export function collectProblems(page: Page): string[] {
   const problems: string[] = [];
   page.on('console', (m) => { if (['error'].includes(m.type())) problems.push('console error: ' + m.text()); if (/Content Security Policy|CSP/i.test(m.text())) problems.push('CSP: ' + m.text()); });
   page.on('pageerror', (e) => problems.push('pageerror: ' + e.message));
-  page.on('requestfailed', (r) => problems.push('request failed: ' + r.url()));
+  page.on('requestfailed', (r) => { if (!/ERR_ABORTED/.test(r.failure()?.errorText ?? '')) problems.push('request failed: ' + r.url() + ' ' + r.failure()?.errorText); }); // aborted-by-navigation is normal
   return problems;
 }
 export async function blockExternal(ctx: BrowserContext, base: string) {

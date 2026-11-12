@@ -64,7 +64,7 @@ export default function Assessment() {
           {comps.map(([id, name]) => (
             <fieldset key={id} class="card" style="margin:0">
               <legend><strong>{id}</strong> {name}</legend>
-              <div class="row">{[1, 2, 3, 4, 5].map((n) => <label key={n} class={`choice ${ratings[id] === n ? 'picked' : ''}`} style="min-width:56px;justify-content:center"><input type="radio" name={`self-${id}`} checked={ratings[id] === n} onChange={() => setRatings({ ...ratings, [id]: n })} required />{n}</label>)}</div>
+              <div class="row">{[1, 2, 3, 4, 5].map((n) => <label key={n} class={`choice ${ratings[id] === n ? 'picked' : ''}`} style="min-width:56px;justify-content:center"><input type="radio" name={`self-${id}`} checked={ratings[id] === n} onChange={() => setRatings((r) => ({ ...r, [id]: n }))} required />{n}</label>)}</div>
             </fieldset>
           ))}
           <div class="row"><button class="btn primary" type="submit" disabled={!all}>Continue to the questions</button>

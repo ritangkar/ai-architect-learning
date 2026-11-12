@@ -19,6 +19,12 @@ browser:  islands (Preact) -> src/lib/app/state.ts (AppState) -> src/lib/engine 
 * **App state** (`src/lib/app/state.ts`): one singleton that loads core data and storage, exposes actions (record attempt, review card, case exercise, import) and recomputes the learner state after each change. If a write fails it switches to session-only mode and raises the banner.
 * **Pages and islands**: stateless content (topics, cases, patterns, sources, about) is rendered at build time; stateful views are client-only islands. Every internal URL comes from `src/lib/url.ts`.
 
+## Performance notes
+
+* Core data (`/data/core.json`, about 100 KB raw) is preloaded from every page's `<head>` so the fetch starts in parallel with the island scripts.
+* Client-rendered islands sit in `.slot` wrappers with a reserved `min-height` (calibrated to the rendered height; topic pages derive it from the number of prerequisites and dependants) and `main` has `min-height: 100vh`, so late hydration does not shift static content or the footer. This took cumulative layout shift from 0.15 to 0.72 down to 0.00 to 0.02 on the measured routes.
+* `scripts/serve-dist.mjs` gzips text responses like GitHub Pages does, so local Lighthouse numbers are realistic.
+
 ## Build and deploy
 
 `npm run build` = validate content, write a graph summary, `astro build`, Pagefind index, internal link check. `deploy.yml` builds, tests and publishes `dist/` to GitHub Pages with minimal permissions. See `docs/DEPLOYMENT_GUIDE.md`.

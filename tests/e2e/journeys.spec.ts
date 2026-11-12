@@ -231,6 +231,46 @@ test.describe('UJ-07 knowledge map, UJ-08 search and filter', () => {
   });
 });
 
+test.describe('case provenance (F06, F19)', () => {
+  test('AC-F06-1/2: V, I and U are distinct by text, symbol and colour; every V fact cites a resolvable source', async ({ page }) => {
+    await page.goto('case/CS-001/');
+    const v = page.locator('#facts .callout.V');
+    expect(await v.count()).toBeGreaterThanOrEqual(8);
+    for (const el of await v.all()) {
+      await expect(el).toContainText('V Verified');
+      const chip = el.locator('a.src-chip');
+      await expect(chip).toHaveAttribute('href', /sources\/#SRC-\d{3}$/);
+    }
+    const colours = await page.evaluate(() => ['V', 'I', 'U'].map((t) => getComputedStyle(document.querySelector(`.prov.${t}`)!).color));
+    expect(new Set(colours).size).toBe(3);
+    await expect(page.locator('#interpretations .callout.I .prov.I').first()).toContainText('I Interpretation');
+    await expect(page.locator('#unknown .callout.U .prov.U').first()).toContainText('U Unknown');
+    for (const sym of ['✓', '◆', '?']) await expect(page.locator('.prov', { hasText: sym }).first()).toBeVisible();
+    // the source anchors resolve on /sources/
+    const ids = await v.locator('a.src-chip').evaluateAll((as) => [...new Set(as.map((a) => a.getAttribute('href')!.split('#')[1]))]);
+    await page.goto('sources/');
+    for (const id of ids) await expect(page.locator(`tr#${id}`)).toHaveCount(1);
+  });
+  test('only sections present in the data render; tier C and provisional cases say so; verify markers show', async ({ page }) => {
+    await page.goto('case/CS-008/');
+    await expect(page.getByText(/Tier C: catalogue stub/)).toBeVisible();
+    await expect(page.locator('#decisions')).toHaveCount(0); // no decisions in the data, so no decisions section
+    await page.goto('case/CS-011/');
+    await expect(page.getByText(/provisional/i).first()).toBeVisible();
+    const core = await (await page.request.get('data/core.json')).json();
+    const flagged = core.cases.filter((c: any) => c.verify);
+    expect(flagged.length).toBeGreaterThan(0);
+    await page.goto(`case/${flagged[0].id}/`);
+    await expect(page.getByText('Verify before use.').first()).toBeVisible(); // AC-F19-1
+  });
+  test('decisions table shows a basis badge and source chip for each decision', async ({ page }) => {
+    await page.goto('case/CS-001/');
+    const rows = page.locator('#decisions tbody tr');
+    expect(await rows.count()).toBeGreaterThanOrEqual(3);
+    for (const r of await rows.all()) { await expect(r.locator('td[data-label="Basis"] .prov')).toBeVisible(); await expect(r.locator('a.src-chip')).toBeVisible(); }
+  });
+});
+
 test.describe('UJ-10 freshness', () => {
   test('SAP topics and flagged cases are listed with last-verified state', async ({ page }) => {
     await page.goto('freshness/');
