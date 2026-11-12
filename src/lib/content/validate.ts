@@ -152,6 +152,8 @@ export function validateContent(c: Content): Issue[] {
     if (/\]\(\/(?!\/)/.test(l.body) || /href="\/(?!\/)/.test(l.body)) out.push(err(f, 'Lesson contains an absolute "/" link; internal links must go through the base-aware helper (use topic:T1.1.1 style links)', 'body'));
     if (t?.sap_status && !c.sapVerification[t.id]) out.push(err(f, 'SAP topic with a lesson needs an entry in curriculum/sap_verification.json (status note date and last-verified)'));
     if (!/^@@ \w+$/m.test(l.body)) out.push(err(f, 'Lesson body has no @@ section markers', 'body'));
+    for (const m of l.body.matchAll(/^@@ (\w+)\s*$/gm)) if (!['summary', 'keyterms', 'why', 'lesson', 'example', 'deep'].includes(m[1])) out.push(err(f, `Unknown lesson block @@ ${m[1]}`, 'body'));
+    if (!/^@@ summary\s*$/m.test(l.body)) out.push(err(f, 'Lesson needs an @@ summary block (shown at every depth)', 'body'));
   }
   for (const [id, v] of Object.entries(c.sapVerification)) if (!topicById.get(id)?.sap_status) out.push(warn('curriculum/sap_verification.json', `${id} has an entry but no sap_status in topics.json`));
   for (const t of c.topics) if (t.sap_status && !c.sapVerification[t.id]) out.push(err(`topic ${t.id}`, 'SAP topic without status/last-verified entry in sap_verification.json'));

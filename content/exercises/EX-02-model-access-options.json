@@ -1,0 +1,77 @@
+{
+ "id": "EX-02",
+ "kind": "options_analysis",
+ "title": "Choose how a client accesses language models",
+ "summary": "Compare five options against weighted criteria and export an ADR.",
+ "topics": [
+  "T1.6.3",
+  "T1.4.2"
+ ],
+ "competencies": [
+  "C12",
+  "C16"
+ ],
+ "est_minutes": 45,
+ "status": "draft",
+ "scenario": "A regional insurer plans an internal assistant for claims handlers. Data is sensitive but not subject to residency restrictions that rule out cloud use. The platform team has three engineers. Load peaks at month end. Constructed for teaching; not a real client.",
+ "options": [
+  {
+   "id": "o1",
+   "name": "Hosted frontier model API",
+   "description": "Call a provider's API directly with managed keys."
+  },
+  {
+   "id": "o2",
+   "name": "Managed model service in the insurer's existing cloud",
+   "description": "Use the cloud provider's model-hosting service within the existing tenancy and identity setup."
+  },
+  {
+   "id": "o3",
+   "name": "Self-hosted open-weight model",
+   "description": "Run a model on the insurer's own GPU infrastructure."
+  },
+  {
+   "id": "o4",
+   "name": "Gateway with routing across several models",
+   "description": "A thin internal gateway sends each request to a small or large model, or a second provider, by task."
+  },
+  {
+   "id": "o5",
+   "name": "No generative model: improved search and templates",
+   "description": "Better document search plus template-based drafting, no language model generation."
+  }
+ ],
+ "criteria": [
+  {
+   "id": "c1",
+   "name": "Quality on claims tasks",
+   "weight": 5
+  },
+  {
+   "id": "c2",
+   "name": "Data handling and privacy fit",
+   "weight": 5
+  },
+  {
+   "id": "c3",
+   "name": "Operations burden for a small team",
+   "weight": 4
+  },
+  {
+   "id": "c4",
+   "name": "Cost at expected volume",
+   "weight": 3
+  },
+  {
+   "id": "c5",
+   "name": "Exit cost and lock-in",
+   "weight": 2
+  },
+  {
+   "id": "c6",
+   "name": "Time to first value",
+   "weight": 3
+  }
+ ],
+ "guidance": "There is no single right answer. Strong answers (1) change at least two weights and check whether the winner changes, (2) state what evidence on the insurer's own tasks would settle the quality score, (3) name the trade-off they accept, and (4) include the simple option honestly. Be suspicious of scores that are all 4s and 5s."
+}

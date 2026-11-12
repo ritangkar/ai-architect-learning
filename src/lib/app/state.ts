@@ -197,7 +197,7 @@ export class AppState {
   async setPending(run: AssessmentRun, itemId: string | undefined) { if (run.pendingItemId === itemId) return; await this.updateProfile((p) => { const r = p.assessmentRuns.find((x) => x.id === run.id); if (r) r.pendingItemId = itemId; }); }
   async answerInitial(run: AssessmentRun, q: Question, response: any, o: { confidence?: number; timeMs: number; seed: string; optionOrder: string[] }) {
     const res = await this.answerQuestion(q, response, { ...o, context: 'initial', runId: run.id });
-    await this.updateProfile((p) => { const r = p.assessmentRuns.find((x) => x.id === run.id); if (r) { r.attemptIds.push(res.attempt.id); r.pendingItemId = undefined; } });
+    await this.updateProfile((p) => { const r = p.assessmentRuns.find((x) => x.id === run.id); if (r) r.attemptIds.push(res.attempt.id); });
     return res;
   }
   async completeRun(run: AssessmentRun) { await this.updateProfile((p) => { const r = p.assessmentRuns.find((x) => x.id === run.id); if (r) { r.status = 'completed'; r.completedAt = this.now(); r.pendingItemId = undefined; } }); await this.ensureTopicCards([]); }

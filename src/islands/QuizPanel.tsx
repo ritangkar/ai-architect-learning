@@ -55,9 +55,13 @@ export function QuizPanel({ q, seed, heading, onSubmit, onNext, nextLabel = 'Nex
     setBusy(true);
     const r = response();
     const score = scoreResponse(q as any, r);
-    setResult({ score });
-    await onSubmit({ response: r, score, confidence: conf, timeMs: Date.now() - started.current, optionOrder: order });
-    setBusy(false);
+    try {
+      // feedback appears only after the attempt is recorded, so "Next" can never race the write
+      await onSubmit({ response: r, score, confidence: conf, timeMs: Date.now() - started.current, optionOrder: order });
+    } finally {
+      setResult({ score });
+      setBusy(false);
+    }
   };
   const done = !!result;
   const choiceClass = (id: string, correct: boolean, isPicked: boolean) => `choice ${isPicked ? 'picked' : ''} ${done && correct ? 'correct' : ''} ${done && isPicked && !correct ? 'wrong' : ''}`;

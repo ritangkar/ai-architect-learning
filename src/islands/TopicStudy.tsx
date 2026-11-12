@@ -32,7 +32,7 @@ export default function TopicStudy({ topicId, part }: { topicId: string; part: '
   const qs = app.questions.filter((q) => q.topics.includes(topicId));
   const unmet = t.pre.filter((p) => !prereqMet(L, p));
   const resume = app.profile.resume;
-  const returnCase = resume && core.cases.find((c) => c.id === resume.caseId && c.prereq_topics.includes(topicId));
+  const returnCase = resume && core.cases.find((c) => c.id === resume.caseId && (c.prereq_topics.includes(topicId) || resume.viaTopic === topicId));
   const read = app.lessonViewedCount(topicId);
   const choose = async (d: Depth) => { setDepth(d); await app.setDepthChoice(topicId, d); };
   const q = quiz ? app.q(quiz.ids[quiz.i]) : undefined;

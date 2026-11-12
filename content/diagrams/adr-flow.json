@@ -1,0 +1,54 @@
+{
+ "id": "adr-flow",
+ "title": "From options to a recorded decision",
+ "description": "Steps from context through options analysis and sensitivity check to an architecture decision record.",
+ "direction": "LR",
+ "nodes": [
+  {
+   "id": "c",
+   "label": "Context and decision"
+  },
+  {
+   "id": "o",
+   "label": "4 to 5 viable options"
+  },
+  {
+   "id": "w",
+   "label": "Weighted criteria"
+  },
+  {
+   "id": "s",
+   "label": "Score and total"
+  },
+  {
+   "id": "sens",
+   "label": "Sensitivity check"
+  },
+  {
+   "id": "adr",
+   "label": "Write the ADR"
+  }
+ ],
+ "edges": [
+  {
+   "from": "c",
+   "to": "o"
+  },
+  {
+   "from": "o",
+   "to": "w"
+  },
+  {
+   "from": "w",
+   "to": "s"
+  },
+  {
+   "from": "s",
+   "to": "sens"
+  },
+  {
+   "from": "sens",
+   "to": "adr"
+  }
+ ]
+}

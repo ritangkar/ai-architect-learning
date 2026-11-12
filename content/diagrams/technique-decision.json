@@ -1,0 +1,76 @@
+{
+ "id": "technique-decision",
+ "title": "RAG, fine-tuning or long context",
+ "description": "Decision flow for choosing how to give a model knowledge or behaviour.",
+ "direction": "LR",
+ "nodes": [
+  {
+   "id": "n",
+   "label": "Need to add knowledge or behaviour"
+  },
+  {
+   "id": "k",
+   "label": "Facts change or must be cited?"
+  },
+  {
+   "id": "rag",
+   "label": "Use retrieval (RAG)"
+  },
+  {
+   "id": "b",
+   "label": "Need consistent format or style?"
+  },
+  {
+   "id": "ft",
+   "label": "Consider fine-tuning"
+  },
+  {
+   "id": "s",
+   "label": "Bounded one-off material?"
+  },
+  {
+   "id": "lc",
+   "label": "Long context"
+  },
+  {
+   "id": "p",
+   "label": "Prompting first"
+  }
+ ],
+ "edges": [
+  {
+   "from": "n",
+   "to": "k"
+  },
+  {
+   "from": "k",
+   "to": "rag",
+   "label": "yes"
+  },
+  {
+   "from": "k",
+   "to": "b",
+   "label": "no"
+  },
+  {
+   "from": "b",
+   "to": "ft",
+   "label": "yes"
+  },
+  {
+   "from": "b",
+   "to": "s",
+   "label": "no"
+  },
+  {
+   "from": "s",
+   "to": "lc",
+   "label": "yes"
+  },
+  {
+   "from": "s",
+   "to": "p",
+   "label": "no"
+  }
+ ]
+}

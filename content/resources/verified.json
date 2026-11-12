@@ -1,0 +1,21 @@
+[
+ {
+  "id": "RES-ANTH-BEA",
+  "title": "Building effective AI agents (Anthropic Engineering)",
+  "sourceKey": "ANTH_AGENTS",
+  "url": "https://www.anthropic.com/engineering/building-effective-agents",
+  "topics": [
+   "T1.3.1",
+   "T1.3.2",
+   "T1.3.3"
+  ],
+  "kind": "article",
+  "whyUseful": "A builder-authored article that separates workflows (fixed code paths) from agents (model-directed loops) and describes common patterns such as prompt chaining, routing, parallelisation and orchestrator-workers.",
+  "focus": "The sections on when to use agents, when to use frameworks, and the workflow patterns; skip the appendices on first read.",
+  "objectiveRelation": "Supports choosing between a workflow and an agent and justifying framework use.",
+  "cost": "free",
+  "language": "English",
+  "lastChecked": "2026-11-12",
+  "status": "verified"
+ }
+]

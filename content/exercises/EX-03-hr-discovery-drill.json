@@ -1,0 +1,102 @@
+{
+ "id": "EX-03",
+ "kind": "discovery_drill",
+ "title": "Discovery drill: an HR assistant request",
+ "summary": "Write the questions you would ask, then compare with a model list.",
+ "topics": [
+  "T1.6.1"
+ ],
+ "competencies": [
+  "C01"
+ ],
+ "est_minutes": 30,
+ "status": "draft",
+ "scenario": "The head of HR at a multinational says: 'We want an AI chatbot for HR.' You have a first meeting and two weeks for discovery. Constructed for teaching.",
+ "categories": [
+  {
+   "id": "outcome",
+   "name": "Outcome",
+   "hint": "What problem and what measurable result?"
+  },
+  {
+   "id": "process",
+   "name": "Process",
+   "hint": "How is it done today and where does it hurt?"
+  },
+  {
+   "id": "data",
+   "name": "Data",
+   "hint": "Where is the information and who owns it?"
+  },
+  {
+   "id": "risk",
+   "name": "Risk and compliance",
+   "hint": "What is the cost of a wrong answer? Which rules apply?"
+  },
+  {
+   "id": "users",
+   "name": "Users",
+   "hint": "Who will use it and how?"
+  },
+  {
+   "id": "constraints",
+   "name": "Constraints",
+   "hint": "Budget, time, platforms, skills, data location"
+  },
+  {
+   "id": "metrics",
+   "name": "Success metrics",
+   "hint": "How will we know it worked?"
+  }
+ ],
+ "model_questions": [
+  {
+   "category": "outcome",
+   "question": "Which HR tasks or queries do you most want to improve, and what would a good result look like in numbers?"
+  },
+  {
+   "category": "outcome",
+   "question": "Who benefits most: employees, HR staff, managers?"
+  },
+  {
+   "category": "process",
+   "question": "Can you show me the last ten real employee queries and how each was handled?"
+  },
+  {
+   "category": "process",
+   "question": "Where do delays and errors occur today, and how many queries arrive per week by type?"
+  },
+  {
+   "category": "data",
+   "question": "Which documents and systems hold the answers, who owns them and how current are they?"
+  },
+  {
+   "category": "data",
+   "question": "Which of those contain personal or sensitive data, and what are we allowed to use them for?"
+  },
+  {
+   "category": "risk",
+   "question": "What is the worst consequence of a wrong answer in each query type, and who would be accountable?"
+  },
+  {
+   "category": "risk",
+   "question": "Which countries and employee groups are in scope, and what privacy or works-council rules apply?"
+  },
+  {
+   "category": "users",
+   "question": "How do employees ask for help today and what do they trust or distrust about it?"
+  },
+  {
+   "category": "constraints",
+   "question": "What platforms, identity systems and security standards must we use, and what budget and timeline apply?"
+  },
+  {
+   "category": "metrics",
+   "question": "What is the baseline for handling time and satisfaction, and what improvement would justify the investment?"
+  },
+  {
+   "category": "metrics",
+   "question": "How will we collect the measures after launch, and who reviews them?"
+  }
+ ]
+}

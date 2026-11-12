@@ -1,0 +1,58 @@
+{
+ "id": "hybrid-retrieval",
+ "title": "Hybrid retrieval with reranking",
+ "description": "A query runs through lexical and vector search, results are fused, reranked and the best few go to the generator.",
+ "direction": "LR",
+ "nodes": [
+  {
+   "id": "q",
+   "label": "Query"
+  },
+  {
+   "id": "lex",
+   "label": "Lexical search"
+  },
+  {
+   "id": "vec",
+   "label": "Vector search"
+  },
+  {
+   "id": "fuse",
+   "label": "Fuse rankings (RRF)"
+  },
+  {
+   "id": "rr",
+   "label": "Rerank candidates"
+  },
+  {
+   "id": "top",
+   "label": "Top passages to generator"
+  }
+ ],
+ "edges": [
+  {
+   "from": "q",
+   "to": "lex"
+  },
+  {
+   "from": "q",
+   "to": "vec"
+  },
+  {
+   "from": "lex",
+   "to": "fuse"
+  },
+  {
+   "from": "vec",
+   "to": "fuse"
+  },
+  {
+   "from": "fuse",
+   "to": "rr"
+  },
+  {
+   "from": "rr",
+   "to": "top"
+  }
+ ]
+}

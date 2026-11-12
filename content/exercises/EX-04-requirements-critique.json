@@ -1,0 +1,73 @@
+{
+ "id": "EX-04",
+ "kind": "requirements_critique",
+ "title": "Critique draft requirements for a support assistant",
+ "summary": "Spot the defects in five draft requirements.",
+ "topics": [
+  "T1.6.2"
+ ],
+ "competencies": [
+  "C01",
+  "C16"
+ ],
+ "est_minutes": 25,
+ "status": "draft",
+ "scenario": "A draft requirements list for a customer-support assistant has landed on your desk. Each requirement may have zero or more defects. Constructed for teaching.",
+ "defect_types": [
+  {
+   "id": "vague",
+   "name": "Vague or untestable"
+  },
+  {
+   "id": "nothreshold",
+   "name": "No measurable threshold"
+  },
+  {
+   "id": "solution",
+   "name": "Prescribes a solution"
+  },
+  {
+   "id": "missing",
+   "name": "Missing AI-specific behaviour (refusal, citation, fallback)"
+  },
+  {
+   "id": "conflict",
+   "name": "Conflicts with another requirement"
+  }
+ ],
+ "requirements": [
+  {
+   "id": "R1",
+   "text": "The assistant shall be fast and user friendly.",
+   "defects": [
+    "vague",
+    "nothreshold"
+   ]
+  },
+  {
+   "id": "R2",
+   "text": "The assistant shall use a vector database and the largest available language model.",
+   "defects": [
+    "solution"
+   ]
+  },
+  {
+   "id": "R3",
+   "text": "For at least 95% of requests, the first token shall appear within 3 seconds, measured at the 95th percentile over a week.",
+   "defects": []
+  },
+  {
+   "id": "R4",
+   "text": "The assistant shall answer every customer question.",
+   "defects": [
+    "missing",
+    "conflict"
+   ]
+  },
+  {
+   "id": "R5",
+   "text": "All answers shall cite a source document; if no source supports an answer the assistant shall say it cannot answer and offer a human handoff.",
+   "defects": []
+  }
+ ]
+}

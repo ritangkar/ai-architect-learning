@@ -108,7 +108,7 @@ input[type='checkbox'], input[type='radio'] { width: 20px; height: 20px; accent-
 .empty { border: 1px dashed var(--border-strong); border-radius: var(--radius-lg); padding: var(--s5); text-align: center; color: var(--text-muted); background: var(--surface); }
 .bar { height: 10px; background: var(--surface-2); border-radius: 999px; overflow: hidden; border: 1px solid var(--border); } .bar > span { display: block; height: 100%; background: var(--accent); }
 table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: var(--s2) var(--s3); border-bottom: 1px solid var(--border); vertical-align: top; } th { font-size: .85rem; color: var(--text-muted); font-weight: 600; }
-.table-wrap { overflow-x: auto; }
+.table-wrap { overflow-x: auto; position: relative; }
 @media (max-width: 720px) { table.stack-table thead { display: none; } table.stack-table tr { display: block; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: var(--s3); background: var(--surface); } table.stack-table td { display: block; border: 0; padding: var(--s2) var(--s3); } table.stack-table td[data-label]::before { content: attr(data-label) ': '; font-weight: 600; color: var(--text-muted); } }
 details.acc { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); margin-bottom: var(--s2); } details.acc > summary { cursor: pointer; padding: var(--s3) var(--s4); font-weight: 600; min-height: 44px; display: flex; align-items: center; } details.acc > div { padding: 0 var(--s4) var(--s4); }
 .tabs { display: flex; gap: var(--s1); border-bottom: 1px solid var(--border); flex-wrap: wrap; } .tabs button { min-height: 44px; padding: 0 var(--s4); background: none; border: 0; border-bottom: 3px solid transparent; font: inherit; font-weight: 550; color: var(--text-muted); cursor: pointer; } .tabs button[aria-selected='true'] { color: var(--accent); border-bottom-color: var(--accent); }
@@ -123,7 +123,7 @@ details.acc { border: 1px solid var(--border); border-radius: var(--radius); bac
 .reading blockquote { margin: var(--s3) 0; padding: var(--s2) var(--s4); border-left: 4px solid var(--border-strong); color: var(--text-muted); }
 .kv { display: grid; grid-template-columns: max-content 1fr; gap: var(--s1) var(--s4); } .kv dt { color: var(--text-muted); font-weight: 600; } .kv dd { margin: 0; }
 .diagram { margin: var(--s4) 0; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: var(--s3); }
-.diagram-scroll { overflow-x: auto; } .diagram svg { min-width: 560px; display: block; } .diagram figcaption { font-size: .9rem; margin-top: var(--s2); }
+.diagram-scroll { overflow-x: auto; position: relative; } .diagram svg { min-width: 560px; display: block; } .diagram figcaption { font-size: .9rem; margin-top: var(--s2); }
 .diagram .node rect { fill: var(--surface-2); stroke: var(--border-strong); } .diagram .node text { fill: var(--text); font: 13px var(--font-ui); } .diagram .edge { stroke: var(--text-muted); fill: none; stroke-width: 1.5; } .diagram .edge-label { fill: var(--text-muted); font: 11px var(--font-ui); } .diagram marker path { fill: var(--text-muted); }
 .sparkbar { display: grid; grid-template-columns: 3.2rem 1fr auto; gap: var(--s2); align-items: center; font-size: .85rem; }
 .rangebar { position: relative; height: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; } .rangebar .range { position: absolute; top: 0; bottom: 0; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 999px; } .rangebar .pt { position: absolute; top: -3px; width: 4px; height: 16px; background: var(--accent); border-radius: 2px; }
@@ -135,3 +135,9 @@ details.acc { border: 1px solid var(--border); border-radius: var(--radius); bac
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 :root[data-motion='off'] * { animation: none !important; transition: none !important; }
 @media print { .site-header, .bottom-bar, .site-footer, .more-sheet { display: none; } }
+
+/* form fields never exceed their container, even with long option text */
+.field { min-width: 0; }
+.field select, .field input[type='text'], .field input[type='search'], .field input[type='number'] { width: 100%; max-width: 100%; min-width: 0; }
+.filters .field { flex: 1 1 180px; max-width: 100%; }
+select { text-overflow: ellipsis; }

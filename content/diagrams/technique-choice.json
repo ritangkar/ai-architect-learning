@@ -1,0 +1,66 @@
+{
+ "id": "technique-choice",
+ "title": "Choosing a technique for a task",
+ "description": "Decision flow from a task description to rules, predictive machine learning or a generative model, with hybrids at the edges.",
+ "direction": "LR",
+ "nodes": [
+  {
+   "id": "t",
+   "label": "Task to automate"
+  },
+  {
+   "id": "q1",
+   "label": "Logic fully specifiable?"
+  },
+  {
+   "id": "rules",
+   "label": "Rules or code"
+  },
+  {
+   "id": "q2",
+   "label": "Numeric or label target with labelled history?"
+  },
+  {
+   "id": "ml",
+   "label": "Predictive ML"
+  },
+  {
+   "id": "llm",
+   "label": "LLM or generative model"
+  },
+  {
+   "id": "guard",
+   "label": "Validate and review outputs"
+  }
+ ],
+ "edges": [
+  {
+   "from": "t",
+   "to": "q1"
+  },
+  {
+   "from": "q1",
+   "to": "rules",
+   "label": "yes"
+  },
+  {
+   "from": "q1",
+   "to": "q2",
+   "label": "no"
+  },
+  {
+   "from": "q2",
+   "to": "ml",
+   "label": "yes"
+  },
+  {
+   "from": "q2",
+   "to": "llm",
+   "label": "no, language task"
+  },
+  {
+   "from": "llm",
+   "to": "guard"
+  }
+ ]
+}

@@ -65,7 +65,7 @@ export function validateShape(x: any): string | null {
 export async function parseImport(text: string, o: { maxBytes: number; currentVersion?: number }): Promise<ImportResult> {
   const current = o.currentVersion ?? CURRENT_SCHEMA_VERSION;
   const bytes = new TextEncoder().encode(text).length;
-  if (bytes === 0 || !text.trim()) return fail('empty', 'The file is empty.');
+  if (bytes === 0 || !text.trim()) return fail('empty', 'The file is empty. Nothing was changed.');
   if (bytes > o.maxBytes) return fail('too_large', `The file is ${(bytes / 1048576).toFixed(1)} MB; the limit is ${(o.maxBytes / 1048576).toFixed(0)} MB. Nothing was changed.`);
   let obj: any;
   try { obj = JSON.parse(text); } catch (e: any) { return fail('invalid_json', `The file is not valid JSON (it may be truncated or corrupted): ${String(e?.message ?? e).slice(0, 120)}. Nothing was changed.`); }

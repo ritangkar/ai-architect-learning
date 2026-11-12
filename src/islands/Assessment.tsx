@@ -9,16 +9,18 @@ export default function Assessment() {
   const { app, error } = useApp(true);
   const [busy, setBusy] = useState(false);
   const [ratings, setRatings] = useState<Record<string, number>>({});
-  const [held, setHeld] = useState<string | null>(null); // question whose feedback is on screen
+  const [cur, setCur] = useState<string | null>(null); // the question on screen (kept until the learner presses Next)
   const run = app?.activeRun;
 
   useEffect(() => {
-    if (!app || !run || !run.selfDone || held) return;
+    if (!app || !run || !run.selfDone || cur !== null) return;
+    const answered = new Set(app.runAttempts(run).map((a) => a.itemId));
+    const pending = run.pendingItemId && app.q(run.pendingItemId) && !answered.has(run.pendingItemId) ? run.pendingItemId : undefined; // resume at the same question after a refresh
+    if (pending) { setCur(pending); return; }
     const next = app.nextForRun(run);
-    const pending = run.pendingItemId && app.q(run.pendingItemId) && !app.runAttempts(run).some((a) => a.itemId === run.pendingItemId) ? run.pendingItemId : undefined;
-    if (!pending && next.item) app.setPending(run, next.item.id);
-    if (!pending && !next.item) app.completeRun(run).then(() => { location.href = url(`assessment/results/?run=${run.id}`); });
-  }, [app?.version, run?.id, run?.selfDone, run?.pendingItemId, held]);
+    if (next.item) { const id = next.item.id; app.setPending(run, id).then(() => setCur(id)); } // persisted before it is shown, so a refresh resumes here
+    else app.completeRun(run).then(() => { location.href = url(`assessment/results/?run=${run.id}`); });
+  }, [app?.version, run?.id, run?.selfDone, cur]);
 
   if (error) return <ErrorBox error={error} />;
   if (!app) return <Loading what="Loading the assessment" />;
@@ -74,7 +76,7 @@ export default function Assessment() {
 
   const progress = app.nextForRun(run).progress;
   const answered = app.runAttempts(run).length;
-  const currentId = held ?? run.pendingItemId;
+  const currentId = cur;
   const q = currentId ? app.q(currentId) : undefined;
   const covered = Object.values(progress).filter((p) => p.stopped || p.asked >= core.engine.initial_assessment.min_items_per_competency_before_stop).length;
   if (!q) return <Loading what="Preparing the next question" />;
@@ -87,9 +89,9 @@ export default function Assessment() {
         key={q.id}
         q={q}
         seed={run.seed}
-        heading={`Question ${answered + 1} · Section ${section === 'A' ? 'A (concept)' : 'B (scenario)'}`}
-        onSubmit={async (r) => { setHeld(q.id); await app.answerInitial(run as AssessmentRun, q, r.response, { confidence: r.confidence, timeMs: r.timeMs, seed: run.seed, optionOrder: r.optionOrder }); }}
-        onNext={() => setHeld(null)}
+        heading={`Question ${app.runAttempts(run).some((a) => a.itemId === q.id) ? answered : answered + 1} · Section ${section === 'A' ? 'A (concept)' : 'B (scenario)'}`}
+        onSubmit={async (r) => { await app.answerInitial(run as AssessmentRun, q, r.response, { confidence: r.confidence, timeMs: r.timeMs, seed: run.seed, optionOrder: r.optionOrder }); }}
+        onNext={() => setCur(null)}
         nextLabel="Next question"
       />
       <div class="row">

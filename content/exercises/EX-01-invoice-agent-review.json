@@ -1,0 +1,86 @@
+{
+ "id": "EX-01",
+ "kind": "architecture_review",
+ "title": "Review an invoice-processing agent",
+ "summary": "Find the real flaws in a plausible agent design and compare with model findings.",
+ "topics": [
+  "T1.6.4"
+ ],
+ "competencies": [
+  "C17"
+ ],
+ "est_minutes": 35,
+ "status": "draft",
+ "scenario": "A mid-sized distributor wants to automate supplier invoice handling. This design is constructed for teaching; it is not a real client or product.",
+ "design": "Design summary\n1. An agent polls a shared mailbox every five minutes and reads each new email and its PDF attachments.\n2. A single LLM call extracts supplier, amount, bank details and due date, and decides whether the invoice is legitimate.\n3. If it judges the invoice legitimate, the agent posts a payment through the finance system using one service account that has permission to pay any supplier.\n4. The agent writes a log line with the invoice number and the final status.\n5. The team tested it on ten invoices they chose themselves and it processed all ten correctly.\n6. If the model service times out, the whole run restarts from the first unprocessed email.\n7. The system prompt tells the model: 'Never pay fraudulent invoices.'",
+ "checklist": [
+  {
+   "id": "f1",
+   "text": "One broad service account can pay any supplier, so a mistake or manipulation has a large blast radius.",
+   "flaw": true,
+   "explanation": "Use scoped credentials, payee allow-lists and amount limits."
+  },
+  {
+   "id": "f2",
+   "text": "Untrusted email and PDF content goes straight into the model that decides whether to pay (injection risk).",
+   "flaw": true,
+   "explanation": "Treat content as data; validate extracted fields in code."
+  },
+  {
+   "id": "f3",
+   "text": "There is no human approval for payments above a threshold or for changed bank details.",
+   "flaw": true,
+   "explanation": "Irreversible actions need approval proportional to impact."
+  },
+  {
+   "id": "f4",
+   "text": "Evaluation consists of ten self-selected invoices; there is no representative test set or fraud cases.",
+   "flaw": true,
+   "explanation": "Build a representative evaluation set including adversarial cases."
+  },
+  {
+   "id": "f5",
+   "text": "Logs record only the invoice number and final status, not inputs, extracted values or reasoning.",
+   "flaw": true,
+   "explanation": "Audit needs evidence to reconstruct decisions."
+  },
+  {
+   "id": "f6",
+   "text": "A timeout restarts the run, so invoices may be paid twice (no idempotency).",
+   "flaw": true,
+   "explanation": "Use idempotency keys and persist step state."
+  },
+  {
+   "id": "f7",
+   "text": "A prompt instruction is the only defence against fraudulent invoices.",
+   "flaw": true,
+   "explanation": "Prompt text is not an access or fraud control."
+  },
+  {
+   "id": "o1",
+   "text": "The agent polls a mailbox every five minutes instead of using real-time events.",
+   "flaw": false,
+   "explanation": "Polling is a reasonable, simple choice at this volume."
+  },
+  {
+   "id": "o2",
+   "text": "The design uses a language model to extract fields from varied PDF layouts.",
+   "flaw": false,
+   "explanation": "Extraction from unstructured documents is a sound use of a model, provided outputs are validated."
+  },
+  {
+   "id": "o3",
+   "text": "Invoices are processed in a batch loop rather than by many parallel agents.",
+   "flaw": false,
+   "explanation": "Simplicity is a virtue here."
+  }
+ ],
+ "model_findings": [
+  "Critical: a single broad credential plus no approval gives a large blast radius for irreversible payments.",
+  "Critical: untrusted content steers a payment decision; validate and constrain in code, not in the prompt.",
+  "High: no representative evaluation, including fraud and manipulated invoices.",
+  "High: logging is too thin for audit or incident response.",
+  "Medium: no idempotency or retry policy; restarts can duplicate payments.",
+  "Recommended: approval thresholds and bank-detail change checks, scoped credentials with payee allow-lists, schema validation, evaluation set, richer audit logs, idempotency keys."
+ ]
+}

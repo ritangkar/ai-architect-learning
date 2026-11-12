@@ -1,0 +1,71 @@
+{
+ "id": "rag-baseline",
+ "title": "Baseline RAG flow",
+ "description": "Offline ingestion of documents into an index and the online query path from question to cited answer.",
+ "direction": "LR",
+ "nodes": [
+  {
+   "id": "docs",
+   "label": "Source documents"
+  },
+  {
+   "id": "chunk",
+   "label": "Chunk and annotate"
+  },
+  {
+   "id": "embed",
+   "label": "Embed chunks"
+  },
+  {
+   "id": "index",
+   "label": "Index with metadata"
+  },
+  {
+   "id": "q",
+   "label": "User question"
+  },
+  {
+   "id": "retr",
+   "label": "Retrieve top passages"
+  },
+  {
+   "id": "prompt",
+   "label": "Assemble prompt"
+  },
+  {
+   "id": "gen",
+   "label": "Generate cited answer"
+  }
+ ],
+ "edges": [
+  {
+   "from": "docs",
+   "to": "chunk"
+  },
+  {
+   "from": "chunk",
+   "to": "embed"
+  },
+  {
+   "from": "embed",
+   "to": "index"
+  },
+  {
+   "from": "q",
+   "to": "retr"
+  },
+  {
+   "from": "index",
+   "to": "retr",
+   "label": "search"
+  },
+  {
+   "from": "retr",
+   "to": "prompt"
+  },
+  {
+   "from": "prompt",
+   "to": "gen"
+  }
+ ]
+}

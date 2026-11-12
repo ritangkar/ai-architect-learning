@@ -7,11 +7,11 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeStringify from 'rehype-stringify';
 import type { Diagram } from '../content/schemas';
 import { renderDiagram } from './diagram';
-import { caseUrl, patternUrl, sourceUrl, topicUrl } from '../url';
+import { caseUrl, patternUrl, sourceUrl, topicUrl, url } from '../url';
 
 const schema: any = {
   ...defaultSchema,
-  protocols: { ...defaultSchema.protocols, href: ['http', 'https', 'mailto', 'topic', 'case', 'pattern', 'source'] },
+  protocols: { ...defaultSchema.protocols, href: ['http', 'https', 'mailto', 'topic', 'case', 'pattern', 'source', 'page'] },
   attributes: { ...defaultSchema.attributes, code: [...(defaultSchema.attributes?.code ?? []), ['className', /^language-./]] },
 };
 
@@ -20,8 +20,8 @@ function rewrite() {
     const walk = (n: any) => {
       if (n.type === 'element' && n.tagName === 'a' && typeof n.properties?.href === 'string') {
         const h: string = n.properties.href;
-        const m = /^(topic|case|pattern|source):(.+)$/.exec(h);
-        if (m) n.properties.href = { topic: topicUrl, case: caseUrl, pattern: patternUrl, source: sourceUrl }[m[1] as 'topic'](m[2]);
+        const m = /^(topic|case|pattern|source|page):(.+)$/.exec(h);
+        if (m) n.properties.href = { topic: topicUrl, case: caseUrl, pattern: patternUrl, source: sourceUrl, page: (x: string) => url(x) }[m[1] as 'topic'](m[2]);
         else if (/^https?:/.test(h)) { n.properties.rel = 'noopener noreferrer'; n.properties.target = '_blank'; n.properties.className = ['ext']; }
       }
       n.children?.forEach(walk);
