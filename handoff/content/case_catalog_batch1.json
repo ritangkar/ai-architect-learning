@@ -1,0 +1,1472 @@
+{
+ "catalog_version": "0.1",
+ "status": "Batch 1 of an expandable catalog. Entries here were read from primary or named sources on 2026-11-12. Target of 100-200 is NOT reached; this batch has 14 entries.",
+ "evidence_tags": {
+  "V": "Verified: stated in cited source",
+  "I": "Interpretation: reasoned from verified facts",
+  "R": "Reconstructed: inferred to fill gaps (none used in batch 1)",
+  "U": "Unknown: not established from sources"
+ },
+ "tier_definitions": {
+  "A": "Full walkthrough candidate: builder-authored technical primary source",
+  "A-provisional": "Primary source identified; full body not yet read",
+  "B": "Structured analysis: limited depth or implementer-authored",
+  "C": "Catalog stub: marketing, editorial or secondary; no invented detail"
+ },
+ "sources_added": {
+  "SRC-023": {
+   "title": "Uber Engineering: Unlocking Financial Insights with Finch",
+   "url": "https://www.uber.com/blog/unlocking-financial-insights-with-finch",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; publication date not captured"
+  },
+  "SRC-024": {
+   "title": "Uber Engineering: Enhanced Agentic-RAG (Genie)",
+   "url": "https://www.uber.com/blog/enhanced-agentic-rag/",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; publication date not captured"
+  },
+  "SRC-025": {
+   "title": "Dropbox Tech: Building Dash, RAG and AI agents for businesses",
+   "url": "https://dropbox.tech/machine-learning/building-dash-rag-multi-step-ai-agents-business-users",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; post dated Apr 24 2025 per page"
+  },
+  "SRC-026": {
+   "title": "Dropbox Tech: Knowledge graphs, MCP and DSPy in Dash (VP interview)",
+   "url": "https://dropbox.tech/machine-learning/vp-josh-clemm-knowledge-graphs-mcp-and-dspy-dash",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; date not captured"
+  },
+  "SRC-027": {
+   "title": "Instacart: Building the Intent Engine",
+   "url": "https://company.instacart.com/tech-innovation/building-the-intent-engine-how-instacart-is-revamping-query-understanding-with-llms",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; date not captured"
+  },
+  "SRC-028": {
+   "title": "Slack Engineering: How we built Slack AI to be secure and private",
+   "url": "https://slack.engineering/how-we-built-slack-ai-to-be-secure-and-private/",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; date not captured"
+  },
+  "SRC-029": {
+   "title": "Zalando Engineering: Agentic Engineering at Zalando, a snapshot",
+   "url": "https://engineering.zalando.com/posts/2026/08/agentic-engineering-at-zalando-a-snapshot.html",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; URL indicates Aug 2026"
+  },
+  "SRC-030": {
+   "title": "LangChain: How Klarna's AI assistant redefined customer support",
+   "url": "https://www.langchain.com/blog/customers-klarna",
+   "grade": "vendor-authored case study",
+   "checked": "page read 2026-11-12; page dated Feb 12 2025"
+  }
+ },
+ "cases": [
+  {
+   "id": "CS-001",
+   "company": "Uber",
+   "industry": "Mobility and technology (internal finance function)",
+   "title": "Finch: conversational finance data agent in Slack",
+   "problem": "Finance analysts lose time locating datasets and writing complex SQL; requests to data science take hours or days.",
+   "category": [
+    "AI agents",
+    "Multi-agent architectures",
+    "AI-driven analytics and decision intelligence"
+   ],
+   "tier": "A",
+   "depth": "Detailed architecture with evaluation approach; no quantitative results published",
+   "sources": [
+    "SRC-023"
+   ],
+   "technologies_stated": [
+    "Slack SDK and Slack AI Assistant APIs",
+    "LangGraph",
+    "Uber Generative AI Gateway (self-hosted and third-party LLMs)",
+    "OpenSearch metadata index",
+    "Presto",
+    "IBM Planning Analytics",
+    "Oracle EPM",
+    "Google Sheets export"
+   ],
+   "patterns": [
+    "PAT06",
+    "PAT08",
+    "PAT12",
+    "PAT07"
+   ],
+   "prereq_topics": [
+    "T1.3.2",
+    "T1.3.3",
+    "T1.3.4",
+    "T1.4.2",
+    "T1.5.6"
+   ],
+   "facts": [
+    [
+     "The agent runs inside Slack using the Slack SDK and AI Assistant APIs, with live status updates.",
+     "SRC-023"
+    ],
+    [
+     "LangGraph coordinates a supervisor that routes requests to specialised sub-agents such as a SQL writer and a document reader.",
+     "SRC-023"
+    ],
+    [
+     "Models are reached through an internal generative AI gateway so they can be swapped; both self-hosted and third-party LLMs are used.",
+     "SRC-023"
+    ],
+    [
+     "Data is exposed as curated single-table data marts; an OpenSearch index holds column names, values and aliases for fuzzy matching of filter values.",
+     "SRC-023"
+    ],
+    [
+     "The SQL writer checks the user's permissions before running a query; RBAC limits access to sensitive financial data.",
+     "SRC-023"
+    ],
+    [
+     "Evaluation compares query results against golden queries, tests supervisor routing on ambiguous intents, runs end-to-end simulations and regression re-runs before prompt or model changes.",
+     "SRC-023"
+    ],
+    [
+     "Sub-agents run in parallel and common metrics are pre-fetched to cut latency.",
+     "SRC-023"
+    ],
+    [
+     "The authors acknowledge hallucination risk and plan on-demand expert validation of answers.",
+     "SRC-023"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Comparing result sets rather than SQL text tolerates equivalent queries but needs stable reference data; it can mask semantic mistakes when both queries share the same wrong filter.",
+     "I"
+    ],
+    [
+     "Simplifying schemas into single-table marts moves complexity from the model into data engineering, trading flexibility for reliability.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Models used",
+    "Quantified accuracy, latency, adoption or time savings",
+    "How RBAC is implemented and how identity reaches the data sources",
+    "How golden-query comparison is scored",
+    "Cost and scale"
+   ],
+   "decisions": [
+    {
+     "decision": "Data exposure to the model",
+     "selected": "Curated single-table marts with simplified schemas",
+     "alternatives": "Expose the raw warehouse and let the model plan joins; semantic layer or metrics store; pre-built dashboards only",
+     "reasoning": "Source states the aim is lower query complexity and faster retrieval. Alternative trade-offs are independent analysis.",
+     "basis": "documented rationale; alternatives are independent analysis",
+     "source": "SRC-023"
+    },
+    {
+     "decision": "Orchestration",
+     "selected": "Supervisor routing to specialised sub-agents in LangGraph",
+     "alternatives": "Single agent with all tools; fixed workflow with intent classifier; fully autonomous planner",
+     "reasoning": "Source documents the supervisor design and tests routing accuracy. Why not the alternatives is not stated.",
+     "basis": "documented design; alternatives are independent analysis",
+     "source": "SRC-023"
+    },
+    {
+     "decision": "Model access",
+     "selected": "Internal gateway so models can be swapped",
+     "alternatives": "Direct provider SDKs per agent",
+     "reasoning": "Source states swappability. Broader lock-in reasoning is independent analysis.",
+     "basis": "documented design; reasoning partly independent",
+     "source": "SRC-023"
+    },
+    {
+     "decision": "Filter value resolution",
+     "selected": "Search index with aliases for fuzzy matching",
+     "alternatives": "Model guesses literal values; exact match only; user picks from list",
+     "reasoning": "Source describes the index purpose. Failure modes of alternatives are independent analysis.",
+     "basis": "documented design; alternatives independent",
+     "source": "SRC-023"
+    },
+    {
+     "decision": "Quality assurance",
+     "selected": "Golden-result comparison plus routing, end-to-end and regression tests",
+     "alternatives": "Manual spot checks; LLM-as-judge only; production feedback only",
+     "reasoning": "Source describes the suite; no explanation of rejected approaches.",
+     "basis": "documented design; alternatives independent",
+     "source": "SRC-023"
+    }
+   ],
+   "review_exercise": "Finch states permission checks occur before query execution but not how identity propagates. List three ways a delegated agent could exceed a user's data rights and the control that closes each.",
+   "lessons": [
+    "Constrain the data the model sees before tuning the model.",
+    "Evaluate agents per component and end to end, and regression-test before every prompt or model change.",
+    "Plan human validation for decisions that matter, because the authors themselves cite hallucination risk."
+   ],
+   "adaptation": "For SAP CX analytics (sales or service KPIs), the same pattern maps to BDC data products as the curated layer and Joule Studio or a BTP agent as the supervisor; identity propagation then becomes the main design question (see T2.4.2). This mapping is independent analysis."
+  },
+  {
+   "id": "CS-002",
+   "company": "Uber",
+   "industry": "Mobility and technology (internal engineering support)",
+   "title": "Genie: enhanced agentic RAG over policy documents",
+   "problem": "An on-call Slack copilot answered security and privacy questions inaccurately over 40+ policy documents; a golden set of 100+ expert questions showed answers were incomplete or wrong.",
+   "category": [
+    "RAG and enterprise knowledge assistants",
+    "Conversational AI"
+   ],
+   "tier": "A",
+   "depth": "Detailed pipeline and evaluation method; relative improvements only",
+   "sources": [
+    "SRC-024"
+   ],
+   "technologies_stated": [
+    "LangGraph",
+    "Langfx (internal LangChain-based service in Michelangelo)",
+    "BM25",
+    "vector search",
+    "Google Docs API loader",
+    "MarkdownTextSplitter",
+    "LLM-as-judge"
+   ],
+   "patterns": [
+    "PAT03",
+    "PAT02",
+    "PAT12",
+    "PAT01"
+   ],
+   "prereq_topics": [
+    "T1.2.1",
+    "T1.2.2",
+    "T1.2.3",
+    "T1.2.5",
+    "T1.1.5"
+   ],
+   "facts": [
+    [
+     "A custom Google Docs loader replaced PDF parsing because standard PDF loaders lost table structure and no single parser worked across documents.",
+     "SRC-024"
+    ],
+    [
+     "An LLM converts tables and structured text to markdown; table chunks are kept intact via metadata; documents get LLM summaries and chunks get FAQs and keywords.",
+     "SRC-024"
+    ],
+    [
+     "Pre-retrieval agents rewrite ambiguous queries, split complex ones into sub-queries and identify the most likely source documents.",
+     "SRC-024"
+    ],
+    [
+     "Retrieval runs vector search and BM25 over enriched metadata and merges results as a union; a post-processor deduplicates and orders chunks by position in the source.",
+     "SRC-024"
+    ],
+    [
+     "Evaluation uses expert reference answers run in batch with an LLM judge scoring 0-5, cutting evaluation turnaround from weeks to minutes.",
+     "SRC-024"
+    ],
+    [
+     "Reported results are relative: 27% more acceptable answers and 60% fewer incorrect answers.",
+     "SRC-024"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Changing the source format (Google Docs instead of PDF) was a bigger lever than changing the model, which is a common ingestion lesson.",
+     "I"
+    ],
+    [
+     "Relative gains without baselines cannot be converted to absolute quality; ask for the baseline before quoting these numbers to a client.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Generation, enrichment and judge LLMs",
+    "Vector store",
+    "Latency, cost and production scale",
+    "Judge agreement with human experts",
+    "Access control enforcement in retrieval"
+   ],
+   "decisions": [
+    {
+     "decision": "Document ingestion",
+     "selected": "Custom Google Docs loader with table-aware markdown conversion",
+     "alternatives": "Keep PDF parsers (several tried); OCR or layout models; re-author sources",
+     "reasoning": "Source documents PDF parsers losing table row and column context and no universal parser.",
+     "basis": "documented",
+     "source": "SRC-024"
+    },
+    {
+     "decision": "Retrieval",
+     "selected": "Hybrid vector plus BM25 union over enriched metadata",
+     "alternatives": "Vector only; BM25 only; reranker-based fusion",
+     "reasoning": "Source describes the hybrid; the choice of union over reranking is not explained.",
+     "basis": "documented design; rationale partly independent",
+     "source": "SRC-024"
+    },
+    {
+     "decision": "Query handling",
+     "selected": "Query optimizer and source identifier agents before retrieval",
+     "alternatives": "Single-pass retrieval with raw query",
+     "reasoning": "Source describes the agents as handling ambiguity and narrowing sources.",
+     "basis": "documented",
+     "source": "SRC-024"
+    },
+    {
+     "decision": "Evaluation",
+     "selected": "Expert references plus LLM judge with reasoning",
+     "alternatives": "Human review per release; synthetic questions only",
+     "reasoning": "Source cites speed gain. Judge validity is not reported.",
+     "basis": "documented; limits are independent analysis",
+     "source": "SRC-024"
+    }
+   ],
+   "review_exercise": "The reported 60% reduction in incorrect advice has no baseline. Define the evidence you would request, and how you would test the judge's agreement with experts before trusting it.",
+   "lessons": [
+    "Fix ingestion before tuning generation.",
+    "Enrich chunks and queries; do not rely on raw similarity alone.",
+    "Judge-based evaluation speeds iteration but must be validated against humans."
+   ],
+   "adaptation": "For an SAP service knowledge assistant over product manuals and notes, the same ingestion-first approach applies; the access-control question (not answered in the source) must be designed explicitly. Independent analysis."
+  },
+  {
+   "id": "CS-003",
+   "company": "Dropbox",
+   "industry": "Software and collaboration",
+   "title": "Dash: RAG plus code-planned agents for universal business search",
+   "problem": "Business knowledge is scattered across apps, formats and modalities, slowing search and raising access-control risk.",
+   "category": [
+    "RAG and enterprise knowledge assistants",
+    "AI agents"
+   ],
+   "tier": "A",
+   "depth": "Detailed design rationale and trade-offs; no model names or accuracy figures",
+   "sources": [
+    "SRC-025"
+   ],
+   "technologies_stated": [
+    "Lexical index with embedding reranking",
+    "LLM-planned code in a Python-like DSL",
+    "custom interpreter with static analysis",
+    "LLM judges",
+    "Natural Questions",
+    "MuSiQue",
+    "MS MARCO"
+   ],
+   "patterns": [
+    "PAT02",
+    "PAT04",
+    "PAT12",
+    "PAT01"
+   ],
+   "prereq_topics": [
+    "T1.2.2",
+    "T1.2.4",
+    "T1.3.2",
+    "T1.5.1",
+    "T1.5.6"
+   ],
+   "facts": [
+    [
+     "Dropbox chose a traditional lexical index with embedding-based reranking over a pure vector index.",
+     "SRC-025"
+    ],
+    [
+     "For complex tasks an LLM expresses a plan as code in a Python-like DSL which a purpose-built minimal interpreter validates with static analysis and dry runs.",
+     "SRC-025"
+    ],
+    [
+     "The interpreter implements only required functionality to reduce the risks of a full-featured interpreter.",
+     "SRC-025"
+    ],
+    [
+     "The post names trade-offs: latency versus quality, freshness versus scalability, budget versus experience, model size versus latency and accuracy.",
+     "SRC-025"
+    ],
+    [
+     "Evaluation uses public datasets plus LLM judges for correctness and completeness and passage-level precision, recall and F1.",
+     "SRC-025"
+    ],
+    [
+     "The post reports over 95% of queries completing in 1-2 seconds.",
+     "SRC-025"
+    ],
+    [
+     "Prompts do not transfer cleanly between models.",
+     "SRC-025"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Planning as code makes failures locatable and testable, giving determinism that free-form tool loops lack.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Model names, embedding model, index technology",
+    "How permissions are enforced inside retrieval and agent execution",
+    "Benchmark scores",
+    "Cost and error rates",
+    "Sync frequency"
+   ],
+   "decisions": [
+    {
+     "decision": "Retrieval index",
+     "selected": "Lexical index with embedding reranking",
+     "alternatives": "Pure vector index; pure lexical search",
+     "reasoning": "Source states these as trade-offs; detailed reasoning is limited.",
+     "basis": "documented selection; alternatives named",
+     "source": "SRC-025"
+    },
+    {
+     "decision": "Agent planning representation",
+     "selected": "LLM-written code in a restricted DSL executed by a custom interpreter",
+     "alternatives": "Iterative tool calling; general-purpose Python sandbox; fixed workflows",
+     "reasoning": "Source describes the DSL approach and its security benefit of a minimal interpreter; alternatives comparison is independent analysis.",
+     "basis": "documented design; alternatives independent",
+     "source": "SRC-025"
+    },
+    {
+     "decision": "Freshness model",
+     "selected": "Periodic sync with webhooks where appropriate, query-time chunking",
+     "alternatives": "Live API calls per query; full real-time indexing",
+     "reasoning": "Source discusses the freshness versus scalability trade-off.",
+     "basis": "documented trade-off",
+     "source": "SRC-025"
+    }
+   ],
+   "review_exercise": "The post does not say how access control is enforced during retrieval and agent execution. Propose three enforcement points and the failure each prevents.",
+   "lessons": [
+    "Restrict what an agent can express, not just what it may call.",
+    "Make retrieval model-agnostic and measure it end to end.",
+    "State trade-offs explicitly to clients."
+   ],
+   "adaptation": "Applies to cross-system SAP CX search (Commerce, Sales, Service content) where permission models differ per source. Independent analysis."
+  },
+  {
+   "id": "CS-004",
+   "company": "Dropbox",
+   "industry": "Software and collaboration",
+   "title": "Dash: knowledge graphs, MCP limits and DSPy",
+   "problem": "Scaling an AI search product exposed context bloat, latency in MCP-based agents and unmanageable prompts.",
+   "category": [
+    "AI agents",
+    "RAG and enterprise knowledge assistants"
+   ],
+   "tier": "A",
+   "depth": "Candid lessons and rejected alternatives; few quantitative results",
+   "sources": [
+    "SRC-026"
+   ],
+   "technologies_stated": [
+    "MCP",
+    "DSPy",
+    "BM25 plus dense vectors",
+    "knowledge graph compressed into bundles",
+    "LLM-as-judge (an OpenAI o3 upgrade is mentioned)"
+   ],
+   "patterns": [
+    "PAT09",
+    "PAT02",
+    "PAT12"
+   ],
+   "prereq_topics": [
+    "T1.3.5",
+    "T1.2.3",
+    "T1.5.6",
+    "T1.5.9"
+   ],
+   "facts": [
+    [
+     "Tool definitions and returned content consume context; Dropbox caps context at about 100,000 tokens because quality degrades beyond it.",
+     "SRC-026"
+    ],
+    [
+     "Some MCP-based agents took up to 45 seconds for a simple query versus seconds with direct index access.",
+     "SRC-026"
+    ],
+    [
+     "Mitigations include one 'super tool' over the index instead of many retrieval tools, storing large results outside the model context and sub-agents with narrower tool sets.",
+     "SRC-026"
+    ],
+    [
+     "A graph database was tried and rejected for latency, query pattern and hybrid retrieval reasons; graphs are built asynchronously and compressed into bundles that go through the normal chunk and embed pipeline.",
+     "SRC-026"
+    ],
+    [
+     "Index-based retrieval was chosen over federated retrieval for connector coverage, preprocessing and speed, at the cost of engineering effort, storage and freshness management.",
+     "SRC-026"
+    ],
+    [
+     "DSPy is used to optimise prompts against evals, starting with judge prompts; about 30 prompts are edited by 5-15 engineers.",
+     "SRC-026"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Federated MCP access is attractive for speed of integration but shifts quality and latency to each external system.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Quantified retrieval or DSPy gains",
+    "Latency after mitigation",
+    "Cost",
+    "Knowledge graph schema and bundle construction"
+   ],
+   "decisions": [
+    {
+     "decision": "Retrieval topology",
+     "selected": "Central index",
+     "alternatives": "Federated retrieval via MCP connectors to each app",
+     "reasoning": "Source lists connector access, preprocessing, offline ranking and speed in favour of the index, and cost and freshness against.",
+     "basis": "documented",
+     "source": "SRC-026"
+    },
+    {
+     "decision": "Tool exposure",
+     "selected": "Single super tool over the index",
+     "alternatives": "5-10 separate retrieval tools",
+     "reasoning": "Source cites context cost and tool selection quality.",
+     "basis": "documented",
+     "source": "SRC-026"
+    },
+    {
+     "decision": "Relationship store",
+     "selected": "Graph summarised into bundles in the existing retrieval pipeline",
+     "alternatives": "Dedicated graph database",
+     "reasoning": "Source states graph database was rejected for latency, query pattern and hybrid retrieval difficulty.",
+     "basis": "documented",
+     "source": "SRC-026"
+    },
+    {
+     "decision": "Prompt management",
+     "selected": "Programmatic optimisation with DSPy",
+     "alternatives": "Hand-edited prompt strings",
+     "reasoning": "Source states preference for generating prompts from goals.",
+     "basis": "documented",
+     "source": "SRC-026"
+    }
+   ],
+   "review_exercise": "You are told to expose 40 enterprise APIs as MCP tools to one agent. Using this case, list the risks and redesign the tool surface.",
+   "lessons": [
+    "Context is a budget.",
+    "Protocols do not remove latency and quality costs.",
+    "Prompt optimisation tooling pays off at scale."
+   ],
+   "adaptation": "Directly relevant to exposing SAP APIs via MCP: scope servers narrowly and measure latency before scaling the tool count. Compare with CS-009. Independent analysis."
+  },
+  {
+   "id": "CS-005",
+   "company": "Instacart",
+   "industry": "Grocery e-commerce",
+   "title": "Intent Engine: LLM-driven query understanding with teacher-student distillation",
+   "problem": "Legacy query understanding struggled with broad queries, noisy labels, tail queries and fragmented models; rewrites covered about half of search traffic.",
+   "category": [
+    "Conversational AI",
+    "AI-driven analytics and decision intelligence",
+    "Predictive AI and machine learning"
+   ],
+   "tier": "A",
+   "depth": "Detailed architecture, latency engineering and metrics; teacher model unnamed",
+   "sources": [
+    "SRC-027"
+   ],
+   "technologies_stated": [
+    "Llama-3-8B student (hedged in source)",
+    "LoRA fine-tuning",
+    "A100 then H100 GPUs",
+    "embedding-similarity guardrails",
+    "FastText (legacy)"
+   ],
+   "patterns": [
+    "PAT01",
+    "PAT11",
+    "PAT13",
+    "PAT12"
+   ],
+   "prereq_topics": [
+    "T1.2.4",
+    "T1.5.9",
+    "T1.4.2",
+    "T1.5.6",
+    "T3.1.2"
+   ],
+   "facts": [
+    [
+     "Strategy: start from LLMs and inject company context via RAG, validate with guardrails, then fine-tune.",
+     "SRC-027"
+    ],
+    [
+     "An offline teacher pipeline with caching handles head queries and produces training data; a smaller fine-tuned student serves tail queries in real time.",
+     "SRC-027"
+    ],
+    [
+     "Out-of-the-box latency was close to 700 ms on A100; merging LoRA adapters and moving to H100 reached about 300 ms.",
+     "SRC-027"
+    ],
+    [
+     "FP8 quantisation cut latency roughly 10% but reduced recall, so unquantised serving was chosen.",
+     "SRC-027"
+    ],
+    [
+     "Caching means only about 2% of queries need real-time inference.",
+     "SRC-027"
+    ],
+    [
+     "Reported results include rewrite coverage above 95% with precision above 90%, and a 50% drop in complaints about poor tail-query results.",
+     "SRC-027"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Splitting offline quality from online latency is the key architectural idea: spend frontier-model cost where latency does not matter, distil for where it does.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Teacher model identity",
+    "Cache-hit definition and thresholds",
+    "Training and serving cost",
+    "A/B test design and significance"
+   ],
+   "decisions": [
+    {
+     "decision": "Where to put intelligence",
+     "selected": "Offline large-model teacher plus distilled small student",
+     "alternatives": "Call a frontier model online for every query; classical models only",
+     "reasoning": "Source cites latency and cost constraints at search scale.",
+     "basis": "documented rationale",
+     "source": "SRC-027"
+    },
+    {
+     "decision": "Hallucination control",
+     "selected": "Taxonomy-bound guardrails with similarity thresholds",
+     "alternatives": "Trust model output; human review of all outputs",
+     "reasoning": "Source describes the validation layer.",
+     "basis": "documented",
+     "source": "SRC-027"
+    },
+    {
+     "decision": "Quantisation",
+     "selected": "Keep unquantised",
+     "alternatives": "FP8 quantisation",
+     "reasoning": "Source states a recall loss outweighed ~10% latency gain.",
+     "basis": "documented",
+     "source": "SRC-027"
+    }
+   ],
+   "review_exercise": "The post cites a 30% latency gain in one place while its numbers imply a bigger change. How would you reconcile before presenting this to a client?",
+   "lessons": [
+    "Latency budgets drive model placement.",
+    "Fine-tuning is for behaviour and consistency here, with RAG supplying knowledge.",
+    "Make quality trade-offs measurable."
+   ],
+   "adaptation": "Relevant to SAP Commerce search and B2B catalogue query understanding. Independent analysis."
+  },
+  {
+   "id": "CS-006",
+   "company": "Slack (Salesforce)",
+   "industry": "Enterprise collaboration software",
+   "title": "Slack AI: privacy-first generative AI architecture",
+   "problem": "Deliver generative AI features while keeping customer data inside the trust boundary and honouring existing compliance commitments.",
+   "category": [
+    "RAG and enterprise knowledge assistants",
+    "AI chatbots and enterprise assistants"
+   ],
+   "tier": "A",
+   "depth": "Detailed on security and hosting decisions; no quality or latency metrics",
+   "sources": [
+    "SRC-028"
+   ],
+   "technologies_stated": [
+    "Closed-source LLMs hosted in an AWS escrow VPC",
+    "RAG",
+    "existing ACL libraries"
+   ],
+   "patterns": [
+    "PAT01",
+    "PAT19",
+    "PAT11"
+   ],
+   "prereq_topics": [
+    "T1.2.4",
+    "T1.5.3",
+    "T1.5.4",
+    "T1.4.3",
+    "T3.2.2"
+   ],
+   "facts": [
+    [
+     "Four principles: customer data stays in the trust boundary, no training on customer data, AI only shows what the user can already see, and enterprise security and compliance still apply.",
+     "SRC-028"
+    ],
+    [
+     "Closed-source models run in an escrow VPC on AWS so the model provider has no access to customer data.",
+     "SRC-028"
+    ],
+    [
+     "Slack chose off-the-shelf models with RAG over fine-tuning on customer data because it could not guarantee sufficient protections.",
+     "SRC-028"
+    ],
+    [
+     "Retrieval uses the requesting user's access control lists and existing display libraries; output is visible only to the requester.",
+     "SRC-028"
+    ],
+    [
+     "Outputs are ephemeral and not written to disk; stored data follows a least-data principle and existing key management and residency infrastructure.",
+     "SRC-028"
+    ],
+    [
+     "If a source message is removed by DLP, derived summaries are invalidated.",
+     "SRC-028"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Reusing existing authorisation code paths for retrieval is a strong pattern: the AI layer inherits, rather than reimplements, access control.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Model vendor and models",
+    "Retention periods",
+    "Technical detail of the escrow VPC",
+    "Latency and quality metrics",
+    "Prompt construction and evaluation (deferred by the authors)"
+   ],
+   "decisions": [
+    {
+     "decision": "Model hosting",
+     "selected": "Provider models inside an escrow VPC",
+     "alternatives": "Hosted provider API; self-hosted open model; vendor-managed private deployment",
+     "reasoning": "Source documents data-ownership requirement and that vendors generally do not ship closed models for self-hosting.",
+     "basis": "documented",
+     "source": "SRC-028"
+    },
+    {
+     "decision": "Knowledge strategy",
+     "selected": "RAG with stateless model calls",
+     "alternatives": "Fine-tune on customer data",
+     "reasoning": "Source states it could not guarantee strong enough protection if training on customer data.",
+     "basis": "documented",
+     "source": "SRC-028"
+    },
+    {
+     "decision": "Authorisation",
+     "selected": "Requesting user's ACLs at retrieval",
+     "alternatives": "Service-level access with output filtering",
+     "reasoning": "Source states AI must show only what the user can already see.",
+     "basis": "documented principle",
+     "source": "SRC-028"
+    }
+   ],
+   "review_exercise": "Derived summaries are invalidated when a source message is deleted. Identify two other places an AI system might retain derivatives of deleted data and how to detect them.",
+   "lessons": [
+    "Start from non-negotiable data principles and derive hosting choices from them.",
+    "Inherit authorisation from the system of record.",
+    "Stateless RAG simplifies privacy arguments."
+   ],
+   "adaptation": "Maps directly to SAP CX client conversations about data residency and no-training terms with Generative AI Hub. Independent analysis."
+  },
+  {
+   "id": "CS-007",
+   "company": "Zalando",
+   "industry": "Fashion e-commerce (internal engineering)",
+   "title": "Agentic engineering platform: gateway, MCP and risk-based review",
+   "problem": "Give 250+ engineering teams measurable access to LLMs and coding agents without forcing one tool, while controlling cost, governance and delivery risk.",
+   "category": [
+    "Software engineering and coding agents",
+    "AI agents"
+   ],
+   "tier": "A",
+   "depth": "Detailed platform components and governance; limited ROI evidence",
+   "sources": [
+    "SRC-029"
+   ],
+   "technologies_stated": [
+    "LiteLLM-based gateway (OpenAI, AWS Bedrock, Google Vertex)",
+    "pydantic-ai CLI",
+    "internal MCP servers with OAuth ingress filter",
+    "kagent (planned platform)",
+    "Claude Code, opencode (client tools)"
+   ],
+   "patterns": [
+    "PAT08",
+    "PAT09",
+    "PAT11",
+    "PAT19"
+   ],
+   "prereq_topics": [
+    "T1.4.2",
+    "T1.4.5",
+    "T1.3.5",
+    "T1.5.5",
+    "T1.5.10"
+   ],
+   "facts": [
+    [
+     "A LiteLLM-based gateway proxies model access with pre and post call hooks and prompt-cache checkpoint injection.",
+     "SRC-029"
+    ],
+    [
+     "A local proxy injects auth headers for coding agents and shows per-model cost and cache usage.",
+     "SRC-029"
+    ],
+    [
+     "Internal MCP servers sit behind a default OAuth ingress filter; configuration is secret-free via token injection.",
+     "SRC-029"
+    ],
+    [
+     "About a third of pull requests are classified low-risk and auto-approved; risk rules derive from production incidents, and risk-based approval is reported to cut lead time by 20-40% versus all PRs.",
+     "SRC-029"
+    ],
+    [
+     "A future agent platform with an identity broker, delegation chains and token vault is described as in progress.",
+     "SRC-029"
+    ],
+    [
+     "Sandboxing is listed as an unsolved problem.",
+     "SRC-029"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Gateway-first rollout produces the telemetry needed for governance before standardising tools.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Threat model details",
+    "Model-to-task allocation and selection criteria",
+    "Identity broker timeline",
+    "ROI beyond lead time"
+   ],
+   "decisions": [
+    {
+     "decision": "Tool strategy",
+     "selected": "Single gateway, no mandated client tool",
+     "alternatives": "Standardise on one coding assistant",
+     "reasoning": "Source states goal of measurable access without central mandate and cites difficulty consolidating tools.",
+     "basis": "documented",
+     "source": "SRC-029"
+    },
+    {
+     "decision": "Review control",
+     "selected": "Risk-based PR approval",
+     "alternatives": "Human review for every PR; size limits only",
+     "reasoning": "Source reports lead-time reduction and risk rules from incidents.",
+     "basis": "documented",
+     "source": "SRC-029"
+    },
+    {
+     "decision": "Agent identity",
+     "selected": "Planned identity broker with delegation and token vault",
+     "alternatives": "Shared service credentials",
+     "reasoning": "Source lists the broker as being built.",
+     "basis": "documented plan",
+     "source": "SRC-029"
+    }
+   ],
+   "review_exercise": "Coding agents increase PR size and complexity. Design controls that preserve review quality without hurting lead time.",
+   "lessons": [
+    "Instrument first, standardise later.",
+    "Governance rules should come from incident data.",
+    "Agent identity is still an open problem even at mature organisations."
+   ],
+   "adaptation": "Useful template for governing AI-assisted SAP development teams. Independent analysis."
+  },
+  {
+   "id": "CS-008",
+   "company": "Klarna",
+   "industry": "Banking and financial services (payments)",
+   "title": "Klarna AI assistant (vendor-authored account)",
+   "problem": "Scale customer support across markets for a large payments platform.",
+   "category": [
+    "Conversational AI",
+    "AI agents"
+   ],
+   "tier": "C",
+   "depth": "Vendor marketing; many controls not described",
+   "sources": [
+    "SRC-030"
+   ],
+   "technologies_stated": [
+    "LangGraph",
+    "LangSmith"
+   ],
+   "patterns": [
+    "PAT05",
+    "PAT12"
+   ],
+   "prereq_topics": [
+    "T1.3.3",
+    "T1.5.6",
+    "T1.6.5"
+   ],
+   "facts": [
+    [
+     "Built on LangGraph with LangSmith tracing; described as multi-agent routing by the vendor.",
+     "SRC-030"
+    ],
+    [
+     "Vendor-reported: 2.5 million conversations handled, 80% faster resolution, about 70% of repetitive tasks automated.",
+     "SRC-030"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Use as a critical-reading exercise: the source omits guardrails, data handling, fallback and escalation, which are the architect's real questions.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Models",
+    "Guardrails",
+    "Data handling",
+    "Escalation criteria",
+    "Metric methodology and independent verification"
+   ],
+   "decisions": [],
+   "review_exercise": "List the ten discovery questions you would ask Klarna before reusing this design, grouped by security, quality, escalation and cost.",
+   "lessons": [
+    "Marketing case studies state outcomes, not architecture; do not copy numbers."
+   ],
+   "adaptation": "Not adaptable without further primary evidence."
+  },
+  {
+   "id": "CS-009",
+   "company": "Mindset Consulting (SAP partner)",
+   "industry": "SAP partner engineering (multi-industry)",
+   "title": "Domain-scoped MCP servers on SAP BTP for Joule agents",
+   "problem": "Give Joule agents governed, reliable access to S/4HANA business functions.",
+   "category": [
+    "AI agents",
+    "Intelligent automation"
+   ],
+   "tier": "B",
+   "depth": "Architecture path and design rules stated by the implementer; no measured results",
+   "sources": [
+    "SRC-014"
+   ],
+   "technologies_stated": [
+    "SAP BTP Joule Studio",
+    "MCP servers on BTP Cloud Foundry",
+    "BTP Destination service",
+    "Cloud Connector",
+    "S/4HANA on-premise OData",
+    "OAuth2 client credentials"
+   ],
+   "patterns": [
+    "PAT09",
+    "PAT15",
+    "PAT19"
+   ],
+   "prereq_topics": [
+    "T1.3.5",
+    "T2.1.2",
+    "T2.2.2",
+    "T2.2.5",
+    "T2.4.2",
+    "T2.4.3"
+   ],
+   "facts": [
+    [
+     "Path: Joule Studio agent to MCP server on Cloud Foundry to Destination service to Cloud Connector to S/4HANA.",
+     "SRC-014"
+    ],
+    [
+     "Authentication is OAuth2 client credentials, with CSRF handling for OData V2 and one shared destination for all servers.",
+     "SRC-014"
+    ],
+    [
+     "Nine MCP servers with 144 tools, each scoped to one business domain, about 20-30 tools per server.",
+     "SRC-014"
+    ],
+    [
+     "The author cites reduced tool-selection accuracy with large tool sets as the reason for narrow servers.",
+     "SRC-014"
+    ],
+    [
+     "The author reads a recent SAP API policy as requiring agent calls to SAP APIs to go through SAP-endorsed paths and notes unresolved customer questions.",
+     "SRC-014"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Client-credentials auth implies service-level identity; the post describes no per-user authorisation, so segregation of duties would need separate design.",
+     "I"
+    ],
+    [
+     "The SAP API policy statement is the author's reading and must be verified against SAP's own text before use.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Measured reliability or savings",
+    "Write safeguards and approval steps",
+    "Per-user identity handling",
+    "Customers and timelines",
+    "Policy text itself"
+   ],
+   "decisions": [
+    {
+     "decision": "MCP granularity",
+     "selected": "One server per business domain, ~20-30 tools",
+     "alternatives": "One large server for all APIs",
+     "reasoning": "Author cites tool-selection degradation as tool count grows.",
+     "basis": "documented rationale (self-reported)",
+     "source": "SRC-014"
+    },
+    {
+     "decision": "Connectivity",
+     "selected": "Reuse BTP Destination and Cloud Connector",
+     "alternatives": "Direct network exposure of S/4HANA; custom connectivity",
+     "reasoning": "Author states it keeps within SAP's existing trust layer.",
+     "basis": "documented",
+     "source": "SRC-014"
+    },
+    {
+     "decision": "Identity",
+     "selected": "Service credentials via client credentials",
+     "alternatives": "Principal propagation or on-behalf-of user tokens",
+     "reasoning": "Not discussed by the source; comparison is independent analysis.",
+     "basis": "independent analysis",
+     "source": "SRC-014"
+    }
+   ],
+   "review_exercise": "Find the segregation-of-duties risk in this architecture and redesign identity so the agent cannot exceed the user's authorisations.",
+   "lessons": [
+    "Narrow tool surfaces improve reliability.",
+    "Reuse platform trust components.",
+    "Question identity at every hop."
+   ],
+   "adaptation": "Template for exposing Commerce or Service Cloud APIs to Joule agents. Independent analysis."
+  },
+  {
+   "id": "CS-010",
+   "company": "DataXstream (SAP partner)",
+   "industry": "Distribution and sales (B2B)",
+   "title": "Churn Risk Agent built in Joule Studio (editorial coverage)",
+   "problem": "Detect at-risk customers and trigger a retention response for sales teams.",
+   "category": [
+    "AI agents",
+    "Predictive AI and machine learning",
+    "Intelligent automation"
+   ],
+   "tier": "C",
+   "depth": "Secondary editorial description; no architecture or outcome metrics",
+   "sources": [
+    "SRC-013"
+   ],
+   "technologies_stated": [
+    "SAP Joule Studio",
+    "MCP server",
+    "SAP BTP Kyma runtime",
+    "containerised ML service"
+   ],
+   "patterns": [
+    "PAT14",
+    "PAT07",
+    "PAT16",
+    "PAT04"
+   ],
+   "prereq_topics": [
+    "T2.2.2",
+    "T1.4.5",
+    "T3.1.1"
+   ],
+   "facts": [
+    [
+     "A proprietary ML model scores churn risk and ranks accounts; separate recommendation, availability and promotion agents then create an SAP inquiry and draft a retention email.",
+     "SRC-013"
+    ],
+    [
+     "The only human step described is reviewing and sending the drafted email.",
+     "SRC-013"
+    ],
+    [
+     "The agent is listed on the SAP Store; coverage reports a second-place finish in a SAP event but no business results.",
+     "SRC-013"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Combining a classical ML scorer with LLM agents is a sound split of responsibilities; the editorial source does not show how the pieces were validated.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "S/4HANA version and APIs",
+    "Model training data and accuracy",
+    "Error handling",
+    "Business results"
+   ],
+   "decisions": [],
+   "review_exercise": "Using only this description, list what you would need to see before recommending it to a distribution client.",
+   "lessons": [
+    "Predictive scoring plus agentic action is a reusable shape.",
+    "Upgrade to Tier B when a builder-authored technical source is found."
+   ],
+   "adaptation": "Candidate for B2B retention scenarios; needs a primary source."
+  },
+  {
+   "id": "CS-011",
+   "company": "SAP",
+   "industry": "Enterprise software (SAP reference architecture)",
+   "title": "SAP A2A and MCP interoperability reference architecture",
+   "problem": "Let Joule agents and third-party agents interoperate with governed access to SAP and non-SAP tools.",
+   "category": [
+    "AI agents",
+    "Multi-agent architectures",
+    "Other emerging enterprise AI"
+   ],
+   "tier": "A-provisional",
+   "depth": "Primary SAP documentation; this session used search excerpts, full page body to be read before walkthrough",
+   "sources": [
+    "SRC-001",
+    "SRC-002",
+    "SRC-003"
+   ],
+   "technologies_stated": [
+    "A2A 0.3.0 with HTTP+JSON",
+    "SAP Cloud Identity Services App2App tokens with named user context",
+    "MCP Gateway in SAP Integration Suite",
+    "Agent Gateway",
+    "Joule as A2A client"
+   ],
+   "patterns": [
+    "PAT09",
+    "PAT10",
+    "PAT19"
+   ],
+   "prereq_topics": [
+    "T1.3.5",
+    "T1.3.6",
+    "T2.2.4",
+    "T2.4.2"
+   ],
+   "facts": [
+    [
+     "SAP uses A2A as the preferred approach for external agent interoperability and MCP for tool access.",
+     "SRC-001"
+    ],
+    [
+     "The Agent Gateway exposes Joule agents externally via A2A; authentication uses IAS App2App tokens with named user context.",
+     "SRC-002"
+    ],
+    [
+     "MCP Gateway in Integration Suite exposes SAP and non-SAP APIs as governed MCP tools.",
+     "SRC-001"
+    ],
+    [
+     "Inbound A2A interoperability general availability was announced for October 2026; the customer defines which agents a client may invoke.",
+     "SRC-003"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Named-user context in tokens suggests the design intends user-level authorisation across agent hops; confirm in full documentation.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Full flows and limits (page body not read this session)",
+    "Pricing and licensing"
+   ],
+   "decisions": [
+    {
+     "decision": "External agent protocol",
+     "selected": "A2A for agent to agent, MCP for tools",
+     "alternatives": "Proprietary SAP APIs only; REST per integration",
+     "reasoning": "Source states A2A as preferred for external interoperability.",
+     "basis": "documented",
+     "source": "SRC-001"
+    }
+   ],
+   "review_exercise": "Draw inbound and outbound flows and mark every identity hop.",
+   "lessons": [
+    "Protocol layering: MCP for tools, A2A for agents."
+   ],
+   "adaptation": "Foundation for any BYO-agent SAP engagement."
+  },
+  {
+   "id": "CS-012",
+   "company": "SAP",
+   "industry": "Enterprise software (SAP reference architecture)",
+   "title": "Business Data Cloud with SAP AI Core: three AI-enhanced data product patterns",
+   "problem": "Turn governed SAP business data into predictive and agentic AI outcomes.",
+   "category": [
+    "Predictive AI and machine learning",
+    "AI-driven analytics and decision intelligence"
+   ],
+   "tier": "A-provisional",
+   "depth": "Primary SAP documentation; this session used search excerpts, full page body to be read before walkthrough",
+   "sources": [
+    "SRC-004"
+   ],
+   "technologies_stated": [
+    "SAP Business Data Cloud",
+    "SAP Databricks",
+    "MLflow and Unity Catalog",
+    "SAP AI Core",
+    "Generative AI Hub",
+    "SAP Datasphere",
+    "BTP destination service"
+   ],
+   "patterns": [
+    "PAT16",
+    "PAT15"
+   ],
+   "prereq_topics": [
+    "T2.1.3",
+    "T2.1.4",
+    "T1.4.5"
+   ],
+   "facts": [
+    [
+     "Pattern 1: train in SAP Databricks on governed data products, register models, serve through AI Core.",
+     "SRC-004"
+    ],
+    [
+     "Pattern 2: batch inference via AI Core workflow executions separated from low-latency serving.",
+     "SRC-004"
+    ],
+    [
+     "Pattern 3: a BTP extension agent queries Datasphere, calls an AI Core endpoint and can use Generative AI Hub to explain results.",
+     "SRC-004"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Separating batch and real-time serving of one governed model is the architectural point to teach.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Full rationale and limits (page body not read this session)"
+   ],
+   "decisions": [
+    {
+     "decision": "Serving path",
+     "selected": "AI Core for governed serving of models trained in Databricks",
+     "alternatives": "Serve directly from Databricks",
+     "reasoning": "Source states AI Core provides enterprise governance, scaling and monitoring with SAP integration.",
+     "basis": "documented",
+     "source": "SRC-004"
+    }
+   ],
+   "review_exercise": "Pick batch or real-time for ticket categorisation, forecast refresh and fraud scoring, and justify.",
+   "lessons": [
+    "Data products are the unit of reuse."
+   ],
+   "adaptation": "Applies to service-ticket classification and sales forecasting in CX."
+  },
+  {
+   "id": "CS-013",
+   "company": "SAP",
+   "industry": "Retail and B2B commerce",
+   "title": "Commerce Cloud storefront MCP server for agentic commerce (announcement-level)",
+   "problem": "Let customers shop through AI platforms as well as the storefront.",
+   "category": [
+    "Conversational AI",
+    "AI agents"
+   ],
+   "tier": "C",
+   "depth": "Product announcements and commentary; roadmap-heavy",
+   "sources": [
+    "SRC-007",
+    "SRC-015",
+    "SRC-016"
+   ],
+   "technologies_stated": [
+    "SAP Commerce Cloud",
+    "MCP server"
+   ],
+   "patterns": [
+    "PAT18",
+    "PAT09"
+   ],
+   "prereq_topics": [
+    "T2.3.2",
+    "T1.3.5"
+   ],
+   "facts": [
+    [
+     "SAP lists conversational AI shopping through an MCP server in its Q2 2026 CX release.",
+     "SRC-007"
+    ],
+    [
+     "Coverage states the server exposes catalog, pricing, inventory and promotions to AI platforms.",
+     "SRC-015"
+    ],
+    [
+     "A commentator notes each merchant deploys the server and that much capability is roadmap.",
+     "SRC-016"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Exposing pricing and inventory to external agents raises contract-price, entitlement and rate-limit questions the sources do not address.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Architecture details",
+    "Security model",
+    "GA status per region",
+    "Results"
+   ],
+   "decisions": [],
+   "review_exercise": "List what must be true before exposing B2B contract pricing via an MCP server.",
+   "lessons": [
+    "Separate announcement from implementation evidence."
+   ],
+   "adaptation": "Discovery prompt for B2B clients; needs SAP documentation."
+  },
+  {
+   "id": "CS-014",
+   "company": "SAP and Google Cloud",
+   "industry": "Marketing and customer experience",
+   "title": "Multi-agent marketing with Joule and Gemini Enterprise (secondary report)",
+   "problem": "Run campaign creation and optimisation across SAP and Google agents.",
+   "category": [
+    "Multi-agent architectures",
+    "AI agents"
+   ],
+   "tier": "C",
+   "depth": "Secondary news summary; metric unverified",
+   "sources": [
+    "SRC-017"
+   ],
+   "technologies_stated": [
+    "A2A",
+    "MCP",
+    "Gemini Enterprise",
+    "SAP Joule",
+    "ABAP SDK for Google Cloud"
+   ],
+   "patterns": [
+    "PAT10",
+    "PAT06"
+   ],
+   "prereq_topics": [
+    "T2.3.4",
+    "T1.3.6"
+   ],
+   "facts": [
+    [
+     "The report says A2A links Google-built agents to Joule and MCP gives access to SAP data.",
+     "SRC-017"
+    ],
+    [
+     "A retailer automation rate of 23% is quoted but not confirmed.",
+     "SRC-017"
+    ]
+   ],
+   "interpretations": [
+    [
+     "Do not quote the 23% without a primary source.",
+     "I"
+    ]
+   ],
+   "unknown": [
+    "Architecture",
+    "Governance",
+    "Results"
+   ],
+   "decisions": [],
+   "review_exercise": "Which consent and brand-safety controls are missing from this description?",
+   "lessons": [
+    "Cross-vendor agent protocols raise governance questions first."
+   ],
+   "adaptation": "Needs SAP primary documentation."
+  }
+ ],
+ "backlog": [
+  {
+   "candidate": "DoorDash support RAG, guardrails and quality monitoring",
+   "status": "Primary DoorDash engineering URLs found by search but not yet read",
+   "industry": "E-commerce delivery",
+   "next": "next batch"
+  },
+  {
+   "candidate": "DoorDash GenAI platform talk (InfoQ)",
+   "status": "Conference talk located; not yet read",
+   "industry": "E-commerce delivery",
+   "next": "next batch"
+  },
+  {
+   "candidate": "LinkedIn GenAI stack and hiring assistant",
+   "status": "Only secondary coverage and ZenML summaries located; primary LinkedIn engineering posts to find",
+   "industry": "Professional networking",
+   "next": "next batch"
+  },
+  {
+   "candidate": "GitHub Copilot context engineering",
+   "status": "Mentioned in ZenML index; primary source not yet located",
+   "industry": "Software",
+   "next": "next batch"
+  },
+  {
+   "candidate": "Uber software factory (agentic coding)",
+   "status": "ZenML summary only; primary post to find",
+   "industry": "Mobility",
+   "next": "next batch"
+  },
+  {
+   "candidate": "Gerdau generative AI in steel manufacturing",
+   "status": "Microsoft customer story and Databricks page located (vendor); technical source needed",
+   "industry": "Manufacturing",
+   "next": "needs technical source"
+  },
+  {
+   "candidate": "Austrian Post order processing automation",
+   "status": "ZenML summary only; primary source to find",
+   "industry": "Logistics",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Barclays MLOps and LLM integration",
+   "status": "Conference talk summaries only",
+   "industry": "Banking",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Harvey legal AI infrastructure",
+   "status": "ZenML summary only",
+   "industry": "Professional services",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Rocket home-buying conversational assistant",
+   "status": "ZenML summary only",
+   "industry": "Financial services",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Rubrik enterprise AI platform integration",
+   "status": "ZenML summary only",
+   "industry": "Software",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Glean enterprise search with LLMs",
+   "status": "ZenML summary only",
+   "industry": "Software",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Instacart, DoorDash and Uber Eats search comparison",
+   "status": "ByteByteGo newsletter (secondary); use only to point to primaries",
+   "industry": "Retail",
+   "next": "secondary only"
+  }
+ ],
+ "coverage_gaps": [
+  "Banking and financial services: searches returned vendor and consultancy content; need named-institution technical sources",
+  "Healthcare and life sciences: same; need hospital or pharma engineering/regulatory-grade sources",
+  "Telecom and media: same",
+  "Energy and utilities: not yet searched",
+  "Travel and hospitality: not yet searched",
+  "Manufacturing and automotive: only vendor stories and ZenML summaries so far",
+  "SAP CX implementations with outcomes: only reference architectures, one partner blog and editorial coverage found"
+ ]
+}

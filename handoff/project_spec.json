@@ -1,0 +1,926 @@
+{
+ "spec_version": "1.0",
+ "prepared": "2026-11-12",
+ "project": {
+  "working_name": "Architect Lab",
+  "configurable": true,
+  "type": "static learning portal (GitHub Pages, no backend)",
+  "branch": "main",
+  "inputs_required_at_build_time": {
+   "GITHUB_OWNER": "supplied by the user in the Claude Code session",
+   "REPO_NAME": "supplied by the user in the Claude Code session",
+   "rule": "Never hard-code or guess. Inspect git remote and confirm with the user before pushing. Derive SITE_URL and BASE_PATH from them."
+  }
+ },
+ "objectives": [
+  "Develop the learner into an enterprise AI Solution Architect with SAP CX specialisation",
+  "Teach architectural judgment through real-world cases with explicit provenance",
+  "Assess real understanding (scenario-weighted) and adapt the pathway",
+  "Keep all progress local with portable JSON backup",
+  "Work with no backend and no API keys"
+ ],
+ "user_profile": {
+  "background": [
+   "Enterprise and SAP Commerce experience",
+   "Java/Spring, APIs, integrations",
+   "OpenAI, Claude, Gemini, tool calling, MCP",
+   "SAP Joule Studio certification"
+  ],
+  "not_a_beginner": true,
+  "time_per_day_hours": 2,
+  "constraints": [
+   "Cannot rely on installing Python or dev environments on personal or office laptops",
+   "Limited extensive local coding",
+   "Some OpenAI credits; portal must not depend on them",
+   "Uses mobile and desktop"
+  ],
+  "deployment_knowledge": "novice"
+ },
+ "content_package": {
+  "manifest": "00_MANIFEST.json",
+  "files": {
+   "curriculum": "content/curriculum_blueprint.json",
+   "case_catalog": "content/case_catalog_batch1.json",
+   "sources": "content/source_register.json",
+   "engine_config": "config/engine.json",
+   "schemas": "schemas/*.schema.json"
+  },
+  "counts_policy": "Never hard-code content counts in UI or docs; compute from data.",
+  "partial_content_policy": "App must run with partial content and show honest empty states; never generate filler content."
+ },
+ "functional_requirements": [
+  {
+   "id": "F01",
+   "title": "Dashboard",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F01-1",
+     "text": "With no data the dashboard routes to the assessment invitation, not an empty chart."
+    },
+    {
+     "id": "AC-F01-2",
+     "text": "Every recommendation displays \"Because ...\" text derived from the scoring factors in section 8.4."
+    },
+    {
+     "id": "AC-F01-3",
+     "text": "Level, gates and counts are computed from data, not hard-coded."
+    },
+    {
+     "id": "AC-F01-4",
+     "text": "Works at 360 px width without horizontal scrolling."
+    }
+   ]
+  },
+  {
+   "id": "F02",
+   "title": "Initial assessment",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F02-1",
+     "text": "Score contributions use the weights above; a unit test with a fixed answer set reproduces expected competency estimates."
+    },
+    {
+     "id": "AC-F02-2",
+     "text": "Refreshing mid-assessment resumes at the same question."
+    },
+    {
+     "id": "AC-F02-3",
+     "text": "Self-assessment never raises a mastery state; it only alters calibration and order of sampling."
+    },
+    {
+     "id": "AC-F02-4",
+     "text": "Results page lists strengths, gaps, overconfident and underconfident competencies, and the reasons topics were compressed or deepened."
+    },
+    {
+     "id": "AC-F02-5",
+     "text": "Retaking is allowed; history of assessment runs is preserved."
+    },
+    {
+     "id": "AC-F02-6",
+     "text": "If the question bank has fewer items than the target for a competency, the assessment still runs and reports \"low evidence\" for that competency."
+    }
+   ]
+  },
+  {
+   "id": "F03",
+   "title": "Adaptive pathway",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F03-1",
+     "text": "A topic is never listed before its prerequisites unless the learner overrides."
+    },
+    {
+     "id": "AC-F03-2",
+     "text": "Proficient topics appear compressed with a \"confirm in 2 questions\" step."
+    },
+    {
+     "id": "AC-F03-3",
+     "text": "No calendar dates anywhere in the pathway view. [REQ]"
+    },
+    {
+     "id": "AC-F03-4",
+     "text": "Build-time validation fails on cycles or dangling prerequisites."
+    }
+   ]
+  },
+  {
+   "id": "F04",
+   "title": "Curriculum navigation",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F04-1",
+     "text": "Filters combine (AND) and persist in the URL query string."
+    },
+    {
+     "id": "AC-F04-2",
+     "text": "Every topic page shows prerequisites with live state and \"next topics unlocked\"."
+    }
+   ]
+  },
+  {
+   "id": "F05",
+   "title": "Lesson pages",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F05-1",
+     "text": "Marking a lesson read records a `lessonViewed` event only; it does not change mastery. [REQ]"
+    },
+    {
+     "id": "AC-F05-2",
+     "text": "Depth switch is instant and remembered per topic."
+    },
+    {
+     "id": "AC-F05-3",
+     "text": "If lesson body is absent (content phase not done), the page shows objectives, resources and questions and a clear \"lesson text not written yet\" banner, never filler text."
+    }
+   ]
+  },
+  {
+   "id": "F06",
+   "title": "Case study library and detail",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F06-1",
+     "text": "Every V claim shows at least one source ID resolvable on `/sources/`."
+    },
+    {
+     "id": "AC-F06-2",
+     "text": "V, I, R, U use distinct labels and colours plus text/icon (not colour alone)."
+    },
+    {
+     "id": "AC-F06-3",
+     "text": "Build fails if a case lacks sources, a V fact cites a source not in its source list, or a Tier A case has fewer than 3 decisions."
+    },
+    {
+     "id": "AC-F06-4",
+     "text": "Simulations render with a persistent \"SIMULATION\" badge and are listed in a separate collection."
+    },
+    {
+     "id": "AC-F06-5",
+     "text": "The library shows true counts by tier and states when the catalog is smaller than any aspirational figure."
+    },
+    {
+     "id": "AC-F06-6",
+     "text": "Diagrams reconstructed by Claude Code from text are labelled \"Reconstructed\"; source diagrams are linked, not copied."
+    }
+   ]
+  },
+  {
+   "id": "F07",
+   "title": "Architecture diagrams and visual explanations",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F07-1",
+     "text": "Each diagram has alt text; each reconstructed one carries the label."
+    },
+    {
+     "id": "AC-F07-2",
+     "text": "Diagrams reflow or scroll within a container on mobile without breaking layout."
+    }
+   ]
+  },
+  {
+   "id": "F08",
+   "title": "Assessment engine (shared by F02, quizzes, exercises)",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F08-1",
+     "text": "Options are shuffled with a seeded shuffle recorded in the attempt."
+    },
+    {
+     "id": "AC-F08-2",
+     "text": "Explanations show after submission, with links back to topic and case."
+    },
+    {
+     "id": "AC-F08-3",
+     "text": "Each attempt stores timestamp, item id, content version, response, score, confidence rating (1-5), time spent."
+    },
+    {
+     "id": "AC-F08-4",
+     "text": "Every question must map to at least one topic and competency (build-time check)."
+    }
+   ]
+  },
+  {
+   "id": "F09",
+   "title": "Knowledge-gap and competency tracking",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F09-1",
+     "text": "Mastery logic matches section 8 and is covered by unit tests."
+    },
+    {
+     "id": "AC-F09-2",
+     "text": "A topic cannot be proficient or mastered with zero applied-item evidence."
+    },
+    {
+     "id": "AC-F09-3",
+     "text": "Later failed case exercises reduce related topic estimates and can reopen a topic (state regression allowed) and queue revision."
+    }
+   ]
+  },
+  {
+   "id": "F10",
+   "title": "Resource presentation",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F10-1",
+     "text": "Resources with `to_verify` status render a \"link not yet verified\" label."
+    },
+    {
+     "id": "AC-F10-2",
+     "text": "A build-time link-check script reports external URL failures as warnings and writes a report; it never silently drops resources."
+    },
+    {
+     "id": "AC-F10-3",
+     "text": "Paid resources are labelled."
+    }
+   ]
+  },
+  {
+   "id": "F11",
+   "title": "Revision and spaced review",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F11-1",
+     "text": "Intervals and penalties come from configuration."
+    },
+    {
+     "id": "AC-F11-2",
+     "text": "Queue persists across sessions; overdue items accumulate without penalty text."
+    },
+    {
+     "id": "AC-F11-3",
+     "text": "The learner can reset or snooze a card."
+    }
+   ]
+  },
+  {
+   "id": "F12",
+   "title": "Recommendations (\"what next\")",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F12-1",
+     "text": "Deterministic given the same data and config (seeded tie-break)."
+    },
+    {
+     "id": "AC-F12-2",
+     "text": "Recommendation includes mix balance (learn, case, exercise, revise) and explains when balance shifted."
+    },
+    {
+     "id": "AC-F12-3",
+     "text": "When prerequisites for a chosen case are in gap, the recommendation is the prerequisite topic with \"then return to case X\"."
+    }
+   ]
+  },
+  {
+   "id": "F13",
+   "title": "Search and filtering",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F13-1",
+     "text": "Index built in CI; search works under the base path."
+    },
+    {
+     "id": "AC-F13-2",
+     "text": "No query leaves the browser."
+    }
+   ]
+  },
+  {
+   "id": "F14",
+   "title": "Knowledge map",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F14-1",
+     "text": "Each of the six sample questions is answerable in two interactions or fewer."
+    },
+    {
+     "id": "AC-F14-2",
+     "text": "Graph view degrades to list when JavaScript graph rendering is unavailable."
+    },
+    {
+     "id": "AC-F14-3",
+     "text": "Graph data generated at build time from validated content."
+    }
+   ]
+  },
+  {
+   "id": "F15",
+   "title": "Progress tracking and gamification (subtle)",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F15-1",
+     "text": "Streak never blocks or scolds; missed days display no penalty."
+    },
+    {
+     "id": "AC-F15-2",
+     "text": "Level changes only from gate evidence."
+    }
+   ]
+  },
+  {
+   "id": "F16",
+   "title": "Local persistence",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F16-1",
+     "text": "Reload preserves state."
+    },
+    {
+     "id": "AC-F16-2",
+     "text": "Simulated storage failure (test) triggers session-only banner, no crash."
+    },
+    {
+     "id": "AC-F16-3",
+     "text": "Schema migration framework exists with at least a tested v1\u2192v2 stub."
+    },
+    {
+     "id": "AC-F16-4",
+     "text": "When content IDs are removed or renamed, orphaned records are retained, flagged, and excluded from active metrics, never deleted silently."
+    }
+   ]
+  },
+  {
+   "id": "F17",
+   "title": "Backup and restore",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F17-1",
+     "text": "Round-trip test: export, wipe, import reproduces identical derived state."
+    },
+    {
+     "id": "AC-F17-2",
+     "text": "Malformed, truncated or wrong-schema files are rejected with a specific message and change nothing."
+    },
+    {
+     "id": "AC-F17-3",
+     "text": "Merge test with two diverging exports yields union of attempts and no duplicate attempt ids."
+    },
+    {
+     "id": "AC-F17-4",
+     "text": "Backup reminder logic per F01."
+    }
+   ]
+  },
+  {
+   "id": "F18",
+   "title": "Settings and transparency",
+   "acceptance_criteria": []
+  },
+  {
+   "id": "F19",
+   "title": "Sources and freshness",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F19-1",
+     "text": "Items marked `verify` display a visible \"verify before use\" marker on the topic or case page that cites them."
+    }
+   ]
+  },
+  {
+   "id": "F20",
+   "title": "Exercises",
+   "acceptance_criteria": [
+    {
+     "id": "AC-F20-1",
+     "text": "ADR export produces valid Markdown with decision, options, criteria, trade-offs."
+    }
+   ]
+  }
+ ],
+ "cross_cutting_acceptance_criteria": [
+  {
+   "id": "AC-A11Y-1",
+   "text": "axe reports zero serious or critical violations on every route type in CI."
+  },
+  {
+   "id": "AC-A11Y-2",
+   "text": "Full assessment completable by keyboard only."
+  }
+ ],
+ "non_functional_requirements": [
+  {
+   "id": "NFR-01",
+   "area": "performance",
+   "requirement": "LCP <= 2.5 s on throttled mobile for key pages; initial JS <= 120 KB gzip on content pages; page weight <= 500 KB excluding video; Lighthouse performance >= 90 and accessibility >= 95 on sampled routes"
+  },
+  {
+   "id": "NFR-02",
+   "area": "accessibility",
+   "requirement": "WCAG 2.2 AA target; keyboard-operable; axe zero serious/critical on every route type; reduced motion respected; no colour-only meaning"
+  },
+  {
+   "id": "NFR-03",
+   "area": "responsive",
+   "requirement": "Works at 360, 768, 1100, 1440 px; no horizontal page scroll at 360; touch targets >= 44 px"
+  },
+  {
+   "id": "NFR-04",
+   "area": "security",
+   "requirement": "No secrets in repo, bundle, config or Git history; secret scan in CI and pre-commit; strict CSP meta; rel noopener; imported JSON validated, size-limited, never evaluated; Markdown sanitised"
+  },
+  {
+   "id": "NFR-05",
+   "area": "privacy",
+   "requirement": "No data leaves the browser; no third-party analytics; video embeds click-to-load via privacy-enhanced domain"
+  },
+  {
+   "id": "NFR-06",
+   "area": "reliability",
+   "requirement": "Storage failure degrades to session-only mode with warning; error boundaries per island; import is non-destructive on failure"
+  },
+  {
+   "id": "NFR-07",
+   "area": "maintainability",
+   "requirement": "Content separate from logic; schema-validated content; engine fully unit-tested; ADRs for key decisions; minimal pinned dependencies"
+  },
+  {
+   "id": "NFR-08",
+   "area": "compatibility",
+   "requirement": "Latest two versions of Chrome, Edge, Firefox, Safari (desktop and mobile); GitHub Pages project-site base path supported"
+  },
+  {
+   "id": "NFR-09",
+   "area": "content_integrity",
+   "requirement": "Provenance tags V/I/R/U enforced by build; no fabricated facts, metrics, diagrams or resources; unverified items visibly labelled"
+  },
+  {
+   "id": "NFR-10",
+   "area": "scalability_of_content",
+   "requirement": "Library growth to hundreds of cases and thousands of questions without code changes; per-route code splitting; search index built in CI"
+  }
+ ],
+ "curriculum_structure": {
+  "source": "content/curriculum_blueprint.json",
+  "pillars": 3,
+  "modules": 13,
+  "topics": 73,
+  "competencies": 17,
+  "patterns": 20,
+  "levels": [
+   "L0",
+   "L1",
+   "L2",
+   "L3",
+   "L4",
+   "L5"
+  ],
+  "field_glossary": {
+   "pre": "prerequisite topic ids",
+   "comps": "competency ids",
+   "obj": "learning objectives",
+   "res": "[resourceSourceKey, focus] slots",
+   "pat": "pattern ids",
+   "cases": "free-text case candidates",
+   "verified_case_ids": "catalog cases linked via prereq_topics"
+  }
+ },
+ "knowledge_model": {
+  "nodes": [
+   "Pillar",
+   "Module",
+   "Topic",
+   "Competency",
+   "Pattern",
+   "Case",
+   "Question",
+   "Card",
+   "Resource",
+   "Source"
+  ],
+  "edges": [
+   "Topic-requires->Topic",
+   "Topic-develops->Competency",
+   "Topic-involves->Pattern",
+   "Case-requires->Topic",
+   "Case-demonstrates->Pattern",
+   "Case-cites->Source",
+   "Question-assesses->Topic",
+   "Question-assesses->Competency",
+   "Card-belongs->Topic",
+   "Resource-supports->Topic"
+  ],
+  "generated_artifact": "graph.json built at build time",
+  "queries_required": [
+   "Which cases demonstrate pattern X",
+   "Which cases use multi-agent orchestration",
+   "Topics before case Y",
+   "Patterns studied",
+   "Weakest competencies",
+   "What to learn next"
+  ]
+ },
+ "case_content_schema": {
+  "schema": "schemas/case.schema.json",
+  "evidence_tags": {
+   "V": "Verified: stated in cited source",
+   "I": "Interpretation: reasoned from verified facts",
+   "R": "Reconstructed: inferred to fill gaps (none used in batch 1)",
+   "U": "Unknown: not established from sources"
+  },
+  "tier_definitions": {
+   "A": "Full walkthrough candidate: builder-authored technical primary source",
+   "A-provisional": "Primary source identified; full body not yet read",
+   "B": "Structured analysis: limited depth or implementer-authored",
+   "C": "Catalog stub: marketing, editorial or secondary; no invented detail"
+  },
+  "walkthrough_sections": [
+   "Company and industry",
+   "Business context",
+   "Original problem",
+   "Objectives",
+   "Discovery questions",
+   "Business and functional requirements",
+   "Technical and non-functional requirements",
+   "Constraints and assumptions",
+   "Documented architecture",
+   "Architecture diagram and components",
+   "End-to-end flows",
+   "Models and technologies",
+   "Integration architecture",
+   "Data architecture and retrieval",
+   "Security, privacy, identity, governance",
+   "Guardrails and human oversight",
+   "Monitoring, observability, evaluation",
+   "Performance, scalability, reliability, cost",
+   "Implementation and deployment",
+   "Documented decisions",
+   "Inferred decisions",
+   "Alternatives",
+   "Why selected approach may be preferable",
+   "Limitations and risks",
+   "Lessons for an architect",
+   "Adapting to another client",
+   "Sources and confidence"
+  ],
+  "render_rule": "Render only sections that exist in data; never fabricate missing sections"
+ },
+ "learning_content_schema": {
+  "lesson": "schemas/lesson_frontmatter.schema.json",
+  "resource": "schemas/resource.schema.json",
+  "card": "schemas/card.schema.json",
+  "depth_variants": {
+   "compress": {
+    "when": "Initial or later assessment shows proficient on this topic's competencies",
+    "content": "One-page summary, key terms, 2 confirmation questions, jump to related cases",
+    "est_minutes_range": [
+     10,
+     20
+    ]
+   },
+   "standard": {
+    "when": "Developing or untested",
+    "content": "Guided lesson, curated resources with focus notes, worked example, quiz, one exercise",
+    "est_minutes_range": [
+     45,
+     90
+    ]
+   },
+   "deep": {
+    "when": "Gap or repeated misses",
+    "content": "Prerequisite refresh, extended lesson, multiple examples, scaffolded exercises, targeted re-assessment",
+    "est_minutes_range": [
+     90,
+     180
+    ]
+   }
+  }
+ },
+ "assessment_schema": {
+  "question": "schemas/question.schema.json",
+  "types": [
+   "mcq",
+   "scenario",
+   "decision_comparison",
+   "architecture_review",
+   "card"
+  ],
+  "initial_assessment_blueprint": {
+   "A_concept_mcq": 0.25,
+   "B_scenario": 0.55,
+   "C_self_assessment_calibration": 0.2
+  }
+ },
+ "adaptive_learning_rules": {
+  "config": "config/engine.json",
+  "summary": [
+   "Mastery only from assessment evidence",
+   "Prerequisite routing with resume pointer",
+   "Regression on failed case exercises",
+   "Deterministic recommender with explanations",
+   "Spaced revision intervals scheduling reviews only",
+   "No calendar deadlines"
+  ]
+ },
+ "progress_tracking_model": {
+  "stores": [
+   "meta",
+   "profile",
+   "attempts",
+   "topicState",
+   "cardState",
+   "caseProgress",
+   "notes",
+   "settings"
+  ],
+  "derived": "topicState and competency estimates recomputable from attempts",
+  "export_schema": "schemas/progress_export.schema.json"
+ },
+ "ui_ux": {
+  "direction": "serious professional workbench, subtle gamification, no childish elements",
+  "navigation": "Dashboard, Pathway, Curriculum, Cases, Review, Map, Progress; utility Search and Settings; mobile bottom bar plus More",
+  "routes": [
+   "/",
+   "/assessment/",
+   "/assessment/results/",
+   "/pathway/",
+   "/curriculum/",
+   "/curriculum/{module}/",
+   "/topic/{id}/",
+   "/cases/",
+   "/case/{id}/",
+   "/patterns/",
+   "/pattern/{id}/",
+   "/competencies/",
+   "/map/",
+   "/review/",
+   "/exercise/{id}/",
+   "/progress/",
+   "/sources/",
+   "/freshness/",
+   "/settings/",
+   "/about/",
+   "/404.html"
+  ],
+  "components": [
+   "card",
+   "badge(tier, provenance, state)",
+   "responsive table",
+   "accordion",
+   "tabs",
+   "stepper",
+   "progress bar",
+   "SVG radar or bars",
+   "callout V/I/R/U",
+   "diagram container",
+   "quiz panel",
+   "resource row",
+   "empty state",
+   "toast"
+  ]
+ },
+ "design_system": {
+  "tokens": "CSS custom properties",
+  "themes": [
+   "light",
+   "dark",
+   "system"
+  ],
+  "typography": "self-hosted variable fonts, font-display swap, no external font CDN",
+  "measure_chars": "65-75",
+  "spacing": "4/8 scale",
+  "provenance_encoding": "colour plus icon plus text label",
+  "motion": "respect prefers-reduced-motion"
+ },
+ "technical_architecture": {
+  "framework": "Astro static output + TypeScript",
+  "content": "Astro content collections with Zod validation from JSON and Markdown",
+  "interactivity": "Preact or React islands (assessment, dashboard, map)",
+  "search": "Pagefind built in CI",
+  "diagrams": "Mermaid prerendered to SVG at build; text alternatives required",
+  "styling": "CSS with tokens (Tailwind acceptable; record ADR)",
+  "tests": [
+   "Vitest",
+   "Playwright",
+   "axe",
+   "Lighthouse CI"
+  ],
+  "deviation_rule": "Any deviation from the recommended stack requires an ADR explaining why and the impact on requirements"
+ },
+ "data_persistence": {
+  "primary": "IndexedDB database architect-lab schema v1",
+  "secondary": "localStorage for small UI preferences only, with try/catch and in-memory fallback",
+  "fallback": "session-only mode with persistent warning",
+  "orphan_policy": "retain, flag, exclude from active metrics",
+  "migrations": "framework with tested v1->v2 stub",
+  "backup": {
+   "format": "JSON",
+   "filename": "architect-lab-progress-YYYY-MM-DD.json",
+   "modes": [
+    "replace",
+    "merge"
+   ],
+   "merge_rule": "union of attempts by id; latest timestamp wins for mutable records",
+   "pre_import_backup_offer": true,
+   "reject_newer_schema": true
+  },
+  "user_notice": "Data lives only in this browser profile on this device; clearing site data or changing device loses it unless a backup is imported; no automatic sync."
+ },
+ "security_requirements": [
+  "No API keys, secrets or tokens anywhere in repo, bundle, config or Git history",
+  "No embedded provider calls",
+  "BYO-key practical exercises are documentation only and explain cost and key-handling",
+  "CSP meta policy",
+  "Secret scanning in CI and pre-commit",
+  "Dependency audit in CI",
+  "Imported data validated and size-limited"
+ ],
+ "repository_structure": {
+  "root": [
+   "README.md",
+   "docs/",
+   "content/",
+   "src/",
+   "scripts/",
+   "tests/",
+   ".github/workflows/",
+   "public/",
+   "package.json",
+   "astro.config.*",
+   "lockfile"
+  ],
+  "docs": [
+   "DEPLOYMENT_GUIDE.md",
+   "CONTENT_GUIDE.md",
+   "ARCHITECTURE.md",
+   "ENGINE.md",
+   "TESTING.md",
+   "ADRs/"
+  ],
+  "content": [
+   "config/engine.json",
+   "curriculum/",
+   "topics/{id}/lesson.md",
+   "cases/",
+   "questions/",
+   "cards/",
+   "resources/",
+   "sources/",
+   "patterns/"
+  ],
+  "src": [
+   "pages/",
+   "components/",
+   "islands/",
+   "lib/engine",
+   "lib/storage",
+   "lib/backup",
+   "lib/search",
+   "styles/",
+   "layouts/"
+  ],
+  "scripts": [
+   "validate-content",
+   "build-graph",
+   "check-links",
+   "scan-secrets"
+  ],
+  "workflows": [
+   "ci.yml",
+   "deploy.yml"
+  ]
+ },
+ "github_pages_deployment": {
+  "source": "GitHub Actions",
+  "branch": "main",
+  "site": "https://{GITHUB_OWNER}.github.io",
+  "base": "/{REPO_NAME} (or / for a repository named {owner}.github.io)",
+  "permissions": {
+   "contents": "read",
+   "pages": "write",
+   "id-token": "write"
+  },
+  "rules": [
+   "All internal URLs via one base-aware helper",
+   "Static HTML per route so refresh on deep links works",
+   "Check current versions of GitHub Actions before pinning",
+   "Post-deploy smoke test of home and one deep link"
+  ],
+  "guide_file": "docs/DEPLOYMENT_GUIDE.md"
+ },
+ "testing_requirements": {
+  "unit": [
+   "scoring",
+   "mastery boundaries",
+   "decay",
+   "calibration",
+   "recommender golden outputs",
+   "routing rule",
+   "spaced repetition",
+   "backup round-trip and merge",
+   "migration",
+   "validators"
+  ],
+  "integration": [
+   "content validators with broken fixtures: cycle, dangling id, missing source, V fact with unlisted source, Tier A with fewer than 3 decisions"
+  ],
+  "e2e": [
+   "UJ-01..UJ-10 under the real base path",
+   "reload persistence",
+   "storage failure mode",
+   "import errors",
+   "keyboard-only assessment",
+   "mobile viewport"
+  ],
+  "a11y": "axe on every route type",
+  "performance": "Lighthouse CI",
+  "deploy_smoke": "fetch live URL after deploy",
+  "reporting_rule": "Report exactly which tests ran and their results; never claim unexecuted coverage"
+ },
+ "documentation_requirements": [
+  "README",
+  "DEPLOYMENT_GUIDE (novice, standalone text)",
+  "CONTENT_GUIDE incl. case research protocol and tiering",
+  "ARCHITECTURE",
+  "ENGINE (all formulas and config)",
+  "TESTING",
+  "ADRs"
+ ],
+ "deployment_guide_requirements": [
+  "Exact repository settings path: Settings > Pages",
+  "Where GitHub Pages is",
+  "Use GitHub Actions as source and why",
+  "What options to select and save",
+  "How to trigger first deploy",
+  "How to verify (checklist)",
+  "How to find final URL",
+  "Troubleshooting: 404, blank page or missing CSS (wrong base), Actions permission errors, Pages not enabled, build validation failures, environment protection rules, path case sensitivity, cache delays",
+  "How to update later and how to roll back",
+  "How to back up progress before updates",
+  "Must stand alone without screenshots"
+ ],
+ "out_of_scope": [
+  "Backend or server database",
+  "Accounts and authentication",
+  "Cross-device sync",
+  "In-portal LLM calls or API keys",
+  "Model-based grading of free text",
+  "Multi-user features",
+  "Payments",
+  "Native mobile app",
+  "Analytics collection",
+  "Push notifications",
+  "Service-worker offline mode (v1)"
+ ],
+ "assumptions": [
+  "Stack choice is a recommendation (ADR if changed)",
+  "Engine thresholds and weights are tunable defaults",
+  "Content arrives in phases; app handles partial content",
+  "SAP availability and pricing facts conflict across sources and are time-sensitive",
+  "Regulatory content is educational, not legal advice",
+  "Scenario justification is self-scored"
+ ],
+ "unresolved_decisions": [
+  {
+   "id": "UD-01",
+   "item": "GitHub owner and repository name",
+   "resolution": "Supplied by the user at Claude Code start; derived paths only"
+  },
+  {
+   "id": "UD-02",
+   "item": "Case catalog size beyond batch 1",
+   "resolution": "Content phase using the case research protocol; honest counts"
+  },
+  {
+   "id": "UD-03",
+   "item": "Individual resource URLs and videos",
+   "resolution": "Curate and link-check in content phase; status to_verify until checked"
+  },
+  {
+   "id": "UD-04",
+   "item": "SAP status conflicts: Joule Studio GA date, free-use period end, Agent Hub GA",
+   "resolution": "Verify on SAP Help Portal and Roadmap Explorer before publishing SAP lessons"
+  },
+  {
+   "id": "UD-05",
+   "item": "OWASP LLM Top 10 edition to teach (2025 vs a referenced 2026 edition)",
+   "resolution": "Fetch primary OWASP pages and state edition"
+  },
+  {
+   "id": "UD-06",
+   "item": "Full reading of SAP reference architecture pages (CS-011, CS-012)",
+   "resolution": "Read full pages and upgrade tier before walkthrough"
+  }
+ ]
+}

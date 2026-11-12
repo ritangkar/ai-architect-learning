@@ -1,0 +1,86 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "ProgressExport",
+ "type": "object",
+ "properties": {
+  "schema": {
+   "const": "architect-lab-progress"
+  },
+  "version": {
+   "type": "integer",
+   "minimum": 1
+  },
+  "exportedAt": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "contentVersion": {
+   "type": "string"
+  },
+  "installId": {
+   "type": "string"
+  },
+  "data": {
+   "type": "object",
+   "required": [
+    "profile",
+    "attempts",
+    "cardState",
+    "caseProgress",
+    "notes",
+    "settings"
+   ],
+   "properties": {
+    "profile": {
+     "type": "object"
+    },
+    "attempts": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": [
+       "id",
+       "itemId",
+       "timestamp",
+       "score"
+      ]
+     }
+    },
+    "cardState": {
+     "type": "array",
+     "items": {
+      "type": "object"
+     }
+    },
+    "caseProgress": {
+     "type": "array",
+     "items": {
+      "type": "object"
+     }
+    },
+    "notes": {
+     "type": "array",
+     "items": {
+      "type": "object"
+     }
+    },
+    "settings": {
+     "type": "object"
+    }
+   }
+  },
+  "checksum": {
+   "type": "string"
+  }
+ },
+ "required": [
+  "schema",
+  "version",
+  "exportedAt",
+  "contentVersion",
+  "installId",
+  "data",
+  "checksum"
+ ],
+ "additionalProperties": true
+}

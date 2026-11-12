@@ -1,0 +1,59 @@
+{
+ "manifest_version": "1.0",
+ "prepared": "2026-11-12",
+ "purpose": "Handoff package for Claude Code to build the Architect Lab learning portal",
+ "start_here": [
+  "CLAUDE_CODE_MASTER_PROMPT.md",
+  "project_spec.json"
+ ],
+ "load_order": [
+  "CLAUDE_CODE_MASTER_PROMPT.md",
+  "project_spec.json",
+  "config/engine.json",
+  "schemas/*.schema.json",
+  "content/source_register.json",
+  "content/curriculum_blueprint.json",
+  "content/case_catalog_batch1.json",
+  "docs/PART4_functional_and_technical_spec.md"
+ ],
+ "files": {
+  "CLAUDE_CODE_MASTER_PROMPT.md": "Instructions for Claude Code",
+  "VALIDATION_MATRIX.md": "Requirement-by-requirement check of this package with honest gaps",
+  "project_spec.json": "Machine-readable specification: functional (20 features, 62 acceptance criteria), non-functional, stack, repo structure, deployment, tests, docs, out of scope, assumptions",
+  "config/engine.json": "Tunable mastery, recommender, assessment and spaced-review parameters",
+  "schemas/": "JSON Schemas: topic, case, source, question, resource, card, lesson_frontmatter, progress_export (+ example)",
+  "content/curriculum_blueprint.json": "Pillars, modules, topics, competencies, patterns, levels, depth model; topics link to verified cases",
+  "content/case_catalog_batch1.json": "14 cases with tiers, tagged facts, decisions, backlog, coverage gaps",
+  "content/source_register.json": "30 sources with grades and check dates",
+  "docs/": "Human-readable research report, curriculum, catalog and functional spec"
+ },
+ "relationships": {
+  "topic.verified_case_ids -> case.id": "derived from case.prereq_topics",
+  "case.sources -> source.id": "required",
+  "case.facts[1] -> case.sources": "fact source must be listed in the case",
+  "case.patterns -> curriculum.patterns": "required",
+  "topic.comps -> curriculum.competencies": "required",
+  "question.topics -> topic.id": "required",
+  "question.competencies -> competency id": "required",
+  "engine.json": "read at runtime by src/lib/engine"
+ },
+ "inputs_supplied_by_user_in_session": [
+  "GITHUB_OWNER",
+  "REPO_NAME"
+ ],
+ "known_incomplete_content": [
+  "Lesson text for all topics",
+  "Question bank (targets only: about 292 MCQ, 134 scenario, 438 cards)",
+  "Individual resource URLs and videos",
+  "Case catalog beyond 14 entries",
+  "Full reading of CS-011 and CS-012 SAP pages"
+ ],
+ "field_glossary_topic": {
+  "pre": "prerequisite topic ids",
+  "comps": "competency ids",
+  "obj": "learning objectives",
+  "res": "[resourceSourceKey, focus]",
+  "pat": "pattern ids",
+  "hands": "none|browser|optional_local"
+ }
+}

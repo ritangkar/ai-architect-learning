@@ -1,0 +1,88 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Question",
+ "type": "object",
+ "properties": {
+  "id": {
+   "type": "string"
+  },
+  "type": {
+   "enum": [
+    "mcq",
+    "scenario",
+    "decision_comparison",
+    "architecture_review",
+    "card"
+   ]
+  },
+  "topics": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1
+  },
+  "competencies": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1
+  },
+  "difficulty": {
+   "type": "integer",
+   "minimum": 1,
+   "maximum": 5
+  },
+  "stem": {
+   "type": "string"
+  },
+  "options": {
+   "type": "array",
+   "items": {
+    "type": "object"
+   }
+  },
+  "correct": {},
+  "explanation": {
+   "type": "string"
+  },
+  "model_answer": {
+   "type": "string"
+  },
+  "rubric": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "criterion",
+     "points"
+    ]
+   }
+  },
+  "sourceCaseId": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "status": {
+   "enum": [
+    "draft",
+    "reviewed",
+    "published"
+   ]
+  }
+ },
+ "required": [
+  "id",
+  "type",
+  "topics",
+  "competencies",
+  "difficulty",
+  "stem",
+  "explanation",
+  "status"
+ ],
+ "additionalProperties": true
+}

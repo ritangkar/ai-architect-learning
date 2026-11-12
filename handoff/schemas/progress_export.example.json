@@ -1,0 +1,16 @@
+{
+ "schema": "architect-lab-progress",
+ "version": 1,
+ "exportedAt": "2026-11-12T00:00:00Z",
+ "contentVersion": "0.2",
+ "installId": "x",
+ "data": {
+  "profile": {},
+  "attempts": [],
+  "cardState": [],
+  "caseProgress": [],
+  "notes": [],
+  "settings": {}
+ },
+ "checksum": "sha256:0"
+}

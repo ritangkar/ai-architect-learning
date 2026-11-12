@@ -1,0 +1,364 @@
+{
+ "register_version": "0.2",
+ "checked_on": "2026-11-12",
+ "sources": [
+  {
+   "id": "SRC-001",
+   "title": "SAP architecture: A2A and MCP for Interoperability",
+   "url": "https://architecture.learning.sap.com/docs/ref-arch/ca1d2a3e/1",
+   "grade": "primary",
+   "supports": [
+    "SAP uses A2A and MCP",
+    "MCP Gateway in Integration Suite",
+    "Joule as A2A client",
+    "Bring Your Own Agent"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-002",
+   "title": "SAP architecture: Agent Gateway / A2A reference",
+   "url": "https://architecture.learning.sap.com/docs/ref-arch/76ec36",
+   "grade": "primary",
+   "supports": [
+    "A2A spec 0.3.0 with HTTP+JSON",
+    "IAS App2App tokens with named user context",
+    "Agent Gateway exposes Joule Agents"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-003",
+   "title": "SAP architecture news: inbound A2A GA October 2026",
+   "url": "https://architecture.learning.sap.com/news/2026/10/27/a2a-agent-gateway-interoperability",
+   "grade": "primary",
+   "supports": [
+    "Inbound A2A interoperability GA announced for October 2026",
+    "Customer defines which SAP Agents external clients may invoke",
+    "Outbound MCP from SAP Agents"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-004",
+   "title": "SAP architecture: SAP Business Data Cloud powered by SAP AI Core",
+   "url": "https://architecture.learning.sap.com/docs/ref-arch/f5b6b597a6/7",
+   "grade": "primary",
+   "supports": [
+    "Three BDC + AI Core patterns",
+    "SAP Databricks model development with AI Core serving",
+    "Batch vs real-time inference separation"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-005",
+   "title": "SAP: Joule Studio product page",
+   "url": "https://www.sap.com/mena/products/artificial-intelligence/joule-studio.html",
+   "grade": "primary",
+   "supports": [
+    "Skill builder GA July 2025",
+    "Agent builder GA stated for December 2025",
+    "Capabilities: NL agent definition, MCP tools, Knowledge Graph grounding, stateful runtime"
+   ],
+   "verify": true,
+   "verify_reason": "Dates conflict with other sources",
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-006",
+   "title": "SAP: Joule Studio agent builder (Netherlands product page)",
+   "url": "https://www.sap.com/netherlands/products/financial-management/joule-studio-agent-builder.html",
+   "grade": "primary",
+   "supports": [
+    "Free promo until 2026-09-30 then Premium AI feature"
+   ],
+   "verify": true,
+   "verify_reason": "Conflicts with SRC-009 on free period; regional page",
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-007",
+   "title": "SAP News: New in SAP CX Q2 2026",
+   "url": "https://news.sap.com/2026/07/new-in-sap-cx-q2-2026-when-insight-is-not-enough/",
+   "grade": "primary",
+   "supports": [
+    "Commerce Cloud MCP server for conversational AI shopping",
+    "Joule in Engagement Cloud (Early Adopter Care)",
+    "Parloa and Google Cloud partnerships"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-008",
+   "title": "SAP News: SAP CX Q4 2025 release",
+   "url": "https://news.sap.com/2026/01/sap-cx-q4-2025-out-of-the-box-ai-agents-ai-assisted-insights-loyalty-tools/",
+   "grade": "primary",
+   "supports": [
+    "Digital Service Agent and Shopping Agent",
+    "Joule Studio agent builder for CX apps"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-009",
+   "title": "SAPinsider: Sapphire 2026, SAP ERP just got an AI brain",
+   "url": "https://sapinsider.org/articles/sapphire-2026-your-sap-erp-just-got-an-ai-brain-now-what-seven-questions-every-leader-must-answer/",
+   "grade": "secondary",
+   "supports": [
+    "Free Joule Studio tooling and runtime through 2026-12-31",
+    "Agent Hub GA Q3 2026, vendor-agnostic",
+    "Post-2026 pricing undisclosed"
+   ],
+   "verify": true,
+   "verify_reason": "Analyst coverage; pricing conflict with SRC-006",
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-010",
+   "title": "SAPinsider: Sapphire 2026 SAP Business AI Platform consolidation",
+   "url": "https://sapinsider.org/blogs/sap-sapphire-2026-how-sap-business-ai-platform-consolidates-sap-btp-sap-business-data-cloud-and-sap-business-ai/",
+   "grade": "secondary",
+   "supports": [
+    "Platform layers: context layer, Joule Studio 2.0, Agent Hub on LeanIX"
+   ],
+   "verify": true,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-011",
+   "title": "ERP Today: SAP TechEd 2026 rollout and plans through 2027",
+   "url": "https://erp.today/sap-teched-2026-whats-rolling-out-and-whats-planned-through-2027/",
+   "grade": "secondary",
+   "supports": [
+    "Joule Work and Joule Studio GA underway in phases",
+    "Agent gateway lets third-party agents invoke Joule Agents",
+    "SAP-RPT-2.0 GA planned"
+   ],
+   "verify": true,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-012",
+   "title": "SoftwareReviews: SAP CX vision at Connect 2026",
+   "url": "https://www.softwarereviews.com/vendor-technology-notes/sap-s-cx-vision-for-its-autonomous-enterprise-gets-product-general-availability-timeline-at-connect-2026",
+   "grade": "secondary",
+   "supports": [
+    "Joule Work / Assistants / Agents layering",
+    "Expanded capabilities GA planned Q1 2027",
+    "70+ supported models in Joule Studio"
+   ],
+   "verify": true,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-013",
+   "title": "SAPinsider: DataXstream agentic AI sales workflows",
+   "url": "https://sapinsider.org/map/sap-agentic-ai-sales-workflows-dataxstream/",
+   "grade": "partner",
+   "supports": [
+    "Churn-risk agent built in Joule Studio with MCP server",
+    "Hack2Build context"
+   ],
+   "verify": true,
+   "verify_reason": "Candidate case; need builder-authored source",
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-014",
+   "title": "Mindset Consulting: toolchain and MCP servers on BTP",
+   "url": "https://www.mindsetconsulting.com/the-toolchain-we-are-building-with-ai-on-top-of-human-expertise/",
+   "grade": "partner",
+   "supports": [
+    "Nine MCP servers on BTP Cloud Foundry",
+    "Joule agent to MCP to Destination to Cloud Connector to S/4HANA path",
+    "One MCP server per business domain"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-015",
+   "title": "ASUG: SAP CX embedded AI for agentic commerce (NRF 2026)",
+   "url": "https://www.asug.com/insights/sap-cx-supplying-retailers-with-embedded-ai-capabilities-to-navigate-the-future-of-agentic-commerce",
+   "grade": "secondary",
+   "supports": [
+    "Storefront MCP server for Commerce Cloud exposing catalog, pricing, inventory, promotions",
+    "Order Reliability Agent for Order Management Services"
+   ],
+   "verify": true,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-016",
+   "title": "Talk Commerce newsletter: SAP Commerce Cloud and the agent at the door",
+   "url": "https://talk-commerce.beehiiv.com/p/maximizing-agility-and-control-in-b2b-commerce-with-shopware",
+   "grade": "secondary",
+   "supports": [
+    "Opinion: most capability is roadmap, merchant deploys MCP server themselves"
+   ],
+   "verify": true,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-017",
+   "title": "Enterprise DNA: SAP and Google Cloud connect AI agents",
+   "url": "https://enterprisedna.co/resources/news/sap-google-cloud-gemini-multi-agent-marketing-2026",
+   "grade": "secondary",
+   "supports": [
+    "A2A + MCP between Joule and Gemini at Cloud Next 2026",
+    "Smyths Toys 23% automation figure (unverified)"
+   ],
+   "verify": true,
+   "verify_reason": "Metric not confirmed from primary source",
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-018",
+   "title": "Astro docs: Deploy to GitHub Pages",
+   "url": "https://docs.astro.build/en/guides/deploy/github/",
+   "grade": "primary",
+   "supports": [
+    "site and base config for project sites",
+    "withastro/action and deploy-pages workflow",
+    "Pages source set to GitHub Actions"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-019",
+   "title": "ZenML LLMOps Database overview (Dec 2025)",
+   "url": "https://www.zenml.io/blog/llmops-in-production-another-419-case-studies-of-what-actually-works",
+   "grade": "secondary",
+   "supports": [
+    "1,182 case studies indexed",
+    "Use as discovery index only; summaries are not primary evidence"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-020",
+   "title": "GitHub: primaprashant/llms-in-production",
+   "url": "https://github.com/primaprashant/llms-in-production",
+   "grade": "secondary",
+   "supports": [
+    "Curated list of engineering blogs on production LLMs"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-021",
+   "title": "OWASP Top 10 for LLM Applications 2025 (via Aembit/Outpost24/Coralogix summaries)",
+   "url": "https://aembit.io/blog/owasp-top-10-llm-risks-explained/",
+   "grade": "secondary",
+   "supports": [
+    "Prompt injection is LLM01",
+    "New entries: System Prompt Leakage, Vector and Embedding Weaknesses",
+    "Unbounded Consumption LLM10"
+   ],
+   "verify": true,
+   "verify_reason": "Fetch genesis.owasp.org primary page; a 2026 edition is referenced",
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-022",
+   "title": "Cloud Wars: Google advances A2A, gains Microsoft and SAP backing",
+   "url": "https://cloudwars.com/ai/google-advances-agent2agent-a2a-protocol-gains-microsoft-and-sap-backing/",
+   "grade": "secondary",
+   "supports": [
+    "SAP adding A2A support to Joule (May 2025)"
+   ],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-023",
+   "title": "Uber Engineering: Unlocking Financial Insights with Finch",
+   "url": "https://www.uber.com/blog/unlocking-financial-insights-with-finch",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; publication date not captured",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-024",
+   "title": "Uber Engineering: Enhanced Agentic-RAG (Genie)",
+   "url": "https://www.uber.com/blog/enhanced-agentic-rag/",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; publication date not captured",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-025",
+   "title": "Dropbox Tech: Building Dash, RAG and AI agents for businesses",
+   "url": "https://dropbox.tech/machine-learning/building-dash-rag-multi-step-ai-agents-business-users",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; post dated Apr 24 2025 per page",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-026",
+   "title": "Dropbox Tech: Knowledge graphs, MCP and DSPy in Dash (VP interview)",
+   "url": "https://dropbox.tech/machine-learning/vp-josh-clemm-knowledge-graphs-mcp-and-dspy-dash",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; date not captured",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-027",
+   "title": "Instacart: Building the Intent Engine",
+   "url": "https://company.instacart.com/tech-innovation/building-the-intent-engine-how-instacart-is-revamping-query-understanding-with-llms",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; date not captured",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-028",
+   "title": "Slack Engineering: How we built Slack AI to be secure and private",
+   "url": "https://slack.engineering/how-we-built-slack-ai-to-be-secure-and-private/",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; date not captured",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-029",
+   "title": "Zalando Engineering: Agentic Engineering at Zalando, a snapshot",
+   "url": "https://engineering.zalando.com/posts/2026/08/agentic-engineering-at-zalando-a-snapshot.html",
+   "grade": "primary (builder-authored)",
+   "checked": "page read 2026-11-12; URL indicates Aug 2026",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  },
+  {
+   "id": "SRC-030",
+   "title": "LangChain: How Klarna's AI assistant redefined customer support",
+   "url": "https://www.langchain.com/blog/customers-klarna",
+   "grade": "vendor-authored case study",
+   "checked": "page read 2026-11-12; page dated Feb 12 2025",
+   "supports": [],
+   "verify": false,
+   "checked_on": "2026-11-12"
+  }
+ ]
+}

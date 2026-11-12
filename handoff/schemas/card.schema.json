@@ -1,0 +1,32 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "RevisionCard",
+ "type": "object",
+ "properties": {
+  "id": {
+   "type": "string"
+  },
+  "topicId": {
+   "type": "string"
+  },
+  "front": {
+   "type": "string"
+  },
+  "back": {
+   "type": "string"
+  },
+  "competencies": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  }
+ },
+ "required": [
+  "id",
+  "topicId",
+  "front",
+  "back"
+ ],
+ "additionalProperties": true
+}

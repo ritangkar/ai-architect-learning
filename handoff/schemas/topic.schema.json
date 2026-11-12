@@ -1,0 +1,106 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Topic",
+ "type": "object",
+ "properties": {
+  "id": {
+   "type": "string",
+   "pattern": "^T[1-3]\\.\\d+\\.\\d+$"
+  },
+  "title": {
+   "type": "string",
+   "minLength": 3
+  },
+  "module": {
+   "type": "string",
+   "pattern": "^M[1-3]\\.\\d+$"
+  },
+  "pillar": {
+   "enum": [
+    "P1",
+    "P2",
+    "P3"
+   ]
+  },
+  "pre": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "uniqueItems": true
+  },
+  "comps": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^C\\d{2}$"
+   },
+   "minItems": 1
+  },
+  "obj": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1
+  },
+  "res": {
+   "type": "array",
+   "items": {
+    "type": "array",
+    "items": {},
+    "minItems": 2,
+    "maxItems": 2
+   }
+  },
+  "pat": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^PAT\\d{2}$"
+   }
+  },
+  "cases": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "hands": {
+   "enum": [
+    "none",
+    "browser",
+    "optional_local"
+   ]
+  },
+  "sap_status": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "assessment_plan": {
+   "type": "object"
+  },
+  "verified_case_ids": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^CS-\\d{3}$"
+   }
+  }
+ },
+ "required": [
+  "id",
+  "title",
+  "module",
+  "pillar",
+  "pre",
+  "comps",
+  "obj",
+  "res",
+  "hands",
+  "assessment_plan"
+ ],
+ "additionalProperties": true
+}

@@ -1,0 +1,67 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Resource",
+ "type": "object",
+ "properties": {
+  "id": {
+   "type": "string"
+  },
+  "title": {
+   "type": "string"
+  },
+  "sourceKey": {
+   "type": "string"
+  },
+  "url": {
+   "type": "string"
+  },
+  "topics": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1
+  },
+  "whyUseful": {
+   "type": "string",
+   "minLength": 10
+  },
+  "focus": {
+   "type": "string",
+   "minLength": 5
+  },
+  "objectiveRelation": {
+   "type": "string"
+  },
+  "cost": {
+   "enum": [
+    "free",
+    "paid"
+   ]
+  },
+  "language": {
+   "type": "string"
+  },
+  "lastChecked": {
+   "type": "string"
+  },
+  "status": {
+   "enum": [
+    "verified",
+    "to_verify",
+    "broken"
+   ]
+  }
+ },
+ "required": [
+  "id",
+  "title",
+  "url",
+  "topics",
+  "whyUseful",
+  "focus",
+  "cost",
+  "status"
+ ],
+ "additionalProperties": true
+}

@@ -1,0 +1,3392 @@
+{
+ "blueprint_version": "0.2",
+ "status": "Part 2 draft. Resource slots name authoritative sources and focus areas; individual URLs, videos and exact SAP availability statuses are verified in the content phase.",
+ "pillars": {
+  "P1": "Core enterprise AI architecture (vendor-neutral)",
+  "P2": "SAP ecosystem and AI architecture",
+  "P3": "Cross-industry business and solution architecture"
+ },
+ "competencies": {
+  "C01": "Discovery and requirements elicitation",
+  "C02": "AI and LLM foundations and limits",
+  "C03": "Retrieval and knowledge architecture",
+  "C04": "Agent and orchestration design",
+  "C05": "Integration and interoperability (APIs, MCP, A2A)",
+  "C06": "AI security and threat modeling",
+  "C07": "Identity, data access and privacy",
+  "C08": "Governance, responsible AI and human oversight",
+  "C09": "Evaluation and quality engineering",
+  "C10": "Reliability, performance and cost engineering",
+  "C11": "Operations, lifecycle and observability",
+  "C12": "Technology selection and trade-off analysis",
+  "C13": "SAP AI platform architecture",
+  "C14": "SAP CX solution architecture",
+  "C15": "Industry and domain architecture",
+  "C16": "Architecture documentation and communication",
+  "C17": "Architecture review and risk challenge"
+ },
+ "patterns": {
+  "PAT01": "Baseline RAG",
+  "PAT02": "Hybrid retrieval with reranking",
+  "PAT03": "Agentic RAG",
+  "PAT04": "Tool-calling agent",
+  "PAT05": "Graph/workflow-orchestrated agent",
+  "PAT06": "Supervisor multi-agent",
+  "PAT07": "Human-in-the-loop approval gate",
+  "PAT08": "LLM gateway and model routing",
+  "PAT09": "MCP tool facade over enterprise APIs",
+  "PAT10": "A2A delegation between agents",
+  "PAT11": "Guardrail and policy layer",
+  "PAT12": "Evaluation-driven development",
+  "PAT13": "Semantic and prompt caching",
+  "PAT14": "Event-driven intelligent automation",
+  "PAT15": "Side-by-side extension (clean core)",
+  "PAT16": "Data-product-enriched ML",
+  "PAT17": "Embedded copilot in business app",
+  "PAT18": "Agentic commerce storefront",
+  "PAT19": "Identity propagation to tools (on-behalf-of)",
+  "PAT20": "Fallback and graceful degradation"
+ },
+ "resource_sources": {
+  "ANTH_AGENTS": {
+   "name": "Anthropic engineering blog: Building effective agents",
+   "domain_hint": "anthropic.com/engineering",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "ANTH_DOCS": {
+   "name": "Anthropic developer documentation",
+   "domain_hint": "docs.claude.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "OPENAI_DOCS": {
+   "name": "OpenAI platform documentation",
+   "domain_hint": "platform.openai.com/docs",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "MCP": {
+   "name": "Model Context Protocol specification and docs",
+   "domain_hint": "modelcontextprotocol.io",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "A2A": {
+   "name": "Agent2Agent protocol specification (Linux Foundation project)",
+   "domain_hint": "verify canonical domain in content phase",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "OWASP": {
+   "name": "OWASP GenAI Security Project (LLM Top 10)",
+   "domain_hint": "genai.owasp.org",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "LANGGRAPH": {
+   "name": "LangGraph and LangChain documentation",
+   "domain_hint": "langchain-ai.github.io",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "SAP_ARCH": {
+   "name": "SAP Architecture Center reference architectures",
+   "domain_hint": "architecture.learning.sap.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "SAP_HELP": {
+   "name": "SAP Help Portal",
+   "domain_hint": "help.sap.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "SAP_LEARN": {
+   "name": "SAP Learning",
+   "domain_hint": "learning.sap.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "SAP_NEWS": {
+   "name": "SAP News Center",
+   "domain_hint": "news.sap.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "SAP_ROADMAP": {
+   "name": "SAP Roadmap Explorer (status of GA vs planned)",
+   "domain_hint": "roadmaps.sap.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "AWS": {
+   "name": "AWS Bedrock and AI documentation",
+   "domain_hint": "docs.aws.amazon.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "AZURE": {
+   "name": "Microsoft Azure AI Foundry documentation",
+   "domain_hint": "learn.microsoft.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "GCP": {
+   "name": "Google Cloud Vertex AI documentation",
+   "domain_hint": "cloud.google.com/vertex-ai/docs",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "NIST": {
+   "name": "NIST AI Risk Management Framework",
+   "domain_hint": "nist.gov",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "EUAI": {
+   "name": "EU AI Act official texts and Commission guidance",
+   "domain_hint": "verify official EU domain in content phase",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "ENG_BLOGS": {
+   "name": "Company engineering blogs (builder-authored)",
+   "domain_hint": "per-case, recorded in source register",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "ZENML": {
+   "name": "ZenML LLMOps Database (discovery index only, not primary evidence)",
+   "domain_hint": "zenml.io/llmops-database",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "C4ADR": {
+   "name": "C4 model and Architecture Decision Records",
+   "domain_hint": "c4model.com, adr.github.io",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "PAPERS": {
+   "name": "Research papers (arXiv)",
+   "domain_hint": "arxiv.org",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "VIDEO": {
+   "name": "YouTube lecture or conference talk (to be curated and URL-verified)",
+   "domain_hint": "youtube.com",
+   "url_status": "to_verify_in_content_phase"
+  },
+  "VENDOR_DOCS": {
+   "name": "Official vendor documentation for the specific product",
+   "domain_hint": "per-topic",
+   "url_status": "to_verify_in_content_phase"
+  }
+ },
+ "modules": {
+  "M1.1": {
+   "pillar": "P1",
+   "title": "Foundations of modern AI"
+  },
+  "M1.2": {
+   "pillar": "P1",
+   "title": "Knowledge and retrieval architecture"
+  },
+  "M1.3": {
+   "pillar": "P1",
+   "title": "Agents, tools and orchestration"
+  },
+  "M1.4": {
+   "pillar": "P1",
+   "title": "Solution architecture and technology selection"
+  },
+  "M1.5": {
+   "pillar": "P1",
+   "title": "Production readiness and non-functional architecture"
+  },
+  "M1.6": {
+   "pillar": "P1",
+   "title": "The architect's craft"
+  },
+  "M2.1": {
+   "pillar": "P2",
+   "title": "SAP AI platform map"
+  },
+  "M2.2": {
+   "pillar": "P2",
+   "title": "Joule, Joule Studio and agent governance"
+  },
+  "M2.3": {
+   "pillar": "P2",
+   "title": "SAP CX architecture with AI"
+  },
+  "M2.4": {
+   "pillar": "P2",
+   "title": "SAP integration, identity and extension architecture"
+  },
+  "M3.1": {
+   "pillar": "P3",
+   "title": "Industry architecture lenses"
+  },
+  "M3.2": {
+   "pillar": "P3",
+   "title": "Regulation and data constraints"
+  },
+  "M3.3": {
+   "pillar": "P3",
+   "title": "Cross-industry synthesis"
+  }
+ },
+ "depth_model": {
+  "compress": {
+   "when": "Initial or later assessment shows proficient on this topic's competencies",
+   "content": "One-page summary, key terms, 2 confirmation questions, jump to related cases",
+   "est_minutes_range": [
+    10,
+    20
+   ]
+  },
+  "standard": {
+   "when": "Developing or untested",
+   "content": "Guided lesson, curated resources with focus notes, worked example, quiz, one exercise",
+   "est_minutes_range": [
+    45,
+    90
+   ]
+  },
+  "deep": {
+   "when": "Gap or repeated misses",
+   "content": "Prerequisite refresh, extended lesson, multiple examples, scaffolded exercises, targeted re-assessment",
+   "est_minutes_range": [
+    90,
+    180
+   ]
+  }
+ },
+ "levels": [
+  {
+   "id": "L0",
+   "name": "Orientation",
+   "entry": "Complete initial assessment",
+   "exit_gate": "Knowledge profile created"
+  },
+  {
+   "id": "L1",
+   "name": "Foundation",
+   "exit_gate": "Every topic in M1.1 and M1.2 at proficient or compressed; no competency C02/C03 below developing"
+  },
+  {
+   "id": "L2",
+   "name": "Practitioner",
+   "exit_gate": "M1.3 complete; M2.1 proficient; 10 Tier A or B cases studied with exercises passed"
+  },
+  {
+   "id": "L3",
+   "name": "Architect",
+   "exit_gate": "M1.4, M1.5, M2.2 proficient; first architecture review exercise passed; C06, C07, C09 at least developing"
+  },
+  {
+   "id": "L4",
+   "name": "Senior Architect",
+   "exit_gate": "M2.3, M2.4, M3.1 proficient across at least 5 industries; all competencies at least developing; C12, C13, C14 proficient"
+  },
+  {
+   "id": "L5",
+   "name": "Lead Architect",
+   "exit_gate": "M1.6, M3.2, M3.3 complete; capstone simulations passed; all competencies proficient; review of weakest competencies due via spaced revision"
+  }
+ ],
+ "levels_note": "Levels and gates are non-calendar. Thresholds are defaults recorded as configuration, not hard-coded.",
+ "topics": [
+  {
+   "id": "T1.1.1",
+   "title": "ML, deep learning and generative AI landscape",
+   "pre": [],
+   "comps": [
+    "C02"
+   ],
+   "obj": [
+    "Distinguish predictive ML, deep learning, generative AI and rules/automation and state which problem types each suits",
+    "Explain why many enterprise problems should not use an LLM"
+   ],
+   "res": [
+    [
+     "VIDEO",
+     "Short orientation talk, skip if assessment shows strength"
+    ],
+    [
+     "PAPERS",
+     "Optional: only for gap learners"
+    ]
+   ],
+   "pat": [],
+   "cases": [
+    "Predictive and generative cases in catalog"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.1",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.1.2",
+   "title": "LLM mechanics: tokens, context windows, attention, inference",
+   "pre": [
+    "T1.1.1"
+   ],
+   "comps": [
+    "C02",
+    "C10"
+   ],
+   "obj": [
+    "Explain tokens, context window and attention at the level needed to reason about cost and latency",
+    "Estimate how prompt size and output length drive latency and spend"
+   ],
+   "res": [
+    [
+     "ANTH_DOCS",
+     "Context windows, prompt caching, token counting"
+    ],
+    [
+     "OPENAI_DOCS",
+     "Tokenization and pricing concepts"
+    ],
+    [
+     "VIDEO",
+     "Visual explanation of transformers, selected for architects"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.1",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.1.3",
+   "title": "Model capabilities, limitations and failure modes",
+   "pre": [
+    "T1.1.2"
+   ],
+   "comps": [
+    "C02",
+    "C17"
+   ],
+   "obj": [
+    "Explain hallucination, nondeterminism, knowledge cutoff and instruction-following limits",
+    "Choose mitigations (grounding, validation, human review) per failure mode"
+   ],
+   "res": [
+    [
+     "ANTH_DOCS",
+     "Reducing hallucinations guidance"
+    ],
+    [
+     "OWASP",
+     "Overreliance and misinformation risks"
+    ]
+   ],
+   "pat": [
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.1",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.1.4",
+   "title": "Embeddings and semantic similarity",
+   "pre": [
+    "T1.1.2"
+   ],
+   "comps": [
+    "C02",
+    "C03"
+   ],
+   "obj": [
+    "Explain what an embedding represents and what it cannot capture",
+    "Reason about embedding model choice, dimensionality and domain fit"
+   ],
+   "res": [
+    [
+     "OPENAI_DOCS",
+     "Embeddings guide"
+    ],
+    [
+     "VIDEO",
+     "Embeddings explained visually"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.1",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.1.5",
+   "title": "Prompt engineering and context engineering",
+   "pre": [
+    "T1.1.2"
+   ],
+   "comps": [
+    "C02",
+    "C04"
+   ],
+   "obj": [
+    "Design system prompts, structured outputs and context assembly for a business task",
+    "Explain context engineering as managing what enters the window, not just wording"
+   ],
+   "res": [
+    [
+     "ANTH_DOCS",
+     "Prompting and structured output guidance"
+    ],
+    [
+     "OPENAI_DOCS",
+     "Structured outputs"
+    ],
+    [
+     "ANTH_AGENTS",
+     "Context and tool design sections"
+    ]
+   ],
+   "pat": [
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.1",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-002"
+   ]
+  },
+  {
+   "id": "T1.2.1",
+   "title": "Retrieval-augmented generation fundamentals",
+   "pre": [
+    "T1.1.4",
+    "T1.1.5"
+   ],
+   "comps": [
+    "C03"
+   ],
+   "obj": [
+    "Draw and explain an end-to-end baseline RAG flow including ingestion, chunking, retrieval, generation and citation",
+    "Identify where baseline RAG breaks"
+   ],
+   "res": [
+    [
+     "VIDEO",
+     "Architect-oriented RAG walkthrough"
+    ],
+    [
+     "ENG_BLOGS",
+     "One builder-authored RAG support case"
+    ]
+   ],
+   "pat": [
+    "PAT01"
+   ],
+   "cases": [
+    "DoorDash support RAG (candidate, verify primary)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.2",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-002"
+   ]
+  },
+  {
+   "id": "T1.2.2",
+   "title": "Vector stores, hybrid search and reranking",
+   "pre": [
+    "T1.2.1"
+   ],
+   "comps": [
+    "C03",
+    "C12"
+   ],
+   "obj": [
+    "Compare vector databases, search engines with vector support and pgvector-style options on scale, ops burden, filtering and security",
+    "Explain why hybrid retrieval and reranking improve recall and precision"
+   ],
+   "res": [
+    [
+     "VENDOR_DOCS",
+     "Two or three vendor docs for contrasting options"
+    ],
+    [
+     "VIDEO",
+     "Hybrid search explained"
+    ]
+   ],
+   "pat": [
+    "PAT02"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.2",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-002",
+    "CS-003"
+   ]
+  },
+  {
+   "id": "T1.2.3",
+   "title": "Advanced retrieval: chunking strategies, graph RAG, agentic RAG",
+   "pre": [
+    "T1.2.2"
+   ],
+   "comps": [
+    "C03",
+    "C04"
+   ],
+   "obj": [
+    "Select a chunking and metadata strategy for a given document type",
+    "Explain when graph-based or agentic retrieval is justified versus its added cost and risk"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Agentic RAG production write-up (candidate: Uber, verify)"
+    ],
+    [
+     "PAPERS",
+     "Selected retrieval papers"
+    ]
+   ],
+   "pat": [
+    "PAT03"
+   ],
+   "cases": [
+    "Uber agentic RAG (candidate, verify)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.2",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-002",
+    "CS-004"
+   ]
+  },
+  {
+   "id": "T1.2.4",
+   "title": "RAG versus fine-tuning versus long-context",
+   "pre": [
+    "T1.2.1",
+    "T1.1.3"
+   ],
+   "comps": [
+    "C03",
+    "C12"
+   ],
+   "obj": [
+    "Produce a decision table for knowledge freshness, grounding, cost, latency and maintainability",
+    "Recognize when fine-tuning is for behavior and format rather than knowledge"
+   ],
+   "res": [
+    [
+     "ANTH_DOCS",
+     "Long context and caching notes"
+    ],
+    [
+     "OPENAI_DOCS",
+     "Fine-tuning overview"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.2",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-003",
+    "CS-005",
+    "CS-006"
+   ]
+  },
+  {
+   "id": "T1.2.5",
+   "title": "Retrieval evaluation and quality measurement",
+   "pre": [
+    "T1.2.2"
+   ],
+   "comps": [
+    "C09",
+    "C03"
+   ],
+   "obj": [
+    "Define retrieval metrics and generation metrics and how to build a golden set",
+    "Explain limits of LLM-as-judge and how to calibrate it"
+   ],
+   "res": [
+    [
+     "VENDOR_DOCS",
+     "Evaluation framework docs (e.g. open-source eval tooling)"
+    ],
+    [
+     "ENG_BLOGS",
+     "LLM jury and guardrail quality monitoring posts (candidate: DoorDash, verify)"
+    ]
+   ],
+   "pat": [
+    "PAT12"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.2",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-002"
+   ]
+  },
+  {
+   "id": "T1.3.1",
+   "title": "Tool and function calling",
+   "pre": [
+    "T1.1.5"
+   ],
+   "comps": [
+    "C04",
+    "C05"
+   ],
+   "obj": [
+    "Explain the tool-calling loop and what the application, not the model, must enforce",
+    "Design tool schemas that are safe, narrow and testable"
+   ],
+   "res": [
+    [
+     "OPENAI_DOCS",
+     "Function calling"
+    ],
+    [
+     "ANTH_DOCS",
+     "Tool use"
+    ],
+    [
+     "ANTH_AGENTS",
+     "Tool design guidance"
+    ]
+   ],
+   "pat": [
+    "PAT04"
+   ],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.3.2",
+   "title": "Workflows versus agents: control patterns",
+   "pre": [
+    "T1.3.1"
+   ],
+   "comps": [
+    "C04",
+    "C12"
+   ],
+   "obj": [
+    "Distinguish fixed workflows, routing, orchestrator-worker and autonomous loops",
+    "Choose the least autonomous design that meets requirements"
+   ],
+   "res": [
+    [
+     "ANTH_AGENTS",
+     "Patterns catalog and when to avoid agents"
+    ]
+   ],
+   "pat": [
+    "PAT04",
+    "PAT05"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-001",
+    "CS-003"
+   ]
+  },
+  {
+   "id": "T1.3.3",
+   "title": "Orchestration frameworks: LangChain, LangGraph and alternatives",
+   "pre": [
+    "T1.3.2"
+   ],
+   "comps": [
+    "C04",
+    "C12"
+   ],
+   "obj": [
+    "Explain what a graph-based orchestrator adds (state, branching, checkpoints, human interrupts)",
+    "Compare frameworks against platform-native builders and plain code on lock-in and observability"
+   ],
+   "res": [
+    [
+     "LANGGRAPH",
+     "Concepts: state, nodes, edges, persistence, interrupts"
+    ],
+    [
+     "VENDOR_DOCS",
+     "One alternative agent framework doc for contrast"
+    ]
+   ],
+   "pat": [
+    "PAT05",
+    "PAT07"
+   ],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-001",
+    "CS-008"
+   ]
+  },
+  {
+   "id": "T1.3.4",
+   "title": "Multi-agent systems",
+   "pre": [
+    "T1.3.2"
+   ],
+   "comps": [
+    "C04",
+    "C17"
+   ],
+   "obj": [
+    "State when multi-agent decomposition helps and when it adds cost, latency and failure surface",
+    "Design supervisor and handoff patterns with clear responsibility boundaries"
+   ],
+   "res": [
+    [
+     "ANTH_AGENTS",
+     "Multi-agent research system lessons"
+    ],
+    [
+     "ENG_BLOGS",
+     "Multi-agent production write-up (to be selected)"
+    ]
+   ],
+   "pat": [
+    "PAT06"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-001"
+   ]
+  },
+  {
+   "id": "T1.3.5",
+   "title": "Model Context Protocol (MCP)",
+   "pre": [
+    "T1.3.1"
+   ],
+   "comps": [
+    "C05",
+    "C07"
+   ],
+   "obj": [
+    "Explain MCP roles (host, client, server), transports and what it standardizes",
+    "Design an MCP facade over enterprise APIs with least privilege and per-user authorization"
+   ],
+   "res": [
+    [
+     "MCP",
+     "Architecture, authorization and security guidance"
+    ]
+   ],
+   "pat": [
+    "PAT09",
+    "PAT19"
+   ],
+   "cases": [
+    "Mindset MCP servers on BTP (partner source, SRC-014)"
+   ],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-004",
+    "CS-007",
+    "CS-009",
+    "CS-011",
+    "CS-013"
+   ]
+  },
+  {
+   "id": "T1.3.6",
+   "title": "Agent-to-agent interoperability (A2A) and the protocol landscape",
+   "pre": [
+    "T1.3.5",
+    "T1.3.4"
+   ],
+   "comps": [
+    "C05",
+    "C12"
+   ],
+   "obj": [
+    "Explain how A2A differs from MCP and where each sits in an architecture",
+    "Evaluate maturity, governance and lock-in risk of agent protocols"
+   ],
+   "res": [
+    [
+     "A2A",
+     "Task lifecycle, agent cards, auth schemes"
+    ],
+    [
+     "SAP_ARCH",
+     "SAP A2A and MCP interoperability reference (SRC-001)"
+    ]
+   ],
+   "pat": [
+    "PAT10"
+   ],
+   "cases": [
+    "SAP Agent Gateway reference (SRC-001/002)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-011",
+    "CS-014"
+   ]
+  },
+  {
+   "id": "T1.3.7",
+   "title": "Memory, state and long-running agent execution",
+   "pre": [
+    "T1.3.3"
+   ],
+   "comps": [
+    "C04",
+    "C10"
+   ],
+   "obj": [
+    "Differentiate conversation state, long-term memory and business system of record",
+    "Design for resumability, idempotency and timeouts"
+   ],
+   "res": [
+    [
+     "LANGGRAPH",
+     "Persistence and checkpointing"
+    ],
+    [
+     "ANTH_AGENTS",
+     "Long-running agent considerations"
+    ]
+   ],
+   "pat": [
+    "PAT05",
+    "PAT20"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.3",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.4.1",
+   "title": "Enterprise AI reference architecture",
+   "pre": [
+    "T1.2.1",
+    "T1.3.2"
+   ],
+   "comps": [
+    "C12",
+    "C16"
+   ],
+   "obj": [
+    "Draw a layered reference architecture (channels, orchestration, models, knowledge, tools, security, observability)",
+    "Place each component on a responsibility and trust boundary map"
+   ],
+   "res": [
+    [
+     "C4ADR",
+     "C4 diagrams and ADR format"
+    ],
+    [
+     "SAP_ARCH",
+     "Compare a vendor reference architecture to the vendor-neutral model"
+    ]
+   ],
+   "pat": [
+    "PAT08",
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.4",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.4.2",
+   "title": "Model selection, routing and gateways",
+   "pre": [
+    "T1.4.1",
+    "T1.1.3"
+   ],
+   "comps": [
+    "C12",
+    "C10"
+   ],
+   "obj": [
+    "Create a model selection scorecard (quality, latency, cost, data residency, tool-use reliability)",
+    "Explain gateway, routing, fallback and caching patterns"
+   ],
+   "res": [
+    [
+     "VENDOR_DOCS",
+     "Provider model docs and pricing pages, re-verified at use time"
+    ]
+   ],
+   "pat": [
+    "PAT08",
+    "PAT13",
+    "PAT20"
+   ],
+   "cases": [
+    "DoorDash multi-provider GenAI gateway (candidate, verify)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.4",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-001",
+    "CS-005",
+    "CS-007"
+   ]
+  },
+  {
+   "id": "T1.4.3",
+   "title": "Cloud and vendor ecosystems compared",
+   "pre": [
+    "T1.4.2"
+   ],
+   "comps": [
+    "C12"
+   ],
+   "obj": [
+    "Compare AWS, Azure, Google Cloud, OpenAI, Anthropic and open-source options on capability, governance, residency, pricing model and lock-in",
+    "Produce a defensible vendor recommendation with stated assumptions"
+   ],
+   "res": [
+    [
+     "AWS",
+     "Bedrock"
+    ],
+    [
+     "AZURE",
+     "AI Foundry"
+    ],
+    [
+     "GCP",
+     "Vertex AI"
+    ],
+    [
+     "OPENAI_DOCS",
+     "Enterprise offerings"
+    ],
+    [
+     "ANTH_DOCS",
+     "Enterprise offerings"
+    ]
+   ],
+   "pat": [
+    "PAT08"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.4",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-006"
+   ]
+  },
+  {
+   "id": "T1.4.4",
+   "title": "Portability, lock-in and exit strategy",
+   "pre": [
+    "T1.4.3"
+   ],
+   "comps": [
+    "C12",
+    "C17"
+   ],
+   "obj": [
+    "Identify lock-in points (prompts, tool schemas, vector indexes, orchestration state, eval sets)",
+    "Design an abstraction layer proportionate to risk"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Multi-provider gateway case (candidate)"
+    ]
+   ],
+   "pat": [
+    "PAT08"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.4",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.4.5",
+   "title": "Beyond LLM chat: predictive ML, vision, multimodal, automation and coding agents",
+   "pre": [
+    "T1.1.1"
+   ],
+   "comps": [
+    "C12",
+    "C15"
+   ],
+   "obj": [
+    "Match problem type to approach (forecasting, anomaly detection, document AI, vision inspection, RPA plus LLM, coding agents)",
+    "Explain where tabular foundation models and classical ML still win"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "One case each: vision, predictive, coding agent (to be selected)"
+    ]
+   ],
+   "pat": [
+    "PAT14",
+    "PAT16"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.4",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-007",
+    "CS-010",
+    "CS-012"
+   ]
+  },
+  {
+   "id": "T1.5.1",
+   "title": "Threat modeling for AI systems",
+   "pre": [
+    "T1.4.1"
+   ],
+   "comps": [
+    "C06"
+   ],
+   "obj": [
+    "Build a threat model with trust boundaries, assets, actors and abuse cases for an agentic system",
+    "Map threats to controls placed outside the model"
+   ],
+   "res": [
+    [
+     "OWASP",
+     "LLM Top 10 and agentic threat guidance (verify current edition)"
+    ],
+    [
+     "NIST",
+     "AI RMF as governance frame"
+    ]
+   ],
+   "pat": [
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-003"
+   ]
+  },
+  {
+   "id": "T1.5.2",
+   "title": "Prompt injection, indirect injection and excessive agency",
+   "pre": [
+    "T1.5.1",
+    "T1.3.1"
+   ],
+   "comps": [
+    "C06",
+    "C17"
+   ],
+   "obj": [
+    "Explain direct versus indirect injection through documents, tickets, emails and tool output",
+    "Design containment: least privilege tools, approval for writes, output validation, isolation of untrusted content"
+   ],
+   "res": [
+    [
+     "OWASP",
+     "LLM01 and excessive agency entries"
+    ],
+    [
+     "VIDEO",
+     "Practitioner talk on injection attacks (to be curated)"
+    ]
+   ],
+   "pat": [
+    "PAT07",
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.5.3",
+   "title": "Identity, authentication and authorization for agents",
+   "pre": [
+    "T1.3.5",
+    "T1.5.1"
+   ],
+   "comps": [
+    "C07",
+    "C06"
+   ],
+   "obj": [
+    "Differentiate service identity from on-behalf-of user identity and justify when each is acceptable",
+    "Design authorization so an agent can never exceed the invoking user's rights"
+   ],
+   "res": [
+    [
+     "MCP",
+     "Authorization guidance"
+    ],
+    [
+     "SAP_ARCH",
+     "Identity patterns for agents on SAP BTP"
+    ]
+   ],
+   "pat": [
+    "PAT19"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-006"
+   ]
+  },
+  {
+   "id": "T1.5.4",
+   "title": "Privacy, data protection and data governance for AI",
+   "pre": [
+    "T1.5.1"
+   ],
+   "comps": [
+    "C07",
+    "C08"
+   ],
+   "obj": [
+    "Classify data flows to models, logs, caches and vector stores and identify retention and residency risks",
+    "Select controls: redaction, tenancy isolation, no-training terms, regional endpoints"
+   ],
+   "res": [
+    [
+     "NIST",
+     "Privacy and data sections"
+    ],
+    [
+     "EUAI",
+     "Data governance obligations (verify applicability)"
+    ]
+   ],
+   "pat": [
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-006"
+   ]
+  },
+  {
+   "id": "T1.5.5",
+   "title": "Guardrails, responsible AI, governance and human oversight",
+   "pre": [
+    "T1.5.1"
+   ],
+   "comps": [
+    "C08",
+    "C06"
+   ],
+   "obj": [
+    "Design guardrail layers (input, retrieval, output, action) and decide where humans approve",
+    "Define governance artifacts: model cards, use-case registry, risk tiering, accountability"
+   ],
+   "res": [
+    [
+     "NIST",
+     "AI RMF functions"
+    ],
+    [
+     "ENG_BLOGS",
+     "Guardrail write-up (candidate)"
+    ]
+   ],
+   "pat": [
+    "PAT07",
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-007"
+   ]
+  },
+  {
+   "id": "T1.5.6",
+   "title": "Evaluation frameworks and testing strategy",
+   "pre": [
+    "T1.2.5",
+    "T1.3.2"
+   ],
+   "comps": [
+    "C09"
+   ],
+   "obj": [
+    "Design an evaluation strategy: golden sets, regression suites, online metrics, human review, red-team tests",
+    "Gate releases on evaluation results"
+   ],
+   "res": [
+    [
+     "OPENAI_DOCS",
+     "Evals guidance"
+    ],
+    [
+     "ENG_BLOGS",
+     "Evaluation-driven development write-ups"
+    ]
+   ],
+   "pat": [
+    "PAT12"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-001",
+    "CS-003",
+    "CS-004",
+    "CS-005",
+    "CS-008"
+   ]
+  },
+  {
+   "id": "T1.5.7",
+   "title": "Observability, tracing and audit",
+   "pre": [
+    "T1.3.3"
+   ],
+   "comps": [
+    "C11",
+    "C08"
+   ],
+   "obj": [
+    "Specify traces, metrics and audit records required to reconstruct an agent decision",
+    "Balance observability with privacy of logged prompts and outputs"
+   ],
+   "res": [
+    [
+     "VENDOR_DOCS",
+     "Open telemetry for GenAI and an LLM observability tool doc"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.5.8",
+   "title": "Reliability, failure scenarios and disaster recovery",
+   "pre": [
+    "T1.4.2"
+   ],
+   "comps": [
+    "C10",
+    "C17"
+   ],
+   "obj": [
+    "Enumerate AI-specific failure scenarios (provider outage, rate limits, tool failure, retrieval drift) and recovery strategies",
+    "Define RTO/RPO implications for stateful agents and indexes"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Error handling in LLM systems write-up (candidate)"
+    ]
+   ],
+   "pat": [
+    "PAT20"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.5.9",
+   "title": "Latency, throughput and cost optimization",
+   "pre": [
+    "T1.1.2",
+    "T1.4.2"
+   ],
+   "comps": [
+    "C10"
+   ],
+   "obj": [
+    "Build a cost and latency model for a workload and identify the top levers",
+    "Apply caching, routing, batching, prompt compression and smaller models appropriately"
+   ],
+   "res": [
+    [
+     "ANTH_DOCS",
+     "Prompt caching"
+    ],
+    [
+     "VENDOR_DOCS",
+     "Batch and priority tiers across providers"
+    ]
+   ],
+   "pat": [
+    "PAT13",
+    "PAT08"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-004",
+    "CS-005"
+   ]
+  },
+  {
+   "id": "T1.5.10",
+   "title": "Deployment, CI/CD, versioning, change management and operating model",
+   "pre": [
+    "T1.5.6",
+    "T1.5.7"
+   ],
+   "comps": [
+    "C11",
+    "C16"
+   ],
+   "obj": [
+    "Define release, rollback and versioning for prompts, tools, models and indexes",
+    "Specify operational ownership, support tiers and incident response"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "LLMOps platform write-up (candidate)"
+    ]
+   ],
+   "pat": [
+    "PAT12"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.5",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-007"
+   ]
+  },
+  {
+   "id": "T1.6.1",
+   "title": "Client discovery and question frameworks for AI engagements",
+   "pre": [],
+   "comps": [
+    "C01"
+   ],
+   "obj": [
+    "Run structured discovery covering business outcome, process, data, risk, users, constraints and success metrics",
+    "Distinguish stated requests from underlying needs"
+   ],
+   "res": [
+    [
+     "VIDEO",
+     "Discovery technique talk (to be curated)"
+    ],
+    [
+     "C4ADR",
+     "Context diagrams as discovery output"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.6",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.6.2",
+   "title": "From requirements to functional spec, technical spec and handover pack",
+   "pre": [
+    "T1.6.1"
+   ],
+   "comps": [
+    "C01",
+    "C16"
+   ],
+   "obj": [
+    "Write testable requirements including AI-specific NFRs (accuracy thresholds, refusal behavior, latency, cost ceilings)",
+    "Structure an architecture document and implementation handover pack"
+   ],
+   "res": [
+    [
+     "C4ADR",
+     "Document structure and diagramming"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.6",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.6.3",
+   "title": "Architecture options analysis and decision records",
+   "pre": [
+    "T1.4.1",
+    "T1.6.2"
+   ],
+   "comps": [
+    "C12",
+    "C16"
+   ],
+   "obj": [
+    "Compare 4-5 viable architectures against weighted criteria and record the decision in an ADR",
+    "Defend a recommendation including accepted trade-offs"
+   ],
+   "res": [
+    [
+     "C4ADR",
+     "ADR practice"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.6",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.6.4",
+   "title": "Architecture review exercises",
+   "pre": [
+    "T1.5.1",
+    "T1.6.3"
+   ],
+   "comps": [
+    "C17"
+   ],
+   "obj": [
+    "Find security, reliability, cost, governance and operability gaps in a plausible design",
+    "Prioritize findings by risk and propose changes"
+   ],
+   "res": [
+    [
+     "OWASP",
+     "Use as checklist"
+    ]
+   ],
+   "pat": [
+    "PAT11",
+    "PAT20"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.6",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T1.6.5",
+   "title": "Communicating architecture to clients and executives",
+   "pre": [
+    "T1.6.3"
+   ],
+   "comps": [
+    "C16"
+   ],
+   "obj": [
+    "Explain an AI architecture to technical and non-technical audiences using appropriate abstraction",
+    "Frame risk, value and cost honestly"
+   ],
+   "res": [
+    [
+     "VIDEO",
+     "Executive communication talk (to be curated)"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.6",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-008"
+   ]
+  },
+  {
+   "id": "T1.6.6",
+   "title": "Tracking emerging AI architecture developments",
+   "pre": [
+    "T1.4.1"
+   ],
+   "comps": [
+    "C12"
+   ],
+   "obj": [
+    "Maintain a lightweight radar of tools, protocols and models with evidence-based adoption criteria",
+    "Separate hype from production evidence"
+   ],
+   "res": [
+    [
+     "ZENML",
+     "Discovery index for new production cases"
+    ],
+    [
+     "SAP_ROADMAP",
+     "Example of status-tracking discipline"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M1.6",
+   "pillar": "P1",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.1.1",
+   "title": "SAP Business AI platform overview and availability-status model",
+   "pre": [
+    "T1.4.1"
+   ],
+   "comps": [
+    "C13"
+   ],
+   "obj": [
+    "Explain how SAP positions Business AI Platform, BTP, Business Data Cloud and Joule",
+    "Classify any SAP AI capability as GA, phased, early access, preview or roadmap and cite where status was checked"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "Reference architectures overview"
+    ],
+    [
+     "SAP_ROADMAP",
+     "Status verification"
+    ],
+    [
+     "SAP_NEWS",
+     "Release announcements with caution about roadmap language"
+    ]
+   ],
+   "pat": [],
+   "cases": [
+    "SAP BDC + AI Core reference (SRC-004)"
+   ],
+   "hands": "none",
+   "sap_status": "Mixed; many items phased. Re-verify at study time.",
+   "module": "M2.1",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.1.2",
+   "title": "BTP essentials for AI: subaccounts, destinations, Cloud Connector, identity",
+   "pre": [
+    "T2.1.1"
+   ],
+   "comps": [
+    "C13",
+    "C07"
+   ],
+   "obj": [
+    "Describe how BTP connects side-by-side apps to S/4HANA and CX systems securely",
+    "Explain principal propagation and its role in agent tool calls"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "Connectivity and security documentation"
+    ],
+    [
+     "SAP_ARCH",
+     "BTP integration references"
+    ]
+   ],
+   "pat": [
+    "PAT15",
+    "PAT19"
+   ],
+   "cases": [
+    "Mindset BTP MCP path (SRC-014)"
+   ],
+   "hands": "none",
+   "sap_status": "GA foundation; compress for experienced learners.",
+   "module": "M2.1",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-009"
+   ]
+  },
+  {
+   "id": "T2.1.3",
+   "title": "SAP AI Foundation: AI Core, AI Launchpad and Generative AI Hub",
+   "pre": [
+    "T2.1.2",
+    "T1.4.2"
+   ],
+   "comps": [
+    "C13",
+    "C12"
+   ],
+   "obj": [
+    "Explain what Generative AI Hub provides (governed multi-model access) versus calling a provider directly",
+    "Choose between AI Core serving, Generative AI Hub orchestration and external model endpoints"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "BDC and AI Core patterns (SRC-004)"
+    ],
+    [
+     "SAP_HELP",
+     "Generative AI Hub documentation"
+    ]
+   ],
+   "pat": [
+    "PAT08",
+    "PAT16"
+   ],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": "Verify model catalog and regions at study time.",
+   "module": "M2.1",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-012"
+   ]
+  },
+  {
+   "id": "T2.1.4",
+   "title": "Business Data Cloud, Datasphere and the Knowledge Graph",
+   "pre": [
+    "T2.1.1",
+    "T1.2.1"
+   ],
+   "comps": [
+    "C13",
+    "C03"
+   ],
+   "obj": [
+    "Explain data products and how they ground SAP-aware AI",
+    "Compare SAP Knowledge Graph grounding with generic RAG over documents"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "BDC reference architecture"
+    ],
+    [
+     "SAP_HELP",
+     "Knowledge Graph and Datasphere docs"
+    ]
+   ],
+   "pat": [
+    "PAT16",
+    "PAT01"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Knowledge Graph capabilities described as expanding; verify.",
+   "module": "M2.1",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-012"
+   ]
+  },
+  {
+   "id": "T2.1.5",
+   "title": "SAP tabular and predictive AI (SAP-RPT) and embedded ML",
+   "pre": [
+    "T2.1.3",
+    "T1.4.5"
+   ],
+   "comps": [
+    "C13",
+    "C12"
+   ],
+   "obj": [
+    "Explain what a relational/tabular foundation model offers versus classical ML pipelines",
+    "State current availability and limits"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "Model announcements"
+    ],
+    [
+     "SAP_HELP",
+     "Model documentation"
+    ]
+   ],
+   "pat": [
+    "PAT16"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Version and GA dates conflict across sources; verify.",
+   "module": "M2.1",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.2.1",
+   "title": "Joule Work, Assistants and Agents: the layering",
+   "pre": [
+    "T2.1.1"
+   ],
+   "comps": [
+    "C13",
+    "C14"
+   ],
+   "obj": [
+    "Explain the roles of Joule Work, role-based Assistants and task Agents",
+    "Describe how a user request is routed to agents and which system acts"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "Sapphire and TechEd announcements, status-checked"
+    ],
+    [
+     "SAP_HELP",
+     "Joule documentation"
+    ]
+   ],
+   "pat": [
+    "PAT17",
+    "PAT05"
+   ],
+   "cases": [],
+   "hands": "browser",
+   "sap_status": "Rollout phased per landscape; verify before client use.",
+   "module": "M2.2",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.2.2",
+   "title": "Joule Studio: skill builder and agent builder",
+   "pre": [
+    "T2.2.1",
+    "T1.3.1"
+   ],
+   "comps": [
+    "C13",
+    "C04"
+   ],
+   "obj": [
+    "Explain what can and cannot be configured (instructions, models, tools, MCP, grounding, guardrails)",
+    "Design an agent in Joule Studio and list its tools, authorizations and approval points"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "Joule Studio guide"
+    ],
+    [
+     "SAP_LEARN",
+     "Joule Studio learning journey"
+    ],
+    [
+     "SAP_ARCH",
+     "Joule agent references"
+    ]
+   ],
+   "pat": [
+    "PAT04",
+    "PAT07"
+   ],
+   "cases": [
+    "DataXstream churn agent (SRC-013, candidate)"
+   ],
+   "hands": "browser",
+   "sap_status": "GA dates and pricing conflict across sources (see register SRC-005/006/009).",
+   "module": "M2.2",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-009",
+    "CS-010"
+   ]
+  },
+  {
+   "id": "T2.2.3",
+   "title": "SAP AI Agent Hub and agent governance",
+   "pre": [
+    "T2.2.2",
+    "T1.5.5"
+   ],
+   "comps": [
+    "C13",
+    "C08"
+   ],
+   "obj": [
+    "Explain inventory, observability and policy functions of an agent governance hub across SAP and non-SAP agents",
+    "Compare with generic enterprise AI governance tooling"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "Announcements"
+    ],
+    [
+     "SAP_HELP",
+     "Product documentation when available"
+    ]
+   ],
+   "pat": [
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Planned GA Q3 2026 per secondary source; verify current.",
+   "module": "M2.2",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.2.4",
+   "title": "Bring-your-own-agent: A2A Agent Gateway and MCP Gateway",
+   "pre": [
+    "T1.3.6",
+    "T2.2.2"
+   ],
+   "comps": [
+    "C05",
+    "C13"
+   ],
+   "obj": [
+    "Draw inbound and outbound A2A and MCP flows between Joule agents and external agents",
+    "Describe authentication (IAS App2App with user context) and customer control over which agents may be invoked"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "A2A and MCP interoperability, Agent Gateway pages (SRC-001..003)"
+    ]
+   ],
+   "pat": [
+    "PAT09",
+    "PAT10",
+    "PAT19"
+   ],
+   "cases": [
+    "SAP Agent Gateway reference"
+   ],
+   "hands": "none",
+   "sap_status": "Inbound A2A GA announced for October 2026 by SAP; confirm scope.",
+   "module": "M2.2",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-011"
+   ]
+  },
+  {
+   "id": "T2.2.5",
+   "title": "Low-code versus pro-code agents on SAP: decision framework",
+   "pre": [
+    "T2.2.2",
+    "T2.2.4",
+    "T1.3.3"
+   ],
+   "comps": [
+    "C12",
+    "C13"
+   ],
+   "obj": [
+    "Compare Joule Studio, custom agents on BTP and external frameworks on control, governance, skills, cost and portability",
+    "Recommend and defend an approach for a given client profile"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "Reference patterns"
+    ],
+    [
+     "ENG_BLOGS",
+     "Partner implementation write-ups"
+    ]
+   ],
+   "pat": [
+    "PAT05",
+    "PAT09",
+    "PAT15"
+   ],
+   "cases": [
+    "Mindset (SRC-014)",
+    "DataXstream (SRC-013)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.2",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-009"
+   ]
+  },
+  {
+   "id": "T2.3.1",
+   "title": "SAP CX portfolio map",
+   "pre": [
+    "T2.1.1"
+   ],
+   "comps": [
+    "C14"
+   ],
+   "obj": [
+    "Map Commerce Cloud, Sales Cloud V2, Service Cloud V2, Engagement Cloud (Emarsys), Customer Data Cloud and ESM and how they connect to ERP",
+    "Distinguish current products from legacy (for example C4C) and migration implications"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "What's new pages per product"
+    ],
+    [
+     "SAP_NEWS",
+     "CX release posts (SRC-007, SRC-008)"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Product naming changes frequently; verify.",
+   "module": "M2.3",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.3.2",
+   "title": "Commerce Cloud and agentic commerce",
+   "pre": [
+    "T2.3.1",
+    "T1.3.5"
+   ],
+   "comps": [
+    "C14",
+    "C05"
+   ],
+   "obj": [
+    "Explain the storefront MCP server concept, what catalog/pricing/inventory/promotion data it exposes and who deploys and secures it",
+    "Evaluate Spartacus/composable storefront and OCC APIs as foundations for agent access"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "CX Q2 2026 post"
+    ],
+    [
+     "SAP_HELP",
+     "Commerce Cloud documentation"
+    ]
+   ],
+   "pat": [
+    "PAT18",
+    "PAT09"
+   ],
+   "cases": [
+    "SAP Commerce storefront MCP (SRC-007/015, roadmap-heavy)"
+   ],
+   "hands": "browser",
+   "sap_status": "Capabilities partly roadmap; verify GA per region.",
+   "module": "M2.3",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-013"
+   ]
+  },
+  {
+   "id": "T2.3.3",
+   "title": "Service and Sales Cloud AI scenarios",
+   "pre": [
+    "T2.3.1",
+    "T2.2.2"
+   ],
+   "comps": [
+    "C14"
+   ],
+   "obj": [
+    "Analyze AI scenarios such as service case summarization, email-to-order and deal qualification for data, integration and risk requirements",
+    "Identify which are embedded features versus custom agent opportunities"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "Service Cloud and Sales Cloud what's new"
+    ],
+    [
+     "SAP_NEWS",
+     "Release posts"
+    ]
+   ],
+   "pat": [
+    "PAT17",
+    "PAT14"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Partner-blog claims need SAP-source verification.",
+   "module": "M2.3",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.3.4",
+   "title": "Engagement and marketing AI, including multi-agent with external platforms",
+   "pre": [
+    "T2.3.1",
+    "T1.3.6"
+   ],
+   "comps": [
+    "C14",
+    "C05"
+   ],
+   "obj": [
+    "Explain the Joule and Google Gemini Enterprise multi-agent marketing design at the level documented",
+    "Analyze consent, brand-safety and data-flow requirements"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "Cloud Next 2026 partnership announcements"
+    ],
+    [
+     "SAP_ARCH",
+     "A2A and MCP references"
+    ]
+   ],
+   "pat": [
+    "PAT10",
+    "PAT06"
+   ],
+   "cases": [
+    "SAP-Google marketing agents (SRC-017 secondary, verify)"
+   ],
+   "hands": "none",
+   "sap_status": "Targeted H2 2026 per secondary source.",
+   "module": "M2.3",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-014"
+   ]
+  },
+  {
+   "id": "T2.3.5",
+   "title": "B2B order management and S/4HANA integration with AI",
+   "pre": [
+    "T2.3.2",
+    "T2.4.1"
+   ],
+   "comps": [
+    "C14",
+    "C15"
+   ],
+   "obj": [
+    "Design AI-assisted order capture and order reliability flows across CX, order management and ERP",
+    "Identify system-of-record, idempotency and approval requirements"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "Order Management Services documentation"
+    ],
+    [
+     "SAP_ARCH",
+     "Integration references"
+    ]
+   ],
+   "pat": [
+    "PAT14",
+    "PAT07"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.3",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.3.6",
+   "title": "CX customer data and identity",
+   "pre": [
+    "T2.3.1",
+    "T1.5.4"
+   ],
+   "comps": [
+    "C14",
+    "C07"
+   ],
+   "obj": [
+    "Explain how customer identity and consent data affect AI personalization and agent actions",
+    "Design data minimization for AI over CX data"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "Customer Data Cloud and identity docs"
+    ]
+   ],
+   "pat": [
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.3",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.4.1",
+   "title": "SAP integration architecture: Integration Suite, APIs, events",
+   "pre": [
+    "T2.1.2"
+   ],
+   "comps": [
+    "C05",
+    "C13"
+   ],
+   "obj": [
+    "Select between API, event, and batch integration for AI use cases",
+    "Describe how Integration Suite MCP Gateway fits"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "Integration reference architectures"
+    ],
+    [
+     "SAP_HELP",
+     "Integration Suite documentation"
+    ]
+   ],
+   "pat": [
+    "PAT09",
+    "PAT14"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.4",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.4.2",
+   "title": "Identity propagation and authorization in SAP landscapes",
+   "pre": [
+    "T2.1.2",
+    "T1.5.3"
+   ],
+   "comps": [
+    "C07",
+    "C06",
+    "C13"
+   ],
+   "obj": [
+    "Trace a user identity from Joule or an external agent to an S/4HANA or CX authorization check",
+    "Identify where service accounts silently bypass user-level controls"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "IAS App2App, principal propagation references"
+    ],
+    [
+     "SAP_HELP",
+     "Security guides"
+    ]
+   ],
+   "pat": [
+    "PAT19"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.4",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-009",
+    "CS-011"
+   ]
+  },
+  {
+   "id": "T2.4.3",
+   "title": "Connecting external models and frameworks to SAP systems",
+   "pre": [
+    "T2.4.1",
+    "T1.3.5"
+   ],
+   "comps": [
+    "C05",
+    "C13"
+   ],
+   "obj": [
+    "Compare patterns: Generative AI Hub, direct provider call from BTP, MCP servers on Cloud Foundry, gateway-mediated agents",
+    "Specify security and cost controls for each"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "Reference patterns"
+    ],
+    [
+     "ENG_BLOGS",
+     "Partner build (SRC-014)"
+    ]
+   ],
+   "pat": [
+    "PAT09",
+    "PAT08"
+   ],
+   "cases": [
+    "Mindset (SRC-014)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.4",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-009"
+   ]
+  },
+  {
+   "id": "T2.4.4",
+   "title": "Extending S/4HANA and CX with AI: side-by-side versus embedded, clean core",
+   "pre": [
+    "T2.4.1"
+   ],
+   "comps": [
+    "C13",
+    "C12"
+   ],
+   "obj": [
+    "Explain clean-core principles and where AI extensions belong",
+    "Decide embedded feature, side-by-side app or external service for a requirement"
+   ],
+   "res": [
+    [
+     "SAP_ARCH",
+     "Clean core and extensibility guidance"
+    ]
+   ],
+   "pat": [
+    "PAT15",
+    "PAT17"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M2.4",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T2.4.5",
+   "title": "SAP AI governance, compliance, licensing and cost in client discussions",
+   "pre": [
+    "T2.2.3",
+    "T1.5.9"
+   ],
+   "comps": [
+    "C08",
+    "C13",
+    "C12"
+   ],
+   "obj": [
+    "Explain which SAP AI features are included, premium or consumption-priced and how to verify with the client's contract",
+    "Assemble a total-cost view including BTP and model consumption"
+   ],
+   "res": [
+    [
+     "SAP_HELP",
+     "Product and pricing information where public"
+    ],
+    [
+     "SAP_NEWS",
+     "Promotions and changes (treat as time-limited)"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Pricing statements conflict across sources; always verify.",
+   "module": "M2.4",
+   "pillar": "P2",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.1",
+   "title": "B2B commerce, sales and distribution",
+   "pre": [
+    "T1.4.1"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Explain B2B specifics: contract pricing, configure-price-quote, account hierarchies, punchout, reorder and sales rep workflows",
+    "Identify high-value AI scenarios and their data prerequisites"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "B2B foodservice search assistant (candidate from index, verify)"
+    ],
+    [
+     "SAP_NEWS",
+     "SAP B2B order capture announcements"
+    ]
+   ],
+   "pat": [
+    "PAT18",
+    "PAT14"
+   ],
+   "cases": [
+    "B2B conversational search (candidate)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-010"
+   ]
+  },
+  {
+   "id": "T3.1.2",
+   "title": "Retail, e-commerce and B2C",
+   "pre": [
+    "T1.2.1"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Analyze personalization, search, support and merchandising architectures and their scale and latency profiles",
+    "Compare search integration approaches seen in production"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Search architecture comparison (candidate: DoorDash/Instacart/Uber Eats analysis, verify)"
+    ]
+   ],
+   "pat": [
+    "PAT02",
+    "PAT13"
+   ],
+   "cases": [
+    "Instacart/DoorDash/Uber Eats search (candidate)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-005"
+   ]
+  },
+  {
+   "id": "T3.1.3",
+   "title": "Manufacturing and automotive",
+   "pre": [
+    "T1.3.2"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Explain shop-floor, quality and service-knowledge AI scenarios and OT/IT boundaries",
+    "Identify safety and latency constraints that shape architecture"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Manufacturing assistant cases (candidate: Gerdau, verify)"
+    ]
+   ],
+   "pat": [
+    "PAT01",
+    "PAT14"
+   ],
+   "cases": [
+    "Gerdau upskilling assistant (candidate)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.4",
+   "title": "Supply chain and logistics",
+   "pre": [
+    "T1.3.2"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Analyze planning, exception management and tender/contract analysis scenarios",
+    "Design agent boundaries around ERP and TMS systems of record"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "SAP supply-chain agents (status-checked)"
+    ],
+    [
+     "ENG_BLOGS",
+     "Logistics case (to be selected)"
+    ]
+   ],
+   "pat": [
+    "PAT14",
+    "PAT07"
+   ],
+   "cases": [
+    "Austrian Post order automation (candidate)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.5",
+   "title": "Banking and financial services",
+   "pre": [
+    "T1.5.4"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Explain model risk, explainability, audit and data residency demands",
+    "Design human oversight for advice-adjacent and decision-adjacent AI"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Bank LLM platform cases (candidate: Barclays, verify)"
+    ],
+    [
+     "NIST",
+     "Risk management framing"
+    ]
+   ],
+   "pat": [
+    "PAT11",
+    "PAT07"
+   ],
+   "cases": [
+    "Barclays MLOps and LLM integration (candidate)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.6",
+   "title": "Healthcare and life sciences",
+   "pre": [
+    "T1.5.4"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Explain PHI handling, clinical safety and validation constraints",
+    "Design retrieval and summarization with traceability to sources"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Healthcare RAG case (to be selected, HIPAA context)"
+    ]
+   ],
+   "pat": [
+    "PAT01",
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.7",
+   "title": "Telecom and media",
+   "pre": [
+    "T1.4.5"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Analyze large-scale support, network operations and content workflows",
+    "Identify cost and latency drivers at high volume"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Telecom or media case (to be selected)"
+    ]
+   ],
+   "pat": [
+    "PAT13",
+    "PAT20"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.8",
+   "title": "Energy and utilities",
+   "pre": [
+    "T1.4.5"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Analyze asset, grid and customer-service scenarios with safety-critical context",
+    "Explain consumption-summary and field-service AI patterns"
+   ],
+   "res": [
+    [
+     "SAP_NEWS",
+     "Utilities consumption summary feature in Service Cloud (SRC-008)"
+    ],
+    [
+     "ENG_BLOGS",
+     "Energy case (to be selected)"
+    ]
+   ],
+   "pat": [
+    "PAT17"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.9",
+   "title": "Travel and hospitality",
+   "pre": [
+    "T1.2.1"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Analyze conversational booking, disruption handling and loyalty personalization",
+    "Identify real-time inventory and pricing integration constraints"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Travel case (to be selected)"
+    ]
+   ],
+   "pat": [
+    "PAT04",
+    "PAT18"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.1.10",
+   "title": "Professional services and public sector",
+   "pre": [
+    "T1.2.1"
+   ],
+   "comps": [
+    "C15",
+    "C12"
+   ],
+   "obj": [
+    "Analyze knowledge work, contract review and document intelligence",
+    "Identify confidentiality, tenancy and audit requirements"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Legal or advisory AI case (candidate: Harvey infrastructure write-up, verify)"
+    ]
+   ],
+   "pat": [
+    "PAT01",
+    "PAT11"
+   ],
+   "cases": [
+    "Harvey legal AI infrastructure (candidate)"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.1",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.2.1",
+   "title": "Regulatory lens: AI regulation, privacy and sector rules",
+   "pre": [
+    "T1.5.4"
+   ],
+   "comps": [
+    "C08",
+    "C15"
+   ],
+   "obj": [
+    "Explain how risk-based AI regulation and privacy law change architecture (logging, human oversight, transparency, data location)",
+    "State clearly when legal advice is needed"
+   ],
+   "res": [
+    [
+     "EUAI",
+     "Official texts and guidance (verify status and dates)"
+    ],
+    [
+     "NIST",
+     "Framework mapping"
+    ]
+   ],
+   "pat": [],
+   "cases": [],
+   "hands": "none",
+   "sap_status": "Regulatory timelines change; verify at study time.",
+   "module": "M3.2",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 0,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.2.2",
+   "title": "Data residency, sovereignty and deployment model choices",
+   "pre": [
+    "T3.2.1",
+    "T1.4.3"
+   ],
+   "comps": [
+    "C07",
+    "C12"
+   ],
+   "obj": [
+    "Compare regional endpoints, private deployment and sovereign options",
+    "Decide when self-hosted open models are justified"
+   ],
+   "res": [
+    [
+     "AWS",
+     "Regional controls"
+    ],
+    [
+     "AZURE",
+     "Regional controls"
+    ],
+    [
+     "GCP",
+     "Regional controls"
+    ]
+   ],
+   "pat": [
+    "PAT08"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.2",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 1,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": [
+    "CS-006"
+   ]
+  },
+  {
+   "id": "T3.3.1",
+   "title": "Cross-industry pattern synthesis",
+   "pre": [
+    "T3.1.1",
+    "T3.1.3",
+    "T3.1.5",
+    "T1.6.3"
+   ],
+   "comps": [
+    "C12",
+    "C15"
+   ],
+   "obj": [
+    "Identify recurring patterns across industries and where industry constraints force deviation",
+    "Adapt a documented architecture to a different industry and justify changes"
+   ],
+   "res": [
+    [
+     "ENG_BLOGS",
+     "Cases from the catalog, Tier A only"
+    ]
+   ],
+   "pat": [
+    "PAT01",
+    "PAT05",
+    "PAT07",
+    "PAT11"
+   ],
+   "cases": [],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.3",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 0,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  },
+  {
+   "id": "T3.3.2",
+   "title": "Capstone architecture simulations (clearly labelled simulations)",
+   "pre": [
+    "T3.3.1",
+    "T2.2.5",
+    "T1.6.4"
+   ],
+   "comps": [
+    "C01",
+    "C12",
+    "C14",
+    "C16",
+    "C17"
+   ],
+   "obj": [
+    "Lead a simulated discovery, produce options analysis and ADR for an SAP CX scenario, then defend it against an architecture review",
+    "Produce an architecture document and handover pack"
+   ],
+   "res": [
+    [
+     "C4ADR",
+     "Templates"
+    ]
+   ],
+   "pat": [
+    "PAT05",
+    "PAT09",
+    "PAT07"
+   ],
+   "cases": [
+    "SIMULATION: B2B order capture with SAP Commerce and S/4HANA",
+    "SIMULATION: service agent with Joule Studio"
+   ],
+   "hands": "none",
+   "sap_status": null,
+   "module": "M3.3",
+   "pillar": "P3",
+   "assessment_plan": {
+    "mcq_target": 4,
+    "scenario_target": 2,
+    "decision_comparison_target": 1,
+    "architecture_review_target": 1,
+    "revision_cards_target": 6
+   },
+   "verified_case_ids": []
+  }
+ ]
+}

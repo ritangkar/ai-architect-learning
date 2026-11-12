@@ -1,0 +1,136 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Case",
+ "type": "object",
+ "properties": {
+  "id": {
+   "type": "string",
+   "pattern": "^CS-\\d{3}$"
+  },
+  "company": {
+   "type": "string"
+  },
+  "industry": {
+   "type": "string"
+  },
+  "title": {
+   "type": "string"
+  },
+  "problem": {
+   "type": "string"
+  },
+  "category": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "minItems": 1
+  },
+  "tier": {
+   "enum": [
+    "A",
+    "A-provisional",
+    "B",
+    "C"
+   ]
+  },
+  "depth": {
+   "type": "string"
+  },
+  "sources": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^SRC-\\d{3}$"
+   },
+   "minItems": 1
+  },
+  "technologies_stated": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "patterns": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^PAT\\d{2}$"
+   }
+  },
+  "prereq_topics": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "pattern": "^T[1-3]\\.\\d+\\.\\d+$"
+   }
+  },
+  "facts": {
+   "type": "array",
+   "items": {
+    "type": "array",
+    "items": {},
+    "minItems": 2,
+    "maxItems": 2
+   },
+   "minItems": 1
+  },
+  "interpretations": {
+   "type": "array",
+   "items": {
+    "type": "array",
+    "items": {},
+    "minItems": 2,
+    "maxItems": 2
+   }
+  },
+  "unknown": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "decisions": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "decision",
+     "selected",
+     "alternatives",
+     "reasoning",
+     "basis",
+     "source"
+    ]
+   }
+  },
+  "review_exercise": {
+   "type": "string"
+  },
+  "lessons": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "adaptation": {
+   "type": "string"
+  }
+ },
+ "required": [
+  "id",
+  "company",
+  "industry",
+  "title",
+  "problem",
+  "category",
+  "tier",
+  "sources",
+  "facts",
+  "unknown",
+  "patterns",
+  "prereq_topics",
+  "decisions"
+ ],
+ "additionalProperties": true
+}

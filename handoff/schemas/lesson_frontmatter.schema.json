@@ -1,0 +1,38 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "LessonFrontmatter",
+ "type": "object",
+ "properties": {
+  "topicId": {
+   "type": "string"
+  },
+  "depthVariants": {
+   "type": "object",
+   "properties": {
+    "compress": {},
+    "standard": {},
+    "deep": {}
+   }
+  },
+  "lastReviewed": {
+   "type": "string"
+  },
+  "sources": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "diagrams": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  }
+ },
+ "required": [
+  "topicId",
+  "lastReviewed"
+ ],
+ "additionalProperties": true
+}
