@@ -18,7 +18,8 @@ export default function Assessment() {
     const pending = run.pendingItemId && app.q(run.pendingItemId) && !answered.has(run.pendingItemId) ? run.pendingItemId : undefined; // resume at the same question after a refresh
     if (pending) { setCur(pending); return; }
     const next = app.nextForRun(run);
-    if (next.item) { const id = next.item.id; app.setPending(run, id).then(() => setCur(id)); } // persisted before it is shown, so a refresh resumes here
+    // Show immediately (no async hop). Selection is deterministic for (seed, attempts), so a refresh resumes at the same question; the pointer is also persisted.
+    if (next.item) { const id = next.item.id; setCur(id); void app.setPending(run, id); }
     else app.completeRun(run).then(() => { location.href = url(`assessment/results/?run=${run.id}`); });
   }, [app?.version, run?.id, run?.selfDone, cur]);
 

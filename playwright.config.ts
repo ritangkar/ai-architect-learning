@@ -16,6 +16,7 @@ export default defineConfig({
   use: {
     baseURL: BASE_URL,
     trace: 'off',
+    screenshot: 'only-on-failure',
     launchOptions: { executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox'] },
   },
   webServer: { command: 'node scripts/serve-dist.mjs', url: BASE_URL, reuseExistingServer: true, timeout: 30_000 },

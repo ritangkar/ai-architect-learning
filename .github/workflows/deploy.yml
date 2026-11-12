@@ -52,7 +52,9 @@ jobs:
         if: always()
         with:
           name: reports
-          path: reports/
+          path: |
+            reports/
+            test-results/
           if-no-files-found: ignore
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
