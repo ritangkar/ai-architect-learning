@@ -1,0 +1,83 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Minimal permissions for the whole workflow; the deploy job adds what Pages needs.
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Secret scan
+        run: |
+          npm run scan:secrets
+          npm run scan:history
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+      - name: Validate content
+        run: npm run validate
+      - name: Unit and integration tests
+        run: npm test
+      - name: Build (owner and repository come from GITHUB_REPOSITORY, so the base path is right)
+        run: npm run build
+      - name: Install browser for end-to-end tests
+        run: npx playwright install --with-deps chromium
+      - name: End-to-end and accessibility tests against the real base path
+        run: npx playwright test --trace off
+      - name: External link report (warnings only)
+        run: npm run check:links
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports
+          path: reports/
+          if-no-files-found: ignore
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Smoke test the live site (home page and one deep link)
+        run: |
+          set -e
+          URL="${{ steps.deployment.outputs.page_url }}"
+          echo "Live URL: $URL"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$URL") && [ "$code" = "200" ] && break
+            echo "waiting for the CDN (attempt $i, got $code)"; sleep 10
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' "$URL")" = "200"
+          test "$(curl -s -o /dev/null -w '%{http_code}' "${URL}topic/T1.2.1/")" = "200"
+          curl -s "$URL" | grep -q "Architect Lab"
+          echo "Smoke test passed: home page and topic/T1.2.1/ return 200"

@@ -33,7 +33,6 @@ for (const scheme of ['light', 'dark'] as const) {
 test.describe('axe: states that need data', () => {
   test('question panel, feedback, results, dashboard with data, pathway, review', async ({ page }) => {
     test.setTimeout(180_000);
-    page.on('dialog', (d) => d.accept());
     await page.goto('assessment/');
     await page.getByRole('button', { name: 'Start the assessment' }).click();
     for (const grp of await page.locator('fieldset.card').all()) await grp.locator('label.choice', { hasText: /^3$/ }).click();
@@ -46,6 +45,7 @@ test.describe('axe: states that need data', () => {
     await page.getByRole('button', { name: 'Submit answer' }).click();
     await expect(page.getByText(/Score for this item/)).toBeVisible();
     await scan(page, 'question feedback');
+    page.once('dialog', (d) => d.accept());
     await page.getByRole('button', { name: 'Abandon this run' }).click();
     await expect(page.getByRole('button', { name: 'Retake the assessment' })).toBeVisible();
     await startAssessmentAndComplete(page, { mode: 'wrong', maxQuestions: 10 });
@@ -57,8 +57,8 @@ test.describe('axe: states that need data', () => {
     await page.getByRole('button', { name: 'Mark lesson as read' }).click();
     await page.goto('review/');
     await page.getByRole('button', { name: 'Start reviewing' }).click();
-    await scan(page, 'review card front');
-    await page.getByRole('button', { name: 'Show answer' }).click();
-    await scan(page, 'review card back');
+    await scan(page, 'review item (card front or missed question)');
+    const show = page.getByRole('button', { name: 'Show answer' });
+    if (await show.count()) { await show.click(); await scan(page, 'review card back'); }
   });
 });

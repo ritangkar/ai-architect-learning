@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the secret scan also checks git history
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Secret scan (working tree and history)
+        run: |
+          npm run scan:secrets
+          npm run scan:history
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+      - name: Validate content (fails on cycles, dangling ids, missing sources, Tier A < 3 decisions, ...)
+        run: npm run validate
+      - name: Unit and integration tests
+        run: npm test
+      - name: Build (includes search index and internal link check under the base path)
+        run: npm run build
+      - name: External link report (warnings only)
+        run: npm run check:links
+        continue-on-error: true
+      - name: Install browser for end-to-end tests
+        run: npx playwright install --with-deps chromium
+      - name: End-to-end, keyboard, mobile and axe accessibility tests
+        run: npx playwright test --trace off
+      - name: Lighthouse budgets
+        run: npm run lhci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports
+          path: |
+            reports/
+            test-results/
+          if-no-files-found: ignore
