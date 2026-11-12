@@ -1,5 +1,5 @@
 import type { ComponentChildren } from 'preact';
-import { topicUrl } from '../lib/url';
+import { topicUrl, url } from "../lib/url";
 import type { Core } from '../lib/app/bundle';
 import type { MasteryState } from '../lib/engine/types';
 
@@ -11,7 +11,7 @@ export function StateBadge({ state, label }: { state: MasteryState; label?: stri
 }
 export function Loading({ what = 'Loading' }: { what?: string }) { return <p role="status" class="muted">{what}…</p>; }
 export function ErrorBox({ error }: { error: string }) {
-  return <div class="banner warn" role="alert"><p><strong>Something went wrong loading this view.</strong> {error}</p><p>Your saved progress is not affected. You can <a href="settings/">export your data</a> from Settings, then reload.</p></div>;
+  return <div class="banner warn" role="alert"><p><strong>Something went wrong loading this view.</strong> {error}</p><p>Your saved progress is not affected. You can <a href={url("settings/")}>export your data</a> from Settings, then reload.</p></div>;
 }
 export function TopicLink({ id, core }: { id: string; core: Core }) {
   const t = core.topics.find((x) => x.id === id);

@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getContent } from '../../lib/content/site';
+import { exerciseUrl } from '../../lib/url';
+const c = getContent();
+const KIND: Record<string, string> = { architecture_review: 'Architecture review', options_analysis: 'Options analysis (ADR)', discovery_drill: 'Discovery question drill', requirements_critique: 'Requirements critique' };
+---
+<Base title="Exercises" current="curriculum">
+  <h1>Exercises</h1>
+  <p class="muted">{c.exercises.length} exercises. All are constructed teaching scenarios, labelled as such, and are drafts until reviewed. Work is saved on your device only.</p>
+  {c.exercises.length === 0 && <div class="empty">No exercises authored yet.</div>}
+  <div class="grid cols-2">
+    {c.exercises.map((e) => (
+      <a class="card" href={exerciseUrl(e.id)}>
+        <p class="small muted" style="margin:0">{KIND[e.kind]}{e.simulation ? ' · SIMULATION' : ''}</p>
+        <h2 style="font-size:1.05rem">{e.title}</h2><p class="small">{e.summary}</p><p class="small muted">about {e.est_minutes ?? 40} min · topics {e.topics.join(', ')}</p>
+      </a>
+    ))}
+  </div>
+</Base>

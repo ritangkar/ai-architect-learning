@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getContent } from '../../lib/content/site';
+import { patternUrl } from '../../lib/url';
+const c = getContent();
+---
+<Base title="Patterns" current="cases">
+  <h1>Architecture patterns</h1>
+  <p class="muted">{Object.keys(c.patterns).length} patterns. Counts of cases and topics are computed from the catalogue.</p>
+  <div class="grid cols-2">
+    {Object.entries(c.patterns).map(([id, name]) => {
+      const cases = c.cases.filter((k) => k.patterns.includes(id));
+      const topics = c.topics.filter((t) => (t.pat ?? []).includes(id));
+      return <a class="card" href={patternUrl(id)}><h2 style="font-size:1.05rem">{id} {name}</h2><p class="small muted">{cases.length} case(s) · {topics.length} topic(s)</p></a>;
+    })}
+  </div>
+</Base>

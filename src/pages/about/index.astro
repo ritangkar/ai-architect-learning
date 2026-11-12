@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProvLegend from '../../components/ProvLegend.astro';
+import { getContent } from '../../lib/content/site';
+import { url } from '../../lib/url';
+const c = getContent();
+---
+<Base title="About and method" narrow>
+  <h1>About, method and limits</h1>
+  <p class="reading">{c.site.siteName} is a personal learning portal for becoming an enterprise AI solution architect with an SAP CX specialisation. It runs entirely in your browser from static files. There is no server, no account and no model API.</p>
+  <h2>How your level is decided</h2>
+  <ul class="reading">
+    <li>Mastery comes only from <strong>assessment and exercise evidence</strong>. Reading a lesson, watching a video or ticking “mark as read” never raises it.</li>
+    <li>Each answer is an item with a weight (concept questions 1, scenarios 3, cards 0.5), a recency decay, and your stated confidence. Overconfident misses count extra.</li>
+    <li>A topic needs applied (scenario-type) evidence to be called proficient, and a correct review a week later to be called mastered.</li>
+    <li>Levels change only when a gate’s evidence conditions are met. All numbers are tunable defaults in <code>content/config/engine.json</code>; see <code>docs/ENGINE.md</code>.</li>
+    <li>There are no calendar deadlines in the curriculum. Dates appear only for revision scheduling, backup reminders and “last verified” stamps.</li>
+  </ul>
+  <h2>Case provenance</h2>
+  <ProvLegend />
+  <p class="reading">Case tiers: A (technical primary source), A-provisional (source found, body not fully read), B (limited depth), C (catalogue stub). The catalogue holds {c.cases.length} cases; any larger figure in project documents is a target, not a count.</p>
+  <h2>Limits you should know</h2>
+  <ul class="reading">
+    <li>Scenario free text is <strong>not</strong> machine-graded. Self-scores are for your reflection.</li>
+    <li>Confidence ranges widen when evidence is thin; thresholds are heuristics, not certifications.</li>
+    <li>SAP product availability and pricing change quickly and sources conflict. See <a href={url('freshness/')}>Freshness</a>.</li>
+    <li>Regulatory topics are educational, not legal advice.</li>
+    <li>Content marked <em>draft</em> has been written to be accurate but not independently reviewed.</li>
+    <li>Diagrams drawn here are illustrative or labelled reconstructions; source diagrams are linked, not copied.</li>
+  </ul>
+  <h2>Privacy</h2>
+  <p class="reading">All progress is stored in your browser (IndexedDB on this device). Nothing is transmitted: no analytics, no trackers, no third-party scripts, no external fonts. Search runs locally. Video embeds, when available, load only after you click, from the privacy-enhanced YouTube domain. Clearing site data or switching device loses your progress unless you export a backup from <a href={url('settings/')}>Settings</a>; there is no sync.</p>
+  <h2>Content counts (computed)</h2>
+  <ul class="reading"><li>{c.topics.length} topics, {Object.keys(c.modules).length} modules, {Object.keys(c.competencies).length} competencies, {Object.keys(c.patterns).length} patterns</li><li>{c.cases.length} cases, {c.sources.length} sources</li><li>{c.questions.length} questions, {c.cards.length} cards, {c.lessons.length} lessons, {c.resources.length} curated resources, {c.exercises.length} exercises</li></ul>
+</Base>

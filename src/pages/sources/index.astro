@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getContent } from '../../lib/content/site';
+import { caseUrl, topicUrl } from '../../lib/url';
+const c = getContent();
+const GRADE_NOTE = 'primary = written by the vendor or builder of the thing described; partner = implementer or partner; secondary = analyst or editorial coverage; vendor-authored = marketing case study.';
+const grades = [...new Set(c.sources.map((s) => s.grade))];
+---
+<Base title="Sources" current="">
+  <h1>Sources</h1>
+  <p class="muted">{c.sources.length} sources. Grades: {GRADE_NOTE} Items flagged <span class="badge warn">verify</span> conflict with other sources or are time-sensitive; they carry a visible marker wherever they are cited.</p>
+  <p class="small">By grade: {grades.map((g) => `${g}: ${c.sources.filter((s) => s.grade === g).length}`).join(' · ')}</p>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead><tr><th scope="col">ID</th><th scope="col">Source</th><th scope="col">Grade</th><th scope="col">What it supports</th><th scope="col">Checked</th><th scope="col">Cited by</th><th scope="col">Flag</th></tr></thead>
+      <tbody>
+        {c.sources.map((s) => {
+          const cases = c.cases.filter((k) => k.sources.includes(s.id));
+          const lessons = c.lessons.filter((l) => (l.frontmatter.sources ?? []).includes(s.id));
+          return (
+            <tr id={s.id}>
+              <th scope="row" data-label="ID"><code>{s.id}</code></th>
+              <td data-label="Source"><a href={s.url} rel="noopener noreferrer" target="_blank">{s.title}<span class="visually-hidden"> (opens in a new tab)</span></a></td>
+              <td data-label="Grade">{s.grade}</td>
+              <td data-label="Supports">{(s.supports ?? []).length ? <ul style="margin:0">{(s.supports ?? []).map((x) => <li>{x}</li>)}</ul> : ((s as any).note ?? 'n/a')}</td>
+              <td data-label="Checked">{s.checked_on ?? 'n/a'}</td>
+              <td data-label="Cited by">{cases.map((k) => <a href={caseUrl(k.id)} style="margin-right:6px">{k.id}</a>)}{lessons.map((l) => <a href={topicUrl(l.topicId)} style="margin-right:6px">{l.topicId}</a>)}{!cases.length && !lessons.length ? <span class="muted">not yet cited</span> : null}</td>
+              <td data-label="Flag">{s.verify ? <span class="badge warn">verify before use: {s.verify_reason}</span> : <span class="muted">none</span>}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+</Base>

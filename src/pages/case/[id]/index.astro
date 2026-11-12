@@ -1,0 +1,163 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CasePanel from '../../../islands/CasePanel.tsx';
+import ProvLegend from '../../../components/ProvLegend.astro';
+import { getContent } from '../../../lib/content/site';
+import { patternUrl, sourceUrl, topicUrl, url } from '../../../lib/url';
+export function getStaticPaths() {
+  return getContent().cases.map((k) => ({ params: { id: k.id } }));
+}
+const { id } = Astro.params as { id: string };
+const c = getContent();
+const k = c.cases.find((x) => x.id === id)!;
+const src = (sid: string) => c.sources.find((s) => s.id === sid)!;
+const verifySrc = k.sources.filter((s) => src(s).verify);
+const TIER: Record<string, string> = {
+  A: 'Tier A: a technical primary source written by the builders. Suitable for a full walkthrough.',
+  'A-provisional': 'Tier A (provisional): a primary source has been identified but its full body has not yet been read. Only what was read is shown; do not treat the case as fully analysed.',
+  B: 'Tier B: structured analysis with limited depth or an implementer-authored source.',
+  C: 'Tier C: catalogue stub from marketing, editorial or secondary material. Nothing is invented beyond what the source states; do not copy its numbers.',
+};
+const basisKind = (b: string) => (/^documented/.test(b) && /independent|partly/.test(b) ? 'mixed' : /^documented/.test(b) ? 'documented' : 'independent');
+const BASIS_LABEL = { documented: 'Documented', mixed: 'Documented + our analysis', independent: 'Independent analysis' } as const;
+const sections = [
+  ['problem', 'Business problem'], ['facts', 'Verified facts'], ['tech', 'Technologies stated'], ['decisions', 'Documented decisions'], ['interpretations', 'Interpretations'], ['reconstructed', 'Reconstructed'], ['unknown', 'Unknown'],
+  ['lessons', 'Lessons for an architect'], ['adaptation', 'Adapting to another client'], ['exercise', 'Review exercise'], ['sources', 'Sources and confidence'],
+].filter(([s]) => ({ problem: !!k.problem, facts: k.facts.length > 0, tech: (k.technologies_stated ?? []).length > 0, decisions: k.decisions.length > 0, interpretations: (k.interpretations ?? []).length > 0, reconstructed: (k.reconstructed ?? []).length > 0, unknown: k.unknown.length > 0, lessons: (k.lessons ?? []).length > 0, adaptation: !!k.adaptation, exercise: true, sources: true } as any)[s]);
+const related = c.topics.filter((t) => k.prereq_topics.includes(t.id));
+---
+<Base title={`${k.id} ${k.company}`} current="cases">
+  <div data-pagefind-meta="type:Case" data-pagefind-filter={`industry:${k.industry}`}></div>
+  <p><a href={url('cases/')}>Case library</a></p>
+  <header class="stack">
+    <div class="row"><span class={`badge tier-${k.tier}`}>Tier {k.tier}</span>{k.simulation && <span class="badge sim">SIMULATION</span>}{verifySrc.length > 0 && <span class="badge warn">verify before use</span>}</div>
+    <h1 style="margin:0">{k.company}: {k.title}</h1>
+    <p class="muted">{k.industry} · {k.category.join(' · ')}</p>
+    <p class="small">{TIER[k.tier]}</p>
+    {k.depth && <p class="small"><strong>Documentation depth:</strong> {k.depth}</p>}
+    {verifySrc.length > 0 && <div class="callout warn" role="note"><p style="color:var(--text)"><span class="prov U">verify</span> <strong>Verify before use.</strong> This case cites sources flagged for verification: {verifySrc.map((s) => <a class="src-chip verify" href={sourceUrl(s)}>{s}</a>)}. Reasons: {verifySrc.map((s) => src(s).verify_reason).filter(Boolean).join('; ')}.</p></div>}
+  </header>
+
+  <nav aria-label="On this page" class="small"><ul class="pill-list">{sections.map(([s, label]) => <li><a class="badge neutral" href={`#${s}`}>{label}</a></li>)}</ul></nav>
+  <ProvLegend />
+
+  <CasePanel client:only="preact" caseId={id} />
+
+  {k.problem && (
+    <section id="problem" data-case-section="problem" aria-labelledby="h-problem">
+      <h2 id="h-problem">Business problem</h2>
+      <p class="reading">{k.problem}</p>
+      <p class="small muted">Summarised from the sources listed at the end.</p>
+    </section>
+  )}
+
+  <section id="facts" data-case-section="facts" aria-labelledby="h-facts">
+    <h2 id="h-facts">Verified facts <span class="prov V"><span aria-hidden="true">✓</span> V</span></h2>
+    <p class="small muted">Each statement below is paraphrased from the cited source. Click a source chip to see its grade and check date.</p>
+    <div>
+      {k.facts.map(([text, sid]) => (
+        <div class="callout V">
+          <span class="prov V"><span aria-hidden="true">✓</span> V Verified</span> <span style="color:var(--text)">{text}</span> <a class={`src-chip ${src(sid).verify ? 'verify' : ''}`} href={sourceUrl(sid)} title={src(sid).title}>{sid}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {(k.technologies_stated ?? []).length > 0 && (
+    <section id="tech" data-case-section="tech" aria-labelledby="h-tech">
+      <h2 id="h-tech">Technologies stated in the sources</h2>
+      <ul class="pill-list">{(k.technologies_stated ?? []).map((t) => <li><span class="badge neutral">{t}</span></li>)}</ul>
+      <p class="small muted">Patterns this case demonstrates: {k.patterns.map((p) => <a href={patternUrl(p)} style="margin-right:8px">{p} {c.patterns[p]}</a>)}</p>
+    </section>
+  )}
+
+  {k.decisions.length > 0 && (
+    <section id="decisions" data-case-section="decisions" aria-labelledby="h-decisions">
+      <h2 id="h-decisions">Documented decisions</h2>
+      <div class="table-wrap">
+        <table class="stack-table">
+          <thead><tr><th scope="col">Decision</th><th scope="col">Selected</th><th scope="col">Alternatives</th><th scope="col">Reasoning</th><th scope="col">Basis</th></tr></thead>
+          <tbody>
+            {k.decisions.map((d) => {
+              const bk = basisKind(d.basis);
+              return (
+                <tr>
+                  <th scope="row" data-label="Decision">{d.decision}</th>
+                  <td data-label="Selected">{d.selected}</td>
+                  <td data-label="Alternatives"><span class="prov I"><span aria-hidden="true">◆</span> I</span> {d.alternatives}</td>
+                  <td data-label="Reasoning">{d.reasoning}</td>
+                  <td data-label="Basis">{bk === 'independent' ? <span class="prov I"><span aria-hidden="true">◆</span> {BASIS_LABEL[bk]}</span> : bk === 'mixed' ? <span class="prov R" style="color:var(--warn)">{BASIS_LABEL[bk]}</span> : <span class="prov V"><span aria-hidden="true">✓</span> {BASIS_LABEL[bk]}</span>}<br /><span class="small muted">{d.basis}</span> <a class="src-chip" href={sourceUrl(d.source)}>{d.source}</a></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">“Alternatives” are listed for comparison. Unless the basis says they are documented, they are our independent analysis (I), not statements by the builders.</p>
+    </section>
+  )}
+
+  {(k.interpretations ?? []).length > 0 && (
+    <section id="interpretations" data-case-section="interpretations" aria-labelledby="h-interp">
+      <h2 id="h-interp">Interpretations <span class="prov I"><span aria-hidden="true">◆</span> I</span></h2>
+      <p class="small muted">Reasoned from the verified facts above. This is analysis, not something the builders said.</p>
+      {(k.interpretations ?? []).map(([text]) => <div class="callout I"><span class="prov I"><span aria-hidden="true">◆</span> I Interpretation</span> <span style="color:var(--text)">{text}</span></div>)}
+    </section>
+  )}
+
+  {(k.reconstructed ?? []).length > 0 && (
+    <section id="reconstructed" data-case-section="reconstructed" aria-labelledby="h-rec">
+      <h2 id="h-rec">Reconstructed <span class="prov R"><span aria-hidden="true">◧</span> R</span></h2>
+      <div class="banner warn" role="note"><p><strong>Reconstructed content.</strong> The following was inferred by the authors to fill gaps. It is not stated by any source.</p></div>
+      {(k.reconstructed ?? []).map(([text]) => <div class="callout R"><span class="prov R"><span aria-hidden="true">◧</span> R Reconstructed</span> <span style="color:var(--text)">{text}</span></div>)}
+    </section>
+  )}
+
+  {k.unknown.length > 0 && (
+    <section id="unknown" data-case-section="unknown" aria-labelledby="h-unk">
+      <h2 id="h-unk">Unknown <span class="prov U"><span aria-hidden="true">?</span> U</span></h2>
+      <p class="small muted">Not established from the sources. A good architect asks about these before reusing the design.</p>
+      <ul>{k.unknown.map((u) => <li class="callout U" style="list-style:none"><span class="prov U"><span aria-hidden="true">?</span> U Unknown</span> <span style="color:var(--text)">{u}</span></li>)}</ul>
+    </section>
+  )}
+
+  {(k.lessons ?? []).length > 0 && (
+    <section id="lessons" data-case-section="lessons" aria-labelledby="h-les">
+      <h2 id="h-les">Lessons for an architect</h2>
+      <ul>{(k.lessons ?? []).map((l) => <li>{l}</li>)}</ul>
+    </section>
+  )}
+  {k.adaptation && (
+    <section id="adaptation" data-case-section="adaptation" aria-labelledby="h-ada">
+      <h2 id="h-ada">Adapting to another client</h2>
+      <p class="reading">{k.adaptation}</p>
+    </section>
+  )}
+
+  <section id="exercise" aria-labelledby="h-ex"><h2 id="h-ex">Review exercise</h2><p class="small muted">The exercise is in the panel above (“Review exercise”), with its self-scoring checklist.</p></section>
+
+  <section id="sources" data-case-section="sources" aria-labelledby="h-src">
+    <h2 id="h-src">Sources and confidence</h2>
+    <p class="small muted">Prerequisite topics: {related.map((t) => <a href={topicUrl(t.id)} style="margin-right:8px">{t.id} {t.title}</a>)}</p>
+    <div class="table-wrap">
+      <table class="stack-table">
+        <thead><tr><th scope="col">Source</th><th scope="col">Grade</th><th scope="col">Supports</th><th scope="col">Checked</th><th scope="col">Flag</th></tr></thead>
+        <tbody>
+          {k.sources.map((sid) => {
+            const s = src(sid);
+            return (
+              <tr>
+                <th scope="row" data-label="Source"><a class="src-chip" href={sourceUrl(sid)}>{sid}</a> <a href={s.url} rel="noopener noreferrer" target="_blank">{s.title}<span class="visually-hidden"> (opens in a new tab)</span></a></th>
+                <td data-label="Grade">{s.grade}</td>
+                <td data-label="Supports">{(s.supports ?? []).join('; ') || (s as any).note || 'n/a'}</td>
+                <td data-label="Checked">{s.checked_on ?? 'n/a'}</td>
+                <td data-label="Flag">{s.verify ? <span class="badge warn">verify: {s.verify_reason}</span> : <span class="muted">none</span>}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">Diagrams: this portal does not copy source diagrams. Where a source has one, open the source link above.</p>
+  </section>
+</Base>

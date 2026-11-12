@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import Island from '../../components/Island.astro';
+import Comp from '../../islands/KnowledgeMap.tsx';
+---
+<Base title="Knowledge map" current="map">
+  <Island><Comp client:only="preact" /></Island>
+</Base>

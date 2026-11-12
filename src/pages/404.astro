@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+---
+<Base title="Page not found">
+  <h1>Page not found</h1>
+  <p>That page does not exist. If you followed an old link, the topic or case may have been renamed; your saved progress is not affected.</p>
+  <p><a class="btn primary" href={url()}>Back to the dashboard</a> <a class="btn" href={url('curriculum/')}>Browse the curriculum</a></p>
+</Base>

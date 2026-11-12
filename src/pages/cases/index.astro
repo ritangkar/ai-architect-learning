@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import Island from '../../components/Island.astro';
+import CaseLibrary from '../../islands/CaseLibrary.tsx';
+import ProvLegend from '../../components/ProvLegend.astro';
+import { getContent } from '../../lib/content/site';
+import { caseUrl } from '../../lib/url';
+const c = getContent();
+---
+<Base title="Case library" current="cases">
+  <Island><CaseLibrary client:only="preact" /></Island>
+  <ProvLegend />
+  <noscript>
+    <h2>All cases</h2>
+    <ul>{c.cases.map((k) => <li><a href={caseUrl(k.id)}>{k.id} {k.company}: {k.title}</a> (Tier {k.tier})</li>)}</ul>
+  </noscript>
+</Base>

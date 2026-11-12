@@ -1,0 +1,16 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Exercise from '../../../islands/Exercise.tsx';
+import { getContent } from '../../../lib/content/site';
+import { url } from '../../../lib/url';
+export function getStaticPaths() {
+  return getContent().exercises.map((e) => ({ params: { id: e.id } }));
+}
+const { id } = Astro.params as { id: string };
+const e = getContent().exercises.find((x) => x.id === id)!;
+---
+<Base title={e.title} current="curriculum">
+  <p><a href={url('exercises/')}>Exercises</a></p>
+  <Exercise client:only="preact" exerciseId={id} />
+  <noscript><p class="callout warn">Exercises need JavaScript because your work is saved in your browser.</p></noscript>
+</Base>

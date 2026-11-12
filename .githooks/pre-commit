@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks commits that contain likely secrets. Enabled by `npm install` (prepare script sets core.hooksPath).
+npx --no-install tsx scripts/scan-secrets.ts --staged

@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import Island from '../../components/Island.astro';
+import Comp from '../../islands/Progress.tsx';
+---
+<Base title="Progress" current="progress">
+  <Island><Comp client:only="preact" /></Island>
+</Base>

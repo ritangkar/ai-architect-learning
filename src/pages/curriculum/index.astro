@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import Island from '../../components/Island.astro';
+import CurriculumBrowser from '../../islands/CurriculumBrowser.tsx';
+import { getContent } from '../../lib/content/site';
+import { moduleUrl } from '../../lib/url';
+const c = getContent();
+---
+<Base title="Curriculum" current="curriculum">
+  <Island><CurriculumBrowser client:only="preact" /></Island>
+  <noscript>
+    <h2>Modules</h2>
+    <ul>{Object.entries(c.modules).map(([id, m]) => <li><a href={moduleUrl(id)}>{id} {m.title}</a></li>)}</ul>
+  </noscript>
+</Base>

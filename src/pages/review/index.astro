@@ -1,0 +1,8 @@
+---
+import Base from '../../layouts/Base.astro';
+import Island from '../../components/Island.astro';
+import Comp from '../../islands/Review.tsx';
+---
+<Base title="Review" current="review">
+  <Island><Comp client:only="preact" /></Island>
+</Base>

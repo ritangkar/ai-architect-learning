@@ -1,0 +1,110 @@
+---
+import Base from '../../../layouts/Base.astro';
+import TopicStudy from '../../../islands/TopicStudy.tsx';
+import ResourceRow from '../../../components/ResourceRow.astro';
+import { getContent } from '../../../lib/content/site';
+import { renderMarkdown, splitLesson, DEPTH_BLOCKS, LESSON_BLOCKS } from '../../../lib/render/markdown';
+import { caseUrl, moduleUrl, patternUrl, sourceUrl, url } from '../../../lib/url';
+export function getStaticPaths() {
+  return getContent().topics.map((t) => ({ params: { id: t.id } }));
+}
+const { id } = Astro.params as { id: string };
+const c = getContent();
+const t = c.topics.find((x) => x.id === id)!;
+const mod = c.modules[t.module];
+const lesson = c.lessons.find((l) => l.topicId === id);
+const dmap = new Map(c.diagrams.map((d) => [d.id, d]));
+const blocks = lesson ? splitLesson(lesson.body) : {};
+const html: Record<string, string> = {};
+for (const k of LESSON_BLOCKS) if (blocks[k]) html[k] = await renderMarkdown(blocks[k]!, dmap);
+const BLOCK_TITLES: Record<string, string> = { summary: 'Summary', keyterms: 'Key terms', why: 'Why this matters to an architect', lesson: 'Lesson', example: 'Worked example', deep: 'Going deeper' };
+const inDepths = (b: string) => (['compress', 'standard', 'deep'] as const).filter((d) => (DEPTH_BLOCKS[d] as string[]).includes(b)).join(' ');
+const resources = c.resources.filter((r) => r.topics.includes(id));
+const cases = c.cases.filter((k) => k.prereq_topics.includes(id));
+const patterns = (t.pat ?? []);
+const ver = c.sapVerification[id];
+const verifySrc = [...new Set([...(lesson?.frontmatter.sources ?? []), ...cases.flatMap((k) => k.sources)])].filter((s) => c.sources.find((x) => x.id === s)?.verify);
+const cards = c.cards.filter((k) => k.topicId === id);
+const slots = t.res.map(([key, focus]) => ({ key, focus, src: c.resourceSources[key] ?? null }));
+const cleanDomain = (h: string) => (/^[a-z0-9.-]+\.[a-z]{2,}(\/[\w./-]*)?$/i.test(h) ? 'https://' + h : null);
+---
+<Base title={`${t.id} ${t.title}`} current="curriculum">
+  <div data-pagefind-filter={`pillar:${t.pillar}`} data-pagefind-meta="type:Topic"></div>
+  <p><a href={url('curriculum/')}>Curriculum</a> › <a href={moduleUrl(t.module)}>{t.module} {mod.title}</a></p>
+  <h1>{t.id} {t.title}</h1>
+  <p class="muted small">{c.pillars[t.pillar]} · competencies {t.comps.map((k) => `${k} ${c.competencies[k]}`).join('; ')} · hands-on: {t.hands}</p>
+
+  {t.sap_status && (
+    <div class="callout warn" role="note">
+      <p style="color:var(--text)"><span class="prov U">SAP status</span> <strong>Availability note:</strong> {t.sap_status}</p>
+      <p class="small" style="color:var(--text)">Note written {ver?.statusNoteDate ?? 'n/a'}. Last verified against SAP primary sources: <strong>{ver?.lastVerified ?? 'not yet verified in this portal'}</strong>. Check <a href={url('freshness/')}>freshness</a> and SAP Help Portal / Roadmap Explorer before relying on any availability or pricing statement.</p>
+    </div>
+  )}
+  {verifySrc.length > 0 && (
+    <div class="callout warn" role="note"><p style="color:var(--text)"><span class="prov U">verify</span> <strong>Verify before use.</strong> This page relies on sources flagged for verification: {verifySrc.map((s) => <a class="src-chip verify" href={sourceUrl(s)}>{s}</a>)}</p></div>
+  )}
+
+  <section aria-labelledby="obj"><h2 id="obj">Objectives</h2><ul>{t.obj.map((o) => <li>{o}</li>)}</ul></section>
+
+  <TopicStudy client:only="preact" topicId={id} part="top" />
+
+  <section id="lesson-root" data-depth="standard" aria-labelledby="lesson-h">
+    <h2 id="lesson-h">Lesson</h2>
+    {!lesson && (
+      <div class="empty" role="note"><p><strong>Lesson text not written yet.</strong></p><p class="small">This topic’s objectives, resources and check questions are available. Nothing is invented to fill the gap; the lesson will be added in a later content phase.</p></div>
+    )}
+    {lesson && (
+      <>
+        <p class="small muted"><span class="badge warn">{lesson.frontmatter.status ?? 'draft'}</span> Lesson last reviewed {lesson.frontmatter.lastReviewed}. Draft content: report errors rather than assuming they are right.</p>
+        {LESSON_BLOCKS.filter((b) => html[b]).map((b) => (
+          <div data-block={b} data-in={inDepths(b)} class="lesson-block">
+            <h3>{BLOCK_TITLES[b]}</h3>
+            <div class="reading" set:html={html[b]} />
+          </div>
+        ))}
+        {(lesson.frontmatter.sources ?? []).length > 0 && <p class="small">Sources: {(lesson.frontmatter.sources ?? []).map((s) => <a class="src-chip" href={sourceUrl(s)}>{s}</a>)}</p>}
+      </>
+    )}
+  </section>
+
+  <section aria-labelledby="res-h">
+    <h2 id="res-h">Resources</h2>
+    {resources.length > 0 && <ul style="padding:0">{resources.map((r) => <ResourceRow r={r} />)}</ul>}
+    {slots.length > 0 && (
+      <>
+        <h3 class="small muted">Planned resource slots</h3>
+        <p class="small muted">The curriculum names where to look, with a focus. Specific pages and videos have not been curated yet, so links below go to the publisher’s site and are <strong>not yet verified</strong>.</p>
+        <ul style="padding:0">
+          {slots.map((s) => {
+            const href = s.src ? cleanDomain(s.src.domain_hint) : null;
+            return (
+              <li class="card" style="margin-bottom:8px;list-style:none">
+                <strong>{s.src?.name ?? s.key}</strong> <span class="badge warn">link not yet verified</span>
+                <p class="small" style="margin:4px 0"><strong>Focus on:</strong> {s.focus}</p>
+                {href ? <p class="small" style="margin:4px 0"><a href={href} rel="noopener noreferrer" target="_blank">{s.src!.domain_hint}<span class="visually-hidden"> (opens in a new tab)</span></a></p> : <p class="small muted" style="margin:4px 0">{s.src ? `Where to look: ${s.src.domain_hint}` : 'Source to be chosen in the content phase.'}</p>}
+              </li>
+            );
+          })}
+        </ul>
+      </>
+    )}
+  </section>
+
+  <TopicStudy client:only="preact" topicId={id} part="bottom" />
+
+  <section aria-labelledby="rel-h">
+    <h2 id="rel-h">Related cases and patterns</h2>
+    {cases.length ? <ul>{cases.map((k) => <li><a href={caseUrl(k.id)}>{k.id} {k.company}: {k.title}</a> <span class={`badge tier-${k.tier}`}>Tier {k.tier}</span></li>)}</ul> : <p class="muted">No catalogued case lists this topic as a prerequisite yet.</p>}
+    {patterns.length > 0 && <ul class="pill-list">{patterns.map((p) => <li><a class="badge neutral" href={patternUrl(p)}>{p} {c.patterns[p]}</a></li>)}</ul>}
+  </section>
+
+  <section aria-labelledby="cards-h">
+    <h2 id="cards-h">Revision cards</h2>
+    {cards.length ? <ul>{cards.map((k) => <li>{k.front}</li>)}</ul> : <p class="muted">No revision cards are written for this topic yet.</p>}
+  </section>
+</Base>
+<style is:global>
+  #lesson-root[data-depth='compress'] .lesson-block:not([data-in~='compress']) { display: none; }
+  #lesson-root[data-depth='standard'] .lesson-block:not([data-in~='standard']) { display: none; }
+  #lesson-root[data-depth='deep'] .lesson-block:not([data-in~='deep']) { display: none; }
+</style>

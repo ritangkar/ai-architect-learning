@@ -1,0 +1,27 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getContent } from '../../../lib/content/site';
+import { topicUrl, url } from '../../../lib/url';
+export function getStaticPaths() {
+  return Object.keys(getContent().modules).map((module) => ({ params: { module } }));
+}
+const { module } = Astro.params as { module: string };
+const c = getContent();
+const m = c.modules[module];
+const topics = c.topics.filter((t) => t.module === module);
+const written = topics.filter((t) => c.lessons.some((l) => l.topicId === t.id)).length;
+---
+<Base title={`${module} ${m.title}`} current="curriculum">
+  <p><a href={url('curriculum/')}>Curriculum</a> › {c.pillars[m.pillar]}</p>
+  <h1>{module} {m.title}</h1>
+  <p class="muted">{topics.length} topics. Lessons written so far: {written} of {topics.length}.</p>
+  <div class="grid cols-2">
+    {topics.map((t) => (
+      <article class="card" data-pagefind-ignore>
+        <h2 style="font-size:1.05rem"><a href={topicUrl(t.id)}>{t.id} {t.title}</a></h2>
+        <p class="small muted">Competencies {t.comps.join(', ')} · Prerequisites: {t.pre.length ? t.pre.join(', ') : 'none'}</p>
+        <p class="small">{c.lessons.some((l) => l.topicId === t.id) ? <span class="badge tier-A">lesson available (draft)</span> : <span class="badge neutral">lesson text not written yet</span>}{t.sap_status ? <span class="badge warn" style="margin-left:6px">SAP status note</span> : null}</p>
+      </article>
+    ))}
+  </div>
+</Base>

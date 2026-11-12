@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import Freshness from '../../islands/Freshness.tsx';
+import { getContent } from '../../lib/content/site';
+const c = getContent();
+const rows = [
+  ...c.topics.filter((t) => t.sap_status).map((t) => ({ kind: 'topic' as const, id: t.id, title: t.title, status: t.sap_status!, noteDate: c.sapVerification[t.id]?.statusNoteDate ?? null, lastVerified: c.sapVerification[t.id]?.lastVerified ?? null, verifySources: [] as string[] })),
+  ...c.cases.filter((k) => k.sources.some((s) => c.sources.find((x) => x.id === s)?.verify)).map((k) => {
+    const vs = k.sources.filter((s) => c.sources.find((x) => x.id === s)?.verify);
+    return { kind: 'case' as const, id: k.id, title: `${k.company}: ${k.title}`, status: 'Cites sources flagged for verification', noteDate: c.sources.filter((s) => vs.includes(s.id)).map((s) => s.checked_on).sort().pop() ?? null, lastVerified: null as string | null, verifySources: vs };
+  }),
+];
+---
+<Base title="Freshness" current="">
+  <h1>Freshness</h1>
+  <p class="muted">Fast-moving topics (SAP availability, pricing, release dates) and cases that cite sources flagged for verification. Items never verified in this portal, or older than the stale threshold, are flagged. Known open conflicts are <strong>not resolved from memory</strong>: Joule Studio GA date, the end of the free-use period, and Agent Hub GA must be checked on SAP Help Portal and Roadmap Explorer.</p>
+  {rows.length === 0 ? <div class="empty">Nothing to show.</div> : <Freshness client:only="preact" rows={rows} />}
+</Base>

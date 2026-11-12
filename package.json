@@ -20,7 +20,11 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "lhci": "node scripts/run-lighthouse.mjs",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "scan:history": "tsx scripts/scan-secrets.ts --history",
+    "audit": "npm audit --audit-level=high",
+    "ci": "npm run scan:secrets && npm run validate && npm test && npm run build"
   },
   "dependencies": {
     "@astrojs/preact": "^6.1.5",

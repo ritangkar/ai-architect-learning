@@ -1,0 +1,23 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getContent } from '../../../lib/content/site';
+import { caseUrl, topicUrl, url } from '../../../lib/url';
+export function getStaticPaths() {
+  return Object.keys(getContent().patterns).map((id) => ({ params: { id } }));
+}
+const { id } = Astro.params as { id: string };
+const c = getContent();
+const name = c.patterns[id];
+const cases = c.cases.filter((k) => k.patterns.includes(id));
+const topics = c.topics.filter((t) => (t.pat ?? []).includes(id));
+---
+<Base title={`${id} ${name}`} current="cases">
+  <div data-pagefind-meta="type:Pattern"></div>
+  <p><a href={url('patterns/')}>Patterns</a></p>
+  <h1>{id} {name}</h1>
+  <section aria-labelledby="pc"><h2 id="pc">Cases that demonstrate it ({cases.length})</h2>
+    {cases.length ? <ul>{cases.map((k) => <li><a href={caseUrl(k.id)}>{k.id} {k.company}: {k.title}</a> <span class={`badge tier-${k.tier}`}>Tier {k.tier}</span></li>)}</ul> : <p class="empty">No catalogued case demonstrates this pattern yet. That is a coverage gap in the catalogue, not a statement that the pattern is unused.</p>}</section>
+  <section aria-labelledby="pt"><h2 id="pt">Topics that teach it ({topics.length})</h2>
+    {topics.length ? <ul>{topics.map((t) => <li><a href={topicUrl(t.id)}>{t.id} {t.title}</a></li>)}</ul> : <p class="muted">No topic lists this pattern yet.</p>}</section>
+  <p class="small muted">Your study status for patterns is on the <a href={url('progress/')}>Progress</a> page.</p>
+</Base>

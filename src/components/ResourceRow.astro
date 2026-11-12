@@ -1,0 +1,38 @@
+---
+import type { Resource } from '../lib/content/schemas';
+interface Props { r: Resource }
+const { r } = Astro.props;
+const isVideo = r.kind === 'video' && r.videoId;
+---
+<li class="card" style="margin-bottom:8px;list-style:none">
+  <div class="row" style="justify-content:space-between">
+    <strong>{r.title}</strong>
+    <span class="row">
+      {r.cost === 'paid' ? <span class="badge warn">Paid</span> : <span class="badge neutral">Free</span>}
+      {r.status === 'verified' ? <span class="badge tier-A">link checked {r.lastChecked}</span> : r.status === 'broken' ? <span class="badge warn">link broken</span> : <span class="badge warn">link not yet verified</span>}
+      {r.language ? <span class="badge neutral">{r.language}</span> : null}
+    </span>
+  </div>
+  <p class="small" style="margin:4px 0"><strong>Why useful:</strong> {r.whyUseful}</p>
+  <p class="small" style="margin:4px 0"><strong>Focus on:</strong> {r.focus}</p>
+  {r.objectiveRelation ? <p class="small" style="margin:4px 0"><strong>Relation to the objective:</strong> {r.objectiveRelation}</p> : null}
+  {isVideo ? (
+    <div class="video-facade" data-video={r.videoId}><button type="button" class="btn" data-load-video>Load video (embeds from youtube-nocookie.com)</button></div>
+  ) : null}
+  <p class="small" style="margin:4px 0"><a href={r.url} rel="noopener noreferrer" target="_blank">{isVideo ? 'Open the video on its own site' : 'Open resource'}<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+</li>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-load-video]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const host = b.closest('.video-facade') as HTMLElement;
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(host.dataset.video!)}`;
+      f.title = 'Video player';
+      f.loading = 'lazy';
+      f.allow = 'encrypted-media; picture-in-picture';
+      f.referrerPolicy = 'no-referrer';
+      f.style.cssText = 'width:100%;height:100%;border:0';
+      host.replaceChildren(f);
+    }, { once: true });
+  });
+</script>
