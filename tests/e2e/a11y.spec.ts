@@ -35,6 +35,7 @@ test.describe('axe: states that need data', () => {
     test.setTimeout(180_000);
     await page.goto('assessment/');
     await page.getByRole('button', { name: 'Start the assessment' }).click();
+    await expect(page.getByRole('heading', { name: /Section C/ })).toBeVisible();
     for (const grp of await page.locator('fieldset.card').all()) await grp.locator('label.choice', { hasText: /^3$/ }).click();
     await scan(page, 'self-rating form');
     await page.getByRole('button', { name: 'Continue to the questions' }).click();

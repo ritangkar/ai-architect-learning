@@ -27,6 +27,7 @@ test.describe('UJ-01 first visit and initial assessment', () => {
   test('AC-F02-2: refresh mid-assessment resumes at the same question; AC-F02-5: retake keeps history', async ({ page }) => {
     await page.goto('assessment/');
     await page.getByRole('button', { name: 'Start the assessment' }).click();
+    await expect(page.getByRole('heading', { name: /Section C/ })).toBeVisible();
     for (const grp of await page.locator('fieldset.card').all()) await grp.locator('label.choice', { hasText: /^4$/ }).click();
     await page.getByRole('button', { name: 'Continue to the questions' }).click();
     await answerCurrent(page); await nextQuestion(page);
