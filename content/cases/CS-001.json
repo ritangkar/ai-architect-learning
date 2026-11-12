@@ -1,0 +1,140 @@
+{
+ "id": "CS-001",
+ "company": "Uber",
+ "industry": "Mobility and technology (internal finance function)",
+ "title": "Finch: conversational finance data agent in Slack",
+ "problem": "Finance analysts lose time locating datasets and writing complex SQL; requests to data science take hours or days.",
+ "category": [
+  "AI agents",
+  "Multi-agent architectures",
+  "AI-driven analytics and decision intelligence"
+ ],
+ "tier": "A",
+ "depth": "Detailed architecture with evaluation approach; no quantitative results published",
+ "sources": [
+  "SRC-023"
+ ],
+ "technologies_stated": [
+  "Slack SDK and Slack AI Assistant APIs",
+  "LangGraph",
+  "Uber Generative AI Gateway (self-hosted and third-party LLMs)",
+  "OpenSearch metadata index",
+  "Presto",
+  "IBM Planning Analytics",
+  "Oracle EPM",
+  "Google Sheets export"
+ ],
+ "patterns": [
+  "PAT06",
+  "PAT08",
+  "PAT12",
+  "PAT07"
+ ],
+ "prereq_topics": [
+  "T1.3.2",
+  "T1.3.3",
+  "T1.3.4",
+  "T1.4.2",
+  "T1.5.6"
+ ],
+ "facts": [
+  [
+   "The agent runs inside Slack using the Slack SDK and AI Assistant APIs, with live status updates.",
+   "SRC-023"
+  ],
+  [
+   "LangGraph coordinates a supervisor that routes requests to specialised sub-agents such as a SQL writer and a document reader.",
+   "SRC-023"
+  ],
+  [
+   "Models are reached through an internal generative AI gateway so they can be swapped; both self-hosted and third-party LLMs are used.",
+   "SRC-023"
+  ],
+  [
+   "Data is exposed as curated single-table data marts; an OpenSearch index holds column names, values and aliases for fuzzy matching of filter values.",
+   "SRC-023"
+  ],
+  [
+   "The SQL writer checks the user's permissions before running a query; RBAC limits access to sensitive financial data.",
+   "SRC-023"
+  ],
+  [
+   "Evaluation compares query results against golden queries, tests supervisor routing on ambiguous intents, runs end-to-end simulations and regression re-runs before prompt or model changes.",
+   "SRC-023"
+  ],
+  [
+   "Sub-agents run in parallel and common metrics are pre-fetched to cut latency.",
+   "SRC-023"
+  ],
+  [
+   "The authors acknowledge hallucination risk and plan on-demand expert validation of answers.",
+   "SRC-023"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Comparing result sets rather than SQL text tolerates equivalent queries but needs stable reference data; it can mask semantic mistakes when both queries share the same wrong filter.",
+   "I"
+  ],
+  [
+   "Simplifying schemas into single-table marts moves complexity from the model into data engineering, trading flexibility for reliability.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Models used",
+  "Quantified accuracy, latency, adoption or time savings",
+  "How RBAC is implemented and how identity reaches the data sources",
+  "How golden-query comparison is scored",
+  "Cost and scale"
+ ],
+ "decisions": [
+  {
+   "decision": "Data exposure to the model",
+   "selected": "Curated single-table marts with simplified schemas",
+   "alternatives": "Expose the raw warehouse and let the model plan joins; semantic layer or metrics store; pre-built dashboards only",
+   "reasoning": "Source states the aim is lower query complexity and faster retrieval. Alternative trade-offs are independent analysis.",
+   "basis": "documented rationale; alternatives are independent analysis",
+   "source": "SRC-023"
+  },
+  {
+   "decision": "Orchestration",
+   "selected": "Supervisor routing to specialised sub-agents in LangGraph",
+   "alternatives": "Single agent with all tools; fixed workflow with intent classifier; fully autonomous planner",
+   "reasoning": "Source documents the supervisor design and tests routing accuracy. Why not the alternatives is not stated.",
+   "basis": "documented design; alternatives are independent analysis",
+   "source": "SRC-023"
+  },
+  {
+   "decision": "Model access",
+   "selected": "Internal gateway so models can be swapped",
+   "alternatives": "Direct provider SDKs per agent",
+   "reasoning": "Source states swappability. Broader lock-in reasoning is independent analysis.",
+   "basis": "documented design; reasoning partly independent",
+   "source": "SRC-023"
+  },
+  {
+   "decision": "Filter value resolution",
+   "selected": "Search index with aliases for fuzzy matching",
+   "alternatives": "Model guesses literal values; exact match only; user picks from list",
+   "reasoning": "Source describes the index purpose. Failure modes of alternatives are independent analysis.",
+   "basis": "documented design; alternatives independent",
+   "source": "SRC-023"
+  },
+  {
+   "decision": "Quality assurance",
+   "selected": "Golden-result comparison plus routing, end-to-end and regression tests",
+   "alternatives": "Manual spot checks; LLM-as-judge only; production feedback only",
+   "reasoning": "Source describes the suite; no explanation of rejected approaches.",
+   "basis": "documented design; alternatives independent",
+   "source": "SRC-023"
+  }
+ ],
+ "review_exercise": "Finch states permission checks occur before query execution but not how identity propagates. List three ways a delegated agent could exceed a user's data rights and the control that closes each.",
+ "lessons": [
+  "Constrain the data the model sees before tuning the model.",
+  "Evaluate agents per component and end to end, and regression-test before every prompt or model change.",
+  "Plan human validation for decisions that matter, because the authors themselves cite hallucination risk."
+ ],
+ "adaptation": "For SAP CX analytics (sales or service KPIs), the same pattern maps to BDC data products as the curated layer and Joule Studio or a BTP agent as the supervisor; identity propagation then becomes the main design question (see T2.4.2). This mapping is independent analysis."
+}

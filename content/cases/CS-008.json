@@ -1,0 +1,58 @@
+{
+ "id": "CS-008",
+ "company": "Klarna",
+ "industry": "Banking and financial services (payments)",
+ "title": "Klarna AI assistant (vendor-authored account)",
+ "problem": "Scale customer support across markets for a large payments platform.",
+ "category": [
+  "Conversational AI",
+  "AI agents"
+ ],
+ "tier": "C",
+ "depth": "Vendor marketing; many controls not described",
+ "sources": [
+  "SRC-030"
+ ],
+ "technologies_stated": [
+  "LangGraph",
+  "LangSmith"
+ ],
+ "patterns": [
+  "PAT05",
+  "PAT12"
+ ],
+ "prereq_topics": [
+  "T1.3.3",
+  "T1.5.6",
+  "T1.6.5"
+ ],
+ "facts": [
+  [
+   "Built on LangGraph with LangSmith tracing; described as multi-agent routing by the vendor.",
+   "SRC-030"
+  ],
+  [
+   "Vendor-reported: 2.5 million conversations handled, 80% faster resolution, about 70% of repetitive tasks automated.",
+   "SRC-030"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Use as a critical-reading exercise: the source omits guardrails, data handling, fallback and escalation, which are the architect's real questions.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Models",
+  "Guardrails",
+  "Data handling",
+  "Escalation criteria",
+  "Metric methodology and independent verification"
+ ],
+ "decisions": [],
+ "review_exercise": "List the ten discovery questions you would ask Klarna before reusing this design, grouped by security, quality, escalation and cost.",
+ "lessons": [
+  "Marketing case studies state outcomes, not architecture; do not copy numbers."
+ ],
+ "adaptation": "Not adaptable without further primary evidence."
+}

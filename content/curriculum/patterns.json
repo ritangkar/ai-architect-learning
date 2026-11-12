@@ -1,0 +1,22 @@
+{
+ "PAT01": "Baseline RAG",
+ "PAT02": "Hybrid retrieval with reranking",
+ "PAT03": "Agentic RAG",
+ "PAT04": "Tool-calling agent",
+ "PAT05": "Graph/workflow-orchestrated agent",
+ "PAT06": "Supervisor multi-agent",
+ "PAT07": "Human-in-the-loop approval gate",
+ "PAT08": "LLM gateway and model routing",
+ "PAT09": "MCP tool facade over enterprise APIs",
+ "PAT10": "A2A delegation between agents",
+ "PAT11": "Guardrail and policy layer",
+ "PAT12": "Evaluation-driven development",
+ "PAT13": "Semantic and prompt caching",
+ "PAT14": "Event-driven intelligent automation",
+ "PAT15": "Side-by-side extension (clean core)",
+ "PAT16": "Data-product-enriched ML",
+ "PAT17": "Embedded copilot in business app",
+ "PAT18": "Agentic commerce storefront",
+ "PAT19": "Identity propagation to tools (on-behalf-of)",
+ "PAT20": "Fallback and graceful degradation"
+}

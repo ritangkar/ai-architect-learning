@@ -1,0 +1,108 @@
+{
+ "id": "CS-005",
+ "company": "Instacart",
+ "industry": "Grocery e-commerce",
+ "title": "Intent Engine: LLM-driven query understanding with teacher-student distillation",
+ "problem": "Legacy query understanding struggled with broad queries, noisy labels, tail queries and fragmented models; rewrites covered about half of search traffic.",
+ "category": [
+  "Conversational AI",
+  "AI-driven analytics and decision intelligence",
+  "Predictive AI and machine learning"
+ ],
+ "tier": "A",
+ "depth": "Detailed architecture, latency engineering and metrics; teacher model unnamed",
+ "sources": [
+  "SRC-027"
+ ],
+ "technologies_stated": [
+  "Llama-3-8B student (hedged in source)",
+  "LoRA fine-tuning",
+  "A100 then H100 GPUs",
+  "embedding-similarity guardrails",
+  "FastText (legacy)"
+ ],
+ "patterns": [
+  "PAT01",
+  "PAT11",
+  "PAT13",
+  "PAT12"
+ ],
+ "prereq_topics": [
+  "T1.2.4",
+  "T1.5.9",
+  "T1.4.2",
+  "T1.5.6",
+  "T3.1.2"
+ ],
+ "facts": [
+  [
+   "Strategy: start from LLMs and inject company context via RAG, validate with guardrails, then fine-tune.",
+   "SRC-027"
+  ],
+  [
+   "An offline teacher pipeline with caching handles head queries and produces training data; a smaller fine-tuned student serves tail queries in real time.",
+   "SRC-027"
+  ],
+  [
+   "Out-of-the-box latency was close to 700 ms on A100; merging LoRA adapters and moving to H100 reached about 300 ms.",
+   "SRC-027"
+  ],
+  [
+   "FP8 quantisation cut latency roughly 10% but reduced recall, so unquantised serving was chosen.",
+   "SRC-027"
+  ],
+  [
+   "Caching means only about 2% of queries need real-time inference.",
+   "SRC-027"
+  ],
+  [
+   "Reported results include rewrite coverage above 95% with precision above 90%, and a 50% drop in complaints about poor tail-query results.",
+   "SRC-027"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Splitting offline quality from online latency is the key architectural idea: spend frontier-model cost where latency does not matter, distil for where it does.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Teacher model identity",
+  "Cache-hit definition and thresholds",
+  "Training and serving cost",
+  "A/B test design and significance"
+ ],
+ "decisions": [
+  {
+   "decision": "Where to put intelligence",
+   "selected": "Offline large-model teacher plus distilled small student",
+   "alternatives": "Call a frontier model online for every query; classical models only",
+   "reasoning": "Source cites latency and cost constraints at search scale.",
+   "basis": "documented rationale",
+   "source": "SRC-027"
+  },
+  {
+   "decision": "Hallucination control",
+   "selected": "Taxonomy-bound guardrails with similarity thresholds",
+   "alternatives": "Trust model output; human review of all outputs",
+   "reasoning": "Source describes the validation layer.",
+   "basis": "documented",
+   "source": "SRC-027"
+  },
+  {
+   "decision": "Quantisation",
+   "selected": "Keep unquantised",
+   "alternatives": "FP8 quantisation",
+   "reasoning": "Source states a recall loss outweighed ~10% latency gain.",
+   "basis": "documented",
+   "source": "SRC-027"
+  }
+ ],
+ "review_exercise": "The post cites a 30% latency gain in one place while its numbers imply a bigger change. How would you reconcile before presenting this to a client?",
+ "lessons": [
+  "Latency budgets drive model placement.",
+  "Fine-tuning is for behaviour and consistency here, with RAG supplying knowledge.",
+  "Make quality trade-offs measurable."
+ ],
+ "adaptation": "Relevant to SAP Commerce search and B2B catalogue query understanding. Independent analysis."
+}

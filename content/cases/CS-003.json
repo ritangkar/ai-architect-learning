@@ -1,0 +1,114 @@
+{
+ "id": "CS-003",
+ "company": "Dropbox",
+ "industry": "Software and collaboration",
+ "title": "Dash: RAG plus code-planned agents for universal business search",
+ "problem": "Business knowledge is scattered across apps, formats and modalities, slowing search and raising access-control risk.",
+ "category": [
+  "RAG and enterprise knowledge assistants",
+  "AI agents"
+ ],
+ "tier": "A",
+ "depth": "Detailed design rationale and trade-offs; no model names or accuracy figures",
+ "sources": [
+  "SRC-025"
+ ],
+ "technologies_stated": [
+  "Lexical index with embedding reranking",
+  "LLM-planned code in a Python-like DSL",
+  "custom interpreter with static analysis",
+  "LLM judges",
+  "Natural Questions",
+  "MuSiQue",
+  "MS MARCO"
+ ],
+ "patterns": [
+  "PAT02",
+  "PAT04",
+  "PAT12",
+  "PAT01"
+ ],
+ "prereq_topics": [
+  "T1.2.2",
+  "T1.2.4",
+  "T1.3.2",
+  "T1.5.1",
+  "T1.5.6"
+ ],
+ "facts": [
+  [
+   "Dropbox chose a traditional lexical index with embedding-based reranking over a pure vector index.",
+   "SRC-025"
+  ],
+  [
+   "For complex tasks an LLM expresses a plan as code in a Python-like DSL which a purpose-built minimal interpreter validates with static analysis and dry runs.",
+   "SRC-025"
+  ],
+  [
+   "The interpreter implements only required functionality to reduce the risks of a full-featured interpreter.",
+   "SRC-025"
+  ],
+  [
+   "The post names trade-offs: latency versus quality, freshness versus scalability, budget versus experience, model size versus latency and accuracy.",
+   "SRC-025"
+  ],
+  [
+   "Evaluation uses public datasets plus LLM judges for correctness and completeness and passage-level precision, recall and F1.",
+   "SRC-025"
+  ],
+  [
+   "The post reports over 95% of queries completing in 1-2 seconds.",
+   "SRC-025"
+  ],
+  [
+   "Prompts do not transfer cleanly between models.",
+   "SRC-025"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Planning as code makes failures locatable and testable, giving determinism that free-form tool loops lack.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Model names, embedding model, index technology",
+  "How permissions are enforced inside retrieval and agent execution",
+  "Benchmark scores",
+  "Cost and error rates",
+  "Sync frequency"
+ ],
+ "decisions": [
+  {
+   "decision": "Retrieval index",
+   "selected": "Lexical index with embedding reranking",
+   "alternatives": "Pure vector index; pure lexical search",
+   "reasoning": "Source states these as trade-offs; detailed reasoning is limited.",
+   "basis": "documented selection; alternatives named",
+   "source": "SRC-025"
+  },
+  {
+   "decision": "Agent planning representation",
+   "selected": "LLM-written code in a restricted DSL executed by a custom interpreter",
+   "alternatives": "Iterative tool calling; general-purpose Python sandbox; fixed workflows",
+   "reasoning": "Source describes the DSL approach and its security benefit of a minimal interpreter; alternatives comparison is independent analysis.",
+   "basis": "documented design; alternatives independent",
+   "source": "SRC-025"
+  },
+  {
+   "decision": "Freshness model",
+   "selected": "Periodic sync with webhooks where appropriate, query-time chunking",
+   "alternatives": "Live API calls per query; full real-time indexing",
+   "reasoning": "Source discusses the freshness versus scalability trade-off.",
+   "basis": "documented trade-off",
+   "source": "SRC-025"
+  }
+ ],
+ "review_exercise": "The post does not say how access control is enforced during retrieval and agent execution. Propose three enforcement points and the failure each prevents.",
+ "lessons": [
+  "Restrict what an agent can express, not just what it may call.",
+  "Make retrieval model-agnostic and measure it end to end.",
+  "State trade-offs explicitly to clients."
+ ],
+ "adaptation": "Applies to cross-system SAP CX search (Commerce, Sales, Service content) where permission models differ per source. Independent analysis."
+}

@@ -1,0 +1,107 @@
+{
+ "id": "CS-007",
+ "company": "Zalando",
+ "industry": "Fashion e-commerce (internal engineering)",
+ "title": "Agentic engineering platform: gateway, MCP and risk-based review",
+ "problem": "Give 250+ engineering teams measurable access to LLMs and coding agents without forcing one tool, while controlling cost, governance and delivery risk.",
+ "category": [
+  "Software engineering and coding agents",
+  "AI agents"
+ ],
+ "tier": "A",
+ "depth": "Detailed platform components and governance; limited ROI evidence",
+ "sources": [
+  "SRC-029"
+ ],
+ "technologies_stated": [
+  "LiteLLM-based gateway (OpenAI, AWS Bedrock, Google Vertex)",
+  "pydantic-ai CLI",
+  "internal MCP servers with OAuth ingress filter",
+  "kagent (planned platform)",
+  "Claude Code, opencode (client tools)"
+ ],
+ "patterns": [
+  "PAT08",
+  "PAT09",
+  "PAT11",
+  "PAT19"
+ ],
+ "prereq_topics": [
+  "T1.4.2",
+  "T1.4.5",
+  "T1.3.5",
+  "T1.5.5",
+  "T1.5.10"
+ ],
+ "facts": [
+  [
+   "A LiteLLM-based gateway proxies model access with pre and post call hooks and prompt-cache checkpoint injection.",
+   "SRC-029"
+  ],
+  [
+   "A local proxy injects auth headers for coding agents and shows per-model cost and cache usage.",
+   "SRC-029"
+  ],
+  [
+   "Internal MCP servers sit behind a default OAuth ingress filter; configuration is secret-free via token injection.",
+   "SRC-029"
+  ],
+  [
+   "About a third of pull requests are classified low-risk and auto-approved; risk rules derive from production incidents, and risk-based approval is reported to cut lead time by 20-40% versus all PRs.",
+   "SRC-029"
+  ],
+  [
+   "A future agent platform with an identity broker, delegation chains and token vault is described as in progress.",
+   "SRC-029"
+  ],
+  [
+   "Sandboxing is listed as an unsolved problem.",
+   "SRC-029"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Gateway-first rollout produces the telemetry needed for governance before standardising tools.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Threat model details",
+  "Model-to-task allocation and selection criteria",
+  "Identity broker timeline",
+  "ROI beyond lead time"
+ ],
+ "decisions": [
+  {
+   "decision": "Tool strategy",
+   "selected": "Single gateway, no mandated client tool",
+   "alternatives": "Standardise on one coding assistant",
+   "reasoning": "Source states goal of measurable access without central mandate and cites difficulty consolidating tools.",
+   "basis": "documented",
+   "source": "SRC-029"
+  },
+  {
+   "decision": "Review control",
+   "selected": "Risk-based PR approval",
+   "alternatives": "Human review for every PR; size limits only",
+   "reasoning": "Source reports lead-time reduction and risk rules from incidents.",
+   "basis": "documented",
+   "source": "SRC-029"
+  },
+  {
+   "decision": "Agent identity",
+   "selected": "Planned identity broker with delegation and token vault",
+   "alternatives": "Shared service credentials",
+   "reasoning": "Source lists the broker as being built.",
+   "basis": "documented plan",
+   "source": "SRC-029"
+  }
+ ],
+ "review_exercise": "Coding agents increase PR size and complexity. Design controls that preserve review quality without hurting lead time.",
+ "lessons": [
+  "Instrument first, standardise later.",
+  "Governance rules should come from incident data.",
+  "Agent identity is still an open problem even at mature organisations."
+ ],
+ "adaptation": "Useful template for governing AI-assisted SAP development teams. Independent analysis."
+}

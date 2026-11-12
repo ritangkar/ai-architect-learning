@@ -1,0 +1,105 @@
+{
+ "catalog_version": "0.1",
+ "status": "Batch 1 of an expandable catalog. Entries here were read from primary or named sources on 2026-11-12. Target of 100-200 is NOT reached; this batch has 14 entries.",
+ "evidence_tags": {
+  "V": "Verified: stated in cited source",
+  "I": "Interpretation: reasoned from verified facts",
+  "R": "Reconstructed: inferred to fill gaps (none used in batch 1)",
+  "U": "Unknown: not established from sources"
+ },
+ "tier_definitions": {
+  "A": "Full walkthrough candidate: builder-authored technical primary source",
+  "A-provisional": "Primary source identified; full body not yet read",
+  "B": "Structured analysis: limited depth or implementer-authored",
+  "C": "Catalog stub: marketing, editorial or secondary; no invented detail"
+ },
+ "backlog": [
+  {
+   "candidate": "DoorDash support RAG, guardrails and quality monitoring",
+   "status": "Primary DoorDash engineering URLs found by search but not yet read",
+   "industry": "E-commerce delivery",
+   "next": "next batch"
+  },
+  {
+   "candidate": "DoorDash GenAI platform talk (InfoQ)",
+   "status": "Conference talk located; not yet read",
+   "industry": "E-commerce delivery",
+   "next": "next batch"
+  },
+  {
+   "candidate": "LinkedIn GenAI stack and hiring assistant",
+   "status": "Only secondary coverage and ZenML summaries located; primary LinkedIn engineering posts to find",
+   "industry": "Professional networking",
+   "next": "next batch"
+  },
+  {
+   "candidate": "GitHub Copilot context engineering",
+   "status": "Mentioned in ZenML index; primary source not yet located",
+   "industry": "Software",
+   "next": "next batch"
+  },
+  {
+   "candidate": "Uber software factory (agentic coding)",
+   "status": "ZenML summary only; primary post to find",
+   "industry": "Mobility",
+   "next": "next batch"
+  },
+  {
+   "candidate": "Gerdau generative AI in steel manufacturing",
+   "status": "Microsoft customer story and Databricks page located (vendor); technical source needed",
+   "industry": "Manufacturing",
+   "next": "needs technical source"
+  },
+  {
+   "candidate": "Austrian Post order processing automation",
+   "status": "ZenML summary only; primary source to find",
+   "industry": "Logistics",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Barclays MLOps and LLM integration",
+   "status": "Conference talk summaries only",
+   "industry": "Banking",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Harvey legal AI infrastructure",
+   "status": "ZenML summary only",
+   "industry": "Professional services",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Rocket home-buying conversational assistant",
+   "status": "ZenML summary only",
+   "industry": "Financial services",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Rubrik enterprise AI platform integration",
+   "status": "ZenML summary only",
+   "industry": "Software",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Glean enterprise search with LLMs",
+   "status": "ZenML summary only",
+   "industry": "Software",
+   "next": "needs primary source"
+  },
+  {
+   "candidate": "Instacart, DoorDash and Uber Eats search comparison",
+   "status": "ByteByteGo newsletter (secondary); use only to point to primaries",
+   "industry": "Retail",
+   "next": "secondary only"
+  }
+ ],
+ "coverage_gaps": [
+  "Banking and financial services: searches returned vendor and consultancy content; need named-institution technical sources",
+  "Healthcare and life sciences: same; need hospital or pharma engineering/regulatory-grade sources",
+  "Telecom and media: same",
+  "Energy and utilities: not yet searched",
+  "Travel and hospitality: not yet searched",
+  "Manufacturing and automotive: only vendor stories and ZenML summaries so far",
+  "SAP CX implementations with outcomes: only reference architectures, one partner blog and editorial coverage found"
+ ]
+}

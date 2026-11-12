@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "note": "Authored encoding of the level exit gates in curriculum/levels.json (human text in 'exit_gate'). Thresholds are tunable defaults. 'complete' in the blueprint is encoded as proficient-or-better. See docs/ADRs/0009-level-gates-encoding.md.",
+  "levels": {
+    "L0": [
+      { "type": "assessment_completed", "min": 1, "label": "Complete the initial assessment" }
+    ],
+    "L1": [
+      { "type": "modules_satisfied", "modules": ["M1.1", "M1.2"], "min_state": "proficient", "allow_compressed": true, "label": "Every topic in M1.1 and M1.2 is proficient or compressed" },
+      { "type": "competencies_min_state", "competencies": ["C02", "C03"], "min_state": "developing", "label": "C02 and C03 are at least developing" }
+    ],
+    "L2": [
+      { "type": "modules_satisfied", "modules": ["M1.3", "M2.1"], "min_state": "proficient", "allow_compressed": true, "label": "M1.3 complete and M2.1 proficient" },
+      { "type": "cases_passed", "min": 10, "tiers": ["A", "B"], "label": "10 Tier A or B cases studied with exercises passed" }
+    ],
+    "L3": [
+      { "type": "modules_satisfied", "modules": ["M1.4", "M1.5", "M2.2"], "min_state": "proficient", "allow_compressed": true, "label": "M1.4, M1.5 and M2.2 proficient" },
+      { "type": "exercise_passed", "kind": "architecture_review", "min": 1, "label": "First architecture review exercise passed" },
+      { "type": "competencies_min_state", "competencies": ["C06", "C07", "C09"], "min_state": "developing", "label": "C06, C07, C09 at least developing" }
+    ],
+    "L4": [
+      { "type": "modules_satisfied", "modules": ["M2.3", "M2.4", "M3.1"], "min_state": "proficient", "allow_compressed": true, "label": "M2.3, M2.4 and M3.1 proficient" },
+      { "type": "industries_studied", "min": 5, "label": "Cases studied across at least 5 industries" },
+      { "type": "competencies_min_state", "competencies": "all", "min_state": "developing", "label": "All competencies at least developing" },
+      { "type": "competencies_min_state", "competencies": ["C12", "C13", "C14"], "min_state": "proficient", "label": "C12, C13, C14 proficient" }
+    ],
+    "L5": [
+      { "type": "modules_satisfied", "modules": ["M1.6", "M3.2", "M3.3"], "min_state": "proficient", "allow_compressed": true, "label": "M1.6, M3.2 and M3.3 complete" },
+      { "type": "simulations_passed", "min": 1, "label": "Capstone simulations passed" },
+      { "type": "competencies_min_state", "competencies": "all", "min_state": "proficient", "label": "All competencies proficient" },
+      { "type": "reviews_current", "weakest": 3, "label": "No overdue revision for the 3 weakest competencies" }
+    ]
+  }
+}

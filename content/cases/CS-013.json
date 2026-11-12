@@ -1,0 +1,62 @@
+{
+ "id": "CS-013",
+ "company": "SAP",
+ "industry": "Retail and B2B commerce",
+ "title": "Commerce Cloud storefront MCP server for agentic commerce (announcement-level)",
+ "problem": "Let customers shop through AI platforms as well as the storefront.",
+ "category": [
+  "Conversational AI",
+  "AI agents"
+ ],
+ "tier": "C",
+ "depth": "Product announcements and commentary; roadmap-heavy",
+ "sources": [
+  "SRC-007",
+  "SRC-015",
+  "SRC-016"
+ ],
+ "technologies_stated": [
+  "SAP Commerce Cloud",
+  "MCP server"
+ ],
+ "patterns": [
+  "PAT18",
+  "PAT09"
+ ],
+ "prereq_topics": [
+  "T2.3.2",
+  "T1.3.5"
+ ],
+ "facts": [
+  [
+   "SAP lists conversational AI shopping through an MCP server in its Q2 2026 CX release.",
+   "SRC-007"
+  ],
+  [
+   "Coverage states the server exposes catalog, pricing, inventory and promotions to AI platforms.",
+   "SRC-015"
+  ],
+  [
+   "A commentator notes each merchant deploys the server and that much capability is roadmap.",
+   "SRC-016"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Exposing pricing and inventory to external agents raises contract-price, entitlement and rate-limit questions the sources do not address.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Architecture details",
+  "Security model",
+  "GA status per region",
+  "Results"
+ ],
+ "decisions": [],
+ "review_exercise": "List what must be true before exposing B2B contract pricing via an MCP server.",
+ "lessons": [
+  "Separate announcement from implementation evidence."
+ ],
+ "adaptation": "Discovery prompt for B2B clients; needs SAP documentation."
+}

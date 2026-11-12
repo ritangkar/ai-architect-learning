@@ -1,0 +1,54 @@
+{
+ "M1.1": {
+  "pillar": "P1",
+  "title": "Foundations of modern AI"
+ },
+ "M1.2": {
+  "pillar": "P1",
+  "title": "Knowledge and retrieval architecture"
+ },
+ "M1.3": {
+  "pillar": "P1",
+  "title": "Agents, tools and orchestration"
+ },
+ "M1.4": {
+  "pillar": "P1",
+  "title": "Solution architecture and technology selection"
+ },
+ "M1.5": {
+  "pillar": "P1",
+  "title": "Production readiness and non-functional architecture"
+ },
+ "M1.6": {
+  "pillar": "P1",
+  "title": "The architect's craft"
+ },
+ "M2.1": {
+  "pillar": "P2",
+  "title": "SAP AI platform map"
+ },
+ "M2.2": {
+  "pillar": "P2",
+  "title": "Joule, Joule Studio and agent governance"
+ },
+ "M2.3": {
+  "pillar": "P2",
+  "title": "SAP CX architecture with AI"
+ },
+ "M2.4": {
+  "pillar": "P2",
+  "title": "SAP integration, identity and extension architecture"
+ },
+ "M3.1": {
+  "pillar": "P3",
+  "title": "Industry architecture lenses"
+ },
+ "M3.2": {
+  "pillar": "P3",
+  "title": "Regulation and data constraints"
+ },
+ "M3.3": {
+  "pillar": "P3",
+  "title": "Cross-industry synthesis"
+ }
+}

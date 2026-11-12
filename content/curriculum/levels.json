@@ -1,0 +1,33 @@
+[
+ {
+  "id": "L0",
+  "name": "Orientation",
+  "entry": "Complete initial assessment",
+  "exit_gate": "Knowledge profile created"
+ },
+ {
+  "id": "L1",
+  "name": "Foundation",
+  "exit_gate": "Every topic in M1.1 and M1.2 at proficient or compressed; no competency C02/C03 below developing"
+ },
+ {
+  "id": "L2",
+  "name": "Practitioner",
+  "exit_gate": "M1.3 complete; M2.1 proficient; 10 Tier A or B cases studied with exercises passed"
+ },
+ {
+  "id": "L3",
+  "name": "Architect",
+  "exit_gate": "M1.4, M1.5, M2.2 proficient; first architecture review exercise passed; C06, C07, C09 at least developing"
+ },
+ {
+  "id": "L4",
+  "name": "Senior Architect",
+  "exit_gate": "M2.3, M2.4, M3.1 proficient across at least 5 industries; all competencies at least developing; C12, C13, C14 proficient"
+ },
+ {
+  "id": "L5",
+  "name": "Lead Architect",
+  "exit_gate": "M1.6, M3.2, M3.3 complete; capstone simulations passed; all competencies proficient; review of weakest competencies due via spaced revision"
+ }
+]

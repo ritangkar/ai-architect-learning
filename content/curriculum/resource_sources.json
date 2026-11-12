@@ -1,0 +1,117 @@
+{
+ "ANTH_AGENTS": {
+  "name": "Anthropic engineering blog: Building effective agents",
+  "domain_hint": "anthropic.com/engineering",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "ANTH_DOCS": {
+  "name": "Anthropic developer documentation",
+  "domain_hint": "docs.claude.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "OPENAI_DOCS": {
+  "name": "OpenAI platform documentation",
+  "domain_hint": "platform.openai.com/docs",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "MCP": {
+  "name": "Model Context Protocol specification and docs",
+  "domain_hint": "modelcontextprotocol.io",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "A2A": {
+  "name": "Agent2Agent protocol specification (Linux Foundation project)",
+  "domain_hint": "verify canonical domain in content phase",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "OWASP": {
+  "name": "OWASP GenAI Security Project (LLM Top 10)",
+  "domain_hint": "genai.owasp.org",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "LANGGRAPH": {
+  "name": "LangGraph and LangChain documentation",
+  "domain_hint": "langchain-ai.github.io",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "SAP_ARCH": {
+  "name": "SAP Architecture Center reference architectures",
+  "domain_hint": "architecture.learning.sap.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "SAP_HELP": {
+  "name": "SAP Help Portal",
+  "domain_hint": "help.sap.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "SAP_LEARN": {
+  "name": "SAP Learning",
+  "domain_hint": "learning.sap.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "SAP_NEWS": {
+  "name": "SAP News Center",
+  "domain_hint": "news.sap.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "SAP_ROADMAP": {
+  "name": "SAP Roadmap Explorer (status of GA vs planned)",
+  "domain_hint": "roadmaps.sap.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "AWS": {
+  "name": "AWS Bedrock and AI documentation",
+  "domain_hint": "docs.aws.amazon.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "AZURE": {
+  "name": "Microsoft Azure AI Foundry documentation",
+  "domain_hint": "learn.microsoft.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "GCP": {
+  "name": "Google Cloud Vertex AI documentation",
+  "domain_hint": "cloud.google.com/vertex-ai/docs",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "NIST": {
+  "name": "NIST AI Risk Management Framework",
+  "domain_hint": "nist.gov",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "EUAI": {
+  "name": "EU AI Act official texts and Commission guidance",
+  "domain_hint": "verify official EU domain in content phase",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "ENG_BLOGS": {
+  "name": "Company engineering blogs (builder-authored)",
+  "domain_hint": "per-case, recorded in source register",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "ZENML": {
+  "name": "ZenML LLMOps Database (discovery index only, not primary evidence)",
+  "domain_hint": "zenml.io/llmops-database",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "C4ADR": {
+  "name": "C4 model and Architecture Decision Records",
+  "domain_hint": "c4model.com, adr.github.io",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "PAPERS": {
+  "name": "Research papers (arXiv)",
+  "domain_hint": "arxiv.org",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "VIDEO": {
+  "name": "YouTube lecture or conference talk (to be curated and URL-verified)",
+  "domain_hint": "youtube.com",
+  "url_status": "to_verify_in_content_phase"
+ },
+ "VENDOR_DOCS": {
+  "name": "Official vendor documentation for the specific product",
+  "domain_hint": "per-topic",
+  "url_status": "to_verify_in_content_phase"
+ }
+}

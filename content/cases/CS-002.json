@@ -1,0 +1,122 @@
+{
+ "id": "CS-002",
+ "company": "Uber",
+ "industry": "Mobility and technology (internal engineering support)",
+ "title": "Genie: enhanced agentic RAG over policy documents",
+ "problem": "An on-call Slack copilot answered security and privacy questions inaccurately over 40+ policy documents; a golden set of 100+ expert questions showed answers were incomplete or wrong.",
+ "category": [
+  "RAG and enterprise knowledge assistants",
+  "Conversational AI"
+ ],
+ "tier": "A",
+ "depth": "Detailed pipeline and evaluation method; relative improvements only",
+ "sources": [
+  "SRC-024"
+ ],
+ "technologies_stated": [
+  "LangGraph",
+  "Langfx (internal LangChain-based service in Michelangelo)",
+  "BM25",
+  "vector search",
+  "Google Docs API loader",
+  "MarkdownTextSplitter",
+  "LLM-as-judge"
+ ],
+ "patterns": [
+  "PAT03",
+  "PAT02",
+  "PAT12",
+  "PAT01"
+ ],
+ "prereq_topics": [
+  "T1.2.1",
+  "T1.2.2",
+  "T1.2.3",
+  "T1.2.5",
+  "T1.1.5"
+ ],
+ "facts": [
+  [
+   "A custom Google Docs loader replaced PDF parsing because standard PDF loaders lost table structure and no single parser worked across documents.",
+   "SRC-024"
+  ],
+  [
+   "An LLM converts tables and structured text to markdown; table chunks are kept intact via metadata; documents get LLM summaries and chunks get FAQs and keywords.",
+   "SRC-024"
+  ],
+  [
+   "Pre-retrieval agents rewrite ambiguous queries, split complex ones into sub-queries and identify the most likely source documents.",
+   "SRC-024"
+  ],
+  [
+   "Retrieval runs vector search and BM25 over enriched metadata and merges results as a union; a post-processor deduplicates and orders chunks by position in the source.",
+   "SRC-024"
+  ],
+  [
+   "Evaluation uses expert reference answers run in batch with an LLM judge scoring 0-5, cutting evaluation turnaround from weeks to minutes.",
+   "SRC-024"
+  ],
+  [
+   "Reported results are relative: 27% more acceptable answers and 60% fewer incorrect answers.",
+   "SRC-024"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Changing the source format (Google Docs instead of PDF) was a bigger lever than changing the model, which is a common ingestion lesson.",
+   "I"
+  ],
+  [
+   "Relative gains without baselines cannot be converted to absolute quality; ask for the baseline before quoting these numbers to a client.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Generation, enrichment and judge LLMs",
+  "Vector store",
+  "Latency, cost and production scale",
+  "Judge agreement with human experts",
+  "Access control enforcement in retrieval"
+ ],
+ "decisions": [
+  {
+   "decision": "Document ingestion",
+   "selected": "Custom Google Docs loader with table-aware markdown conversion",
+   "alternatives": "Keep PDF parsers (several tried); OCR or layout models; re-author sources",
+   "reasoning": "Source documents PDF parsers losing table row and column context and no universal parser.",
+   "basis": "documented",
+   "source": "SRC-024"
+  },
+  {
+   "decision": "Retrieval",
+   "selected": "Hybrid vector plus BM25 union over enriched metadata",
+   "alternatives": "Vector only; BM25 only; reranker-based fusion",
+   "reasoning": "Source describes the hybrid; the choice of union over reranking is not explained.",
+   "basis": "documented design; rationale partly independent",
+   "source": "SRC-024"
+  },
+  {
+   "decision": "Query handling",
+   "selected": "Query optimizer and source identifier agents before retrieval",
+   "alternatives": "Single-pass retrieval with raw query",
+   "reasoning": "Source describes the agents as handling ambiguity and narrowing sources.",
+   "basis": "documented",
+   "source": "SRC-024"
+  },
+  {
+   "decision": "Evaluation",
+   "selected": "Expert references plus LLM judge with reasoning",
+   "alternatives": "Human review per release; synthetic questions only",
+   "reasoning": "Source cites speed gain. Judge validity is not reported.",
+   "basis": "documented; limits are independent analysis",
+   "source": "SRC-024"
+  }
+ ],
+ "review_exercise": "The reported 60% reduction in incorrect advice has no baseline. Define the evidence you would request, and how you would test the judge's agreement with experts before trusting it.",
+ "lessons": [
+  "Fix ingestion before tuning generation.",
+  "Enrich chunks and queries; do not rely on raw similarity alone.",
+  "Judge-based evaluation speeds iteration but must be validated against humans."
+ ],
+ "adaptation": "For an SAP service knowledge assistant over product manuals and notes, the same ingestion-first approach applies; the access-control question (not answered in the source) must be designed explicitly. Independent analysis."
+}

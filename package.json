@@ -1,0 +1,54 @@
+{
+  "name": "architect-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Architect Lab: a backend-free learning portal for enterprise AI solution architects.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "validate": "tsx scripts/validate-content.ts",
+    "graph": "tsx scripts/build-graph.ts",
+    "prebuild": "npm run validate && npm run graph",
+    "build": "astro build && pagefind --site dist --output-path dist/pagefind",
+    "postbuild": "tsx scripts/check-links.ts --internal",
+    "preview": "node scripts/serve-dist.mjs",
+    "check:links": "tsx scripts/check-links.ts --external",
+    "scan:secrets": "tsx scripts/scan-secrets.ts",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "lhci": "node scripts/run-lighthouse.mjs",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^6.1.5",
+    "astro": "^7.4.11",
+    "preact": "^11.2.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.1",
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "fake-indexeddb": "^6.2.8",
+    "gray-matter": "^4.0.3",
+    "pagefind": "^1.6.0",
+    "rehype-sanitize": "^6.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "unified": "^11.0.5",
+    "vitest": "^5.1.0"
+  }
+}

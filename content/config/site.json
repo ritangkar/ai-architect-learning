@@ -1,0 +1,7 @@
+{
+  "siteName": "Architect Lab",
+  "contentVersion": "0.3.0",
+  "contentVersionNote": "Bump when content changes in a way that matters for exported progress.",
+  "storageNoticeVersion": "1",
+  "streakVisibleByDefault": false
+}

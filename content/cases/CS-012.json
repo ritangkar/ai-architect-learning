@@ -1,0 +1,72 @@
+{
+ "id": "CS-012",
+ "company": "SAP",
+ "industry": "Enterprise software (SAP reference architecture)",
+ "title": "Business Data Cloud with SAP AI Core: three AI-enhanced data product patterns",
+ "problem": "Turn governed SAP business data into predictive and agentic AI outcomes.",
+ "category": [
+  "Predictive AI and machine learning",
+  "AI-driven analytics and decision intelligence"
+ ],
+ "tier": "A-provisional",
+ "depth": "Primary SAP documentation; this session used search excerpts, full page body to be read before walkthrough",
+ "sources": [
+  "SRC-004"
+ ],
+ "technologies_stated": [
+  "SAP Business Data Cloud",
+  "SAP Databricks",
+  "MLflow and Unity Catalog",
+  "SAP AI Core",
+  "Generative AI Hub",
+  "SAP Datasphere",
+  "BTP destination service"
+ ],
+ "patterns": [
+  "PAT16",
+  "PAT15"
+ ],
+ "prereq_topics": [
+  "T2.1.3",
+  "T2.1.4",
+  "T1.4.5"
+ ],
+ "facts": [
+  [
+   "Pattern 1: train in SAP Databricks on governed data products, register models, serve through AI Core.",
+   "SRC-004"
+  ],
+  [
+   "Pattern 2: batch inference via AI Core workflow executions separated from low-latency serving.",
+   "SRC-004"
+  ],
+  [
+   "Pattern 3: a BTP extension agent queries Datasphere, calls an AI Core endpoint and can use Generative AI Hub to explain results.",
+   "SRC-004"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Separating batch and real-time serving of one governed model is the architectural point to teach.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Full rationale and limits (page body not read this session)"
+ ],
+ "decisions": [
+  {
+   "decision": "Serving path",
+   "selected": "AI Core for governed serving of models trained in Databricks",
+   "alternatives": "Serve directly from Databricks",
+   "reasoning": "Source states AI Core provides enterprise governance, scaling and monitoring with SAP integration.",
+   "basis": "documented",
+   "source": "SRC-004"
+  }
+ ],
+ "review_exercise": "Pick batch or real-time for ticket categorisation, forecast refresh and fraud scoring, and justify.",
+ "lessons": [
+  "Data products are the unit of reuse."
+ ],
+ "adaptation": "Applies to service-ticket classification and sales forecasting in CX."
+}

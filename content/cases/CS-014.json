@@ -1,0 +1,58 @@
+{
+ "id": "CS-014",
+ "company": "SAP and Google Cloud",
+ "industry": "Marketing and customer experience",
+ "title": "Multi-agent marketing with Joule and Gemini Enterprise (secondary report)",
+ "problem": "Run campaign creation and optimisation across SAP and Google agents.",
+ "category": [
+  "Multi-agent architectures",
+  "AI agents"
+ ],
+ "tier": "C",
+ "depth": "Secondary news summary; metric unverified",
+ "sources": [
+  "SRC-017"
+ ],
+ "technologies_stated": [
+  "A2A",
+  "MCP",
+  "Gemini Enterprise",
+  "SAP Joule",
+  "ABAP SDK for Google Cloud"
+ ],
+ "patterns": [
+  "PAT10",
+  "PAT06"
+ ],
+ "prereq_topics": [
+  "T2.3.4",
+  "T1.3.6"
+ ],
+ "facts": [
+  [
+   "The report says A2A links Google-built agents to Joule and MCP gives access to SAP data.",
+   "SRC-017"
+  ],
+  [
+   "A retailer automation rate of 23% is quoted but not confirmed.",
+   "SRC-017"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Do not quote the 23% without a primary source.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Architecture",
+  "Governance",
+  "Results"
+ ],
+ "decisions": [],
+ "review_exercise": "Which consent and brand-safety controls are missing from this description?",
+ "lessons": [
+  "Cross-vendor agent protocols raise governance questions first."
+ ],
+ "adaptation": "Needs SAP primary documentation."
+}

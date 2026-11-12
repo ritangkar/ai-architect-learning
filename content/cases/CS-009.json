@@ -1,0 +1,109 @@
+{
+ "id": "CS-009",
+ "company": "Mindset Consulting (SAP partner)",
+ "industry": "SAP partner engineering (multi-industry)",
+ "title": "Domain-scoped MCP servers on SAP BTP for Joule agents",
+ "problem": "Give Joule agents governed, reliable access to S/4HANA business functions.",
+ "category": [
+  "AI agents",
+  "Intelligent automation"
+ ],
+ "tier": "B",
+ "depth": "Architecture path and design rules stated by the implementer; no measured results",
+ "sources": [
+  "SRC-014"
+ ],
+ "technologies_stated": [
+  "SAP BTP Joule Studio",
+  "MCP servers on BTP Cloud Foundry",
+  "BTP Destination service",
+  "Cloud Connector",
+  "S/4HANA on-premise OData",
+  "OAuth2 client credentials"
+ ],
+ "patterns": [
+  "PAT09",
+  "PAT15",
+  "PAT19"
+ ],
+ "prereq_topics": [
+  "T1.3.5",
+  "T2.1.2",
+  "T2.2.2",
+  "T2.2.5",
+  "T2.4.2",
+  "T2.4.3"
+ ],
+ "facts": [
+  [
+   "Path: Joule Studio agent to MCP server on Cloud Foundry to Destination service to Cloud Connector to S/4HANA.",
+   "SRC-014"
+  ],
+  [
+   "Authentication is OAuth2 client credentials, with CSRF handling for OData V2 and one shared destination for all servers.",
+   "SRC-014"
+  ],
+  [
+   "Nine MCP servers with 144 tools, each scoped to one business domain, about 20-30 tools per server.",
+   "SRC-014"
+  ],
+  [
+   "The author cites reduced tool-selection accuracy with large tool sets as the reason for narrow servers.",
+   "SRC-014"
+  ],
+  [
+   "The author reads a recent SAP API policy as requiring agent calls to SAP APIs to go through SAP-endorsed paths and notes unresolved customer questions.",
+   "SRC-014"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Client-credentials auth implies service-level identity; the post describes no per-user authorisation, so segregation of duties would need separate design.",
+   "I"
+  ],
+  [
+   "The SAP API policy statement is the author's reading and must be verified against SAP's own text before use.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Measured reliability or savings",
+  "Write safeguards and approval steps",
+  "Per-user identity handling",
+  "Customers and timelines",
+  "Policy text itself"
+ ],
+ "decisions": [
+  {
+   "decision": "MCP granularity",
+   "selected": "One server per business domain, ~20-30 tools",
+   "alternatives": "One large server for all APIs",
+   "reasoning": "Author cites tool-selection degradation as tool count grows.",
+   "basis": "documented rationale (self-reported)",
+   "source": "SRC-014"
+  },
+  {
+   "decision": "Connectivity",
+   "selected": "Reuse BTP Destination and Cloud Connector",
+   "alternatives": "Direct network exposure of S/4HANA; custom connectivity",
+   "reasoning": "Author states it keeps within SAP's existing trust layer.",
+   "basis": "documented",
+   "source": "SRC-014"
+  },
+  {
+   "decision": "Identity",
+   "selected": "Service credentials via client credentials",
+   "alternatives": "Principal propagation or on-behalf-of user tokens",
+   "reasoning": "Not discussed by the source; comparison is independent analysis.",
+   "basis": "independent analysis",
+   "source": "SRC-014"
+  }
+ ],
+ "review_exercise": "Find the segregation-of-duties risk in this architecture and redesign identity so the agent cannot exceed the user's authorisations.",
+ "lessons": [
+  "Narrow tool surfaces improve reliability.",
+  "Reuse platform trust components.",
+  "Question identity at every hop."
+ ],
+ "adaptation": "Template for exposing Commerce or Service Cloud APIs to Joule agents. Independent analysis."
+}

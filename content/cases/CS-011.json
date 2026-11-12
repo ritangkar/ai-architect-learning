@@ -1,0 +1,80 @@
+{
+ "id": "CS-011",
+ "company": "SAP",
+ "industry": "Enterprise software (SAP reference architecture)",
+ "title": "SAP A2A and MCP interoperability reference architecture",
+ "problem": "Let Joule agents and third-party agents interoperate with governed access to SAP and non-SAP tools.",
+ "category": [
+  "AI agents",
+  "Multi-agent architectures",
+  "Other emerging enterprise AI"
+ ],
+ "tier": "A-provisional",
+ "depth": "Primary SAP documentation; this session used search excerpts, full page body to be read before walkthrough",
+ "sources": [
+  "SRC-001",
+  "SRC-002",
+  "SRC-003"
+ ],
+ "technologies_stated": [
+  "A2A 0.3.0 with HTTP+JSON",
+  "SAP Cloud Identity Services App2App tokens with named user context",
+  "MCP Gateway in SAP Integration Suite",
+  "Agent Gateway",
+  "Joule as A2A client"
+ ],
+ "patterns": [
+  "PAT09",
+  "PAT10",
+  "PAT19"
+ ],
+ "prereq_topics": [
+  "T1.3.5",
+  "T1.3.6",
+  "T2.2.4",
+  "T2.4.2"
+ ],
+ "facts": [
+  [
+   "SAP uses A2A as the preferred approach for external agent interoperability and MCP for tool access.",
+   "SRC-001"
+  ],
+  [
+   "The Agent Gateway exposes Joule agents externally via A2A; authentication uses IAS App2App tokens with named user context.",
+   "SRC-002"
+  ],
+  [
+   "MCP Gateway in Integration Suite exposes SAP and non-SAP APIs as governed MCP tools.",
+   "SRC-001"
+  ],
+  [
+   "Inbound A2A interoperability general availability was announced for October 2026; the customer defines which agents a client may invoke.",
+   "SRC-003"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Named-user context in tokens suggests the design intends user-level authorisation across agent hops; confirm in full documentation.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Full flows and limits (page body not read this session)",
+  "Pricing and licensing"
+ ],
+ "decisions": [
+  {
+   "decision": "External agent protocol",
+   "selected": "A2A for agent to agent, MCP for tools",
+   "alternatives": "Proprietary SAP APIs only; REST per integration",
+   "reasoning": "Source states A2A as preferred for external interoperability.",
+   "basis": "documented",
+   "source": "SRC-001"
+  }
+ ],
+ "review_exercise": "Draw inbound and outbound flows and mark every identity hop.",
+ "lessons": [
+  "Protocol layering: MCP for tools, A2A for agents."
+ ],
+ "adaptation": "Foundation for any BYO-agent SAP engagement."
+}

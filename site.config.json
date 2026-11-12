@@ -1,0 +1,5 @@
+{
+  "_comment": "Local-build defaults only. In GitHub Actions the owner and repository come from GITHUB_REPOSITORY. Override with SITE_URL and BASE_PATH environment variables.",
+  "owner": "ritangkar",
+  "repo": "ai-architect-learning"
+}

@@ -1,0 +1,113 @@
+{
+ "id": "CS-004",
+ "company": "Dropbox",
+ "industry": "Software and collaboration",
+ "title": "Dash: knowledge graphs, MCP limits and DSPy",
+ "problem": "Scaling an AI search product exposed context bloat, latency in MCP-based agents and unmanageable prompts.",
+ "category": [
+  "AI agents",
+  "RAG and enterprise knowledge assistants"
+ ],
+ "tier": "A",
+ "depth": "Candid lessons and rejected alternatives; few quantitative results",
+ "sources": [
+  "SRC-026"
+ ],
+ "technologies_stated": [
+  "MCP",
+  "DSPy",
+  "BM25 plus dense vectors",
+  "knowledge graph compressed into bundles",
+  "LLM-as-judge (an OpenAI o3 upgrade is mentioned)"
+ ],
+ "patterns": [
+  "PAT09",
+  "PAT02",
+  "PAT12"
+ ],
+ "prereq_topics": [
+  "T1.3.5",
+  "T1.2.3",
+  "T1.5.6",
+  "T1.5.9"
+ ],
+ "facts": [
+  [
+   "Tool definitions and returned content consume context; Dropbox caps context at about 100,000 tokens because quality degrades beyond it.",
+   "SRC-026"
+  ],
+  [
+   "Some MCP-based agents took up to 45 seconds for a simple query versus seconds with direct index access.",
+   "SRC-026"
+  ],
+  [
+   "Mitigations include one 'super tool' over the index instead of many retrieval tools, storing large results outside the model context and sub-agents with narrower tool sets.",
+   "SRC-026"
+  ],
+  [
+   "A graph database was tried and rejected for latency, query pattern and hybrid retrieval reasons; graphs are built asynchronously and compressed into bundles that go through the normal chunk and embed pipeline.",
+   "SRC-026"
+  ],
+  [
+   "Index-based retrieval was chosen over federated retrieval for connector coverage, preprocessing and speed, at the cost of engineering effort, storage and freshness management.",
+   "SRC-026"
+  ],
+  [
+   "DSPy is used to optimise prompts against evals, starting with judge prompts; about 30 prompts are edited by 5-15 engineers.",
+   "SRC-026"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Federated MCP access is attractive for speed of integration but shifts quality and latency to each external system.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Quantified retrieval or DSPy gains",
+  "Latency after mitigation",
+  "Cost",
+  "Knowledge graph schema and bundle construction"
+ ],
+ "decisions": [
+  {
+   "decision": "Retrieval topology",
+   "selected": "Central index",
+   "alternatives": "Federated retrieval via MCP connectors to each app",
+   "reasoning": "Source lists connector access, preprocessing, offline ranking and speed in favour of the index, and cost and freshness against.",
+   "basis": "documented",
+   "source": "SRC-026"
+  },
+  {
+   "decision": "Tool exposure",
+   "selected": "Single super tool over the index",
+   "alternatives": "5-10 separate retrieval tools",
+   "reasoning": "Source cites context cost and tool selection quality.",
+   "basis": "documented",
+   "source": "SRC-026"
+  },
+  {
+   "decision": "Relationship store",
+   "selected": "Graph summarised into bundles in the existing retrieval pipeline",
+   "alternatives": "Dedicated graph database",
+   "reasoning": "Source states graph database was rejected for latency, query pattern and hybrid retrieval difficulty.",
+   "basis": "documented",
+   "source": "SRC-026"
+  },
+  {
+   "decision": "Prompt management",
+   "selected": "Programmatic optimisation with DSPy",
+   "alternatives": "Hand-edited prompt strings",
+   "reasoning": "Source states preference for generating prompts from goals.",
+   "basis": "documented",
+   "source": "SRC-026"
+  }
+ ],
+ "review_exercise": "You are told to expose 40 enterprise APIs as MCP tools to one agent. Using this case, list the risks and redesign the tool surface.",
+ "lessons": [
+  "Context is a budget.",
+  "Protocols do not remove latency and quality costs.",
+  "Prompt optimisation tooling pays off at scale."
+ ],
+ "adaptation": "Directly relevant to exposing SAP APIs via MCP: scope servers narrowly and measure latency before scaling the tool count. Compare with CS-009. Independent analysis."
+}

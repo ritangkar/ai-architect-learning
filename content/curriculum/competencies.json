@@ -1,0 +1,19 @@
+{
+ "C01": "Discovery and requirements elicitation",
+ "C02": "AI and LLM foundations and limits",
+ "C03": "Retrieval and knowledge architecture",
+ "C04": "Agent and orchestration design",
+ "C05": "Integration and interoperability (APIs, MCP, A2A)",
+ "C06": "AI security and threat modeling",
+ "C07": "Identity, data access and privacy",
+ "C08": "Governance, responsible AI and human oversight",
+ "C09": "Evaluation and quality engineering",
+ "C10": "Reliability, performance and cost engineering",
+ "C11": "Operations, lifecycle and observability",
+ "C12": "Technology selection and trade-off analysis",
+ "C13": "SAP AI platform architecture",
+ "C14": "SAP CX solution architecture",
+ "C15": "Industry and domain architecture",
+ "C16": "Architecture documentation and communication",
+ "C17": "Architecture review and risk challenge"
+}

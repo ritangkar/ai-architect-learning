@@ -1,0 +1,159 @@
+{
+ "version": "1.0",
+ "note": "All values are defaults. Tune without code changes.",
+ "evidence_weights": {
+  "mcq": 1,
+  "scenario": 3,
+  "decision_comparison": 3,
+  "architecture_review": 3,
+  "card": 0.5
+ },
+ "recency_decay_per_newer_attempt": 0.85,
+ "max_attempts_considered": 12,
+ "state_thresholds": {
+  "unknown_below_mass": 3,
+  "gap_below": 0.5,
+  "developing_below": 0.7,
+  "proficient": {
+   "min_score": 0.7,
+   "min_mass": 6,
+   "min_applied_items": 1,
+   "applied_min_score": 0.7
+  },
+  "mastered": {
+   "min_score": 0.85,
+   "min_applied_items": 2,
+   "applied_min_score": 0.8,
+   "distinct_days": 2,
+   "review_after_days": 7
+  }
+ },
+ "overconfidence": {
+  "confidence_min": 4,
+  "score_below": 0.4,
+  "negative_weight_multiplier": 1.5
+ },
+ "competency_interval_halfwidth": "0.5/sqrt(mass)",
+ "calibration_window_items": 20,
+ "initial_assessment": {
+  "weights": {
+   "concept_mcq": 0.25,
+   "scenario": 0.55,
+   "self_assessment_calibration": 0.2
+  },
+  "min_items_per_competency_before_stop": 3,
+  "stop_if_interval_above": 0.8,
+  "stop_if_interval_below": 0.4,
+  "interval_confidence": 0.8,
+  "scenario_free_text_is_self_scored": true,
+  "section_order": [
+   "C",
+   "A",
+   "B"
+  ],
+  "section_pattern": [
+   "A",
+   "B",
+   "A",
+   "B",
+   "A",
+   "B",
+   "A"
+  ],
+  "pattern_note": "Added by the implementation. Per-competency item pattern; with evidence weights mcq=1 and scenario=3, 4 A : 3 B gives scored weight ~25:55 as in 'weights'.",
+  "max_items_per_competency": 7
+ },
+ "recommender": {
+  "weights": {
+   "gapSeverity": 0.35,
+   "unblockValue": 0.25,
+   "caseRelevance": 0.15,
+   "reviewDue": 0.15,
+   "levelFit": 0.1
+  },
+  "gap_severity_values": {
+   "gap": 1.0,
+   "unknown": 0.7,
+   "other": "1-E"
+  },
+  "level_fit": {
+   "advances_gate": 1.0,
+   "otherwise": 0.5
+  },
+  "session_mix_target": {
+   "learn": 0.4,
+   "case": 0.3,
+   "exercise": 0.15,
+   "revise": 0.15
+  },
+  "mix_shifts": [
+   {
+    "when": "due_cards>25",
+    "add": {
+     "revise": 20
+    }
+   },
+   {
+    "when": "topics_in_gap>3",
+    "add": {
+     "learn": 15
+    }
+   },
+   {
+    "when": "queued_case_prereqs_all_proficient",
+    "add": {
+     "case": 10
+    }
+   }
+  ],
+  "routing": {
+   "gap_depth": "deep",
+   "unknown_depth": "standard",
+   "store_resume_pointer": true
+  },
+  "case_exercise_regression_below": 0.5,
+  "alternatives_per_slot": 1,
+  "tie_break": "seeded_hash_of_activity_id",
+  "estimated_minutes": {
+   "learn": {
+    "compress": 15,
+    "standard": 60,
+    "deep": 120
+   },
+   "case": 45,
+   "exercise": 40,
+   "revise": 10
+  }
+ },
+ "spaced_review": {
+  "box_intervals_days": [
+   1,
+   3,
+   7,
+   16,
+   35,
+   70
+  ],
+  "correct_moves_up": 1,
+  "incorrect_drops": 2,
+  "min_box": 1,
+  "low_confidence_correct_advances": false,
+  "low_confidence_threshold": 2,
+  "note": "Dates schedule revision only; they are not curriculum deadlines."
+ },
+ "backup_reminder": {
+  "days": 7,
+  "new_attempts": 25
+ },
+ "import_max_bytes": 26214400,
+ "freshness": {
+  "stale_after_days": 90
+ },
+ "session_length_hint_minutes": 120,
+ "streak_visible_by_default": false,
+ "calibration": {
+  "flag_threshold": 0.15,
+  "note": "Added by the implementation (not in the handoff engine.json): |calibration index| above this marks a competency over/underconfident. Tunable."
+ },
+ "pass_threshold": 0.7
+}

@@ -1,0 +1,67 @@
+{
+ "id": "CS-010",
+ "company": "DataXstream (SAP partner)",
+ "industry": "Distribution and sales (B2B)",
+ "title": "Churn Risk Agent built in Joule Studio (editorial coverage)",
+ "problem": "Detect at-risk customers and trigger a retention response for sales teams.",
+ "category": [
+  "AI agents",
+  "Predictive AI and machine learning",
+  "Intelligent automation"
+ ],
+ "tier": "C",
+ "depth": "Secondary editorial description; no architecture or outcome metrics",
+ "sources": [
+  "SRC-013"
+ ],
+ "technologies_stated": [
+  "SAP Joule Studio",
+  "MCP server",
+  "SAP BTP Kyma runtime",
+  "containerised ML service"
+ ],
+ "patterns": [
+  "PAT14",
+  "PAT07",
+  "PAT16",
+  "PAT04"
+ ],
+ "prereq_topics": [
+  "T2.2.2",
+  "T1.4.5",
+  "T3.1.1"
+ ],
+ "facts": [
+  [
+   "A proprietary ML model scores churn risk and ranks accounts; separate recommendation, availability and promotion agents then create an SAP inquiry and draft a retention email.",
+   "SRC-013"
+  ],
+  [
+   "The only human step described is reviewing and sending the drafted email.",
+   "SRC-013"
+  ],
+  [
+   "The agent is listed on the SAP Store; coverage reports a second-place finish in a SAP event but no business results.",
+   "SRC-013"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Combining a classical ML scorer with LLM agents is a sound split of responsibilities; the editorial source does not show how the pieces were validated.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "S/4HANA version and APIs",
+  "Model training data and accuracy",
+  "Error handling",
+  "Business results"
+ ],
+ "decisions": [],
+ "review_exercise": "Using only this description, list what you would need to see before recommending it to a distribution client.",
+ "lessons": [
+  "Predictive scoring plus agentic action is a reusable shape.",
+  "Upgrade to Tier B when a builder-authored technical source is found."
+ ],
+ "adaptation": "Candidate for B2B retention scenarios; needs a primary source."
+}

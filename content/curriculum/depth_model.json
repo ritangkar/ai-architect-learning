@@ -1,0 +1,26 @@
+{
+ "compress": {
+  "when": "Initial or later assessment shows proficient on this topic's competencies",
+  "content": "One-page summary, key terms, 2 confirmation questions, jump to related cases",
+  "est_minutes_range": [
+   10,
+   20
+  ]
+ },
+ "standard": {
+  "when": "Developing or untested",
+  "content": "Guided lesson, curated resources with focus notes, worked example, quiz, one exercise",
+  "est_minutes_range": [
+   45,
+   90
+  ]
+ },
+ "deep": {
+  "when": "Gap or repeated misses",
+  "content": "Prerequisite refresh, extended lesson, multiple examples, scaffolded exercises, targeted re-assessment",
+  "est_minutes_range": [
+   90,
+   180
+  ]
+ }
+}

@@ -1,0 +1,105 @@
+{
+ "id": "CS-006",
+ "company": "Slack (Salesforce)",
+ "industry": "Enterprise collaboration software",
+ "title": "Slack AI: privacy-first generative AI architecture",
+ "problem": "Deliver generative AI features while keeping customer data inside the trust boundary and honouring existing compliance commitments.",
+ "category": [
+  "RAG and enterprise knowledge assistants",
+  "AI chatbots and enterprise assistants"
+ ],
+ "tier": "A",
+ "depth": "Detailed on security and hosting decisions; no quality or latency metrics",
+ "sources": [
+  "SRC-028"
+ ],
+ "technologies_stated": [
+  "Closed-source LLMs hosted in an AWS escrow VPC",
+  "RAG",
+  "existing ACL libraries"
+ ],
+ "patterns": [
+  "PAT01",
+  "PAT19",
+  "PAT11"
+ ],
+ "prereq_topics": [
+  "T1.2.4",
+  "T1.5.3",
+  "T1.5.4",
+  "T1.4.3",
+  "T3.2.2"
+ ],
+ "facts": [
+  [
+   "Four principles: customer data stays in the trust boundary, no training on customer data, AI only shows what the user can already see, and enterprise security and compliance still apply.",
+   "SRC-028"
+  ],
+  [
+   "Closed-source models run in an escrow VPC on AWS so the model provider has no access to customer data.",
+   "SRC-028"
+  ],
+  [
+   "Slack chose off-the-shelf models with RAG over fine-tuning on customer data because it could not guarantee sufficient protections.",
+   "SRC-028"
+  ],
+  [
+   "Retrieval uses the requesting user's access control lists and existing display libraries; output is visible only to the requester.",
+   "SRC-028"
+  ],
+  [
+   "Outputs are ephemeral and not written to disk; stored data follows a least-data principle and existing key management and residency infrastructure.",
+   "SRC-028"
+  ],
+  [
+   "If a source message is removed by DLP, derived summaries are invalidated.",
+   "SRC-028"
+  ]
+ ],
+ "interpretations": [
+  [
+   "Reusing existing authorisation code paths for retrieval is a strong pattern: the AI layer inherits, rather than reimplements, access control.",
+   "I"
+  ]
+ ],
+ "unknown": [
+  "Model vendor and models",
+  "Retention periods",
+  "Technical detail of the escrow VPC",
+  "Latency and quality metrics",
+  "Prompt construction and evaluation (deferred by the authors)"
+ ],
+ "decisions": [
+  {
+   "decision": "Model hosting",
+   "selected": "Provider models inside an escrow VPC",
+   "alternatives": "Hosted provider API; self-hosted open model; vendor-managed private deployment",
+   "reasoning": "Source documents data-ownership requirement and that vendors generally do not ship closed models for self-hosting.",
+   "basis": "documented",
+   "source": "SRC-028"
+  },
+  {
+   "decision": "Knowledge strategy",
+   "selected": "RAG with stateless model calls",
+   "alternatives": "Fine-tune on customer data",
+   "reasoning": "Source states it could not guarantee strong enough protection if training on customer data.",
+   "basis": "documented",
+   "source": "SRC-028"
+  },
+  {
+   "decision": "Authorisation",
+   "selected": "Requesting user's ACLs at retrieval",
+   "alternatives": "Service-level access with output filtering",
+   "reasoning": "Source states AI must show only what the user can already see.",
+   "basis": "documented principle",
+   "source": "SRC-028"
+  }
+ ],
+ "review_exercise": "Derived summaries are invalidated when a source message is deleted. Identify two other places an AI system might retain derivatives of deleted data and how to detect them.",
+ "lessons": [
+  "Start from non-negotiable data principles and derive hosting choices from them.",
+  "Inherit authorisation from the system of record.",
+  "Stateless RAG simplifies privacy arguments."
+ ],
+ "adaptation": "Maps directly to SAP CX client conversations about data residency and no-training terms with Generative AI Hub. Independent analysis."
+}
